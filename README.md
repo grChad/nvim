@@ -1,6 +1,6 @@
 <h1 align="center">
     Configuración de
-    <img height="20px" src="https://github.com/grChad/my-assets/tree/main/dotfiles/icons/nvim-logo.png"/>
+    <img height="20px" src="https://github.com/grChad/my-assets/blob/main/dotfiles/icons/nvim-logo.png"/>
 </h1>
 
 ## Requisitos
