@@ -16,13 +16,10 @@
 Antes de instalar asegúrate de hacer una copia de tu Configuración actual y eliminar los siguientes directorios:
 
 ```bash
-rm -rf ~/.local/share/nvim/
-rm -rf ~/.local/state/nvim/
-rm -rf ~/.cache/nvim/
-rm -rf ~/.config/nvim/
+rm -rf ~/.local/share/nvim/ ~/.local/state/nvim/ ~/.cache/nvim/ ~/.config/nvim/
 ```
 
-Luego ejecuta este comando:
+Ahora si podemos instalar, use el siguiente comando comando:
 
 ```bash
 git clone https://github.com/grChad/nvim.git ~/.config/nvim --depth 1 && cd ~/.config/nvim/ && nvim init.lua
