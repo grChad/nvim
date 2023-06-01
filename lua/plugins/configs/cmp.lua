@@ -94,10 +94,12 @@ local options = {
 	window = {
 		completion = {
 			border = border('FloatBorder'),
-			winhighlight = 'Normal:CmpItemMenu,CursorLine:PmenuSel,Search:None',
+			-- winhighlight = 'Normal:CmpItemMenu,CursorLine:PmenuSel,Search:None',
+			winhighlight = 'Normal:None,CursorLine:PmenuSel,Search:None',
 		},
 		documentation = {
 			border = border('FloatBorder'),
+			-- winhighlight = 'Normal:Pmenu,Search:None',
 			winhighlight = 'Normal:None,Search:None',
 		},
 	},
