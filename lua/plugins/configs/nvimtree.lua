@@ -26,6 +26,19 @@ local config = {
 -- 	return win_width <= 130 and not config.windows_float
 -- end
 
+local function border(hl_name)
+	return {
+		{ ' ', hl_name },
+		{ '▁', hl_name },
+		{ ' ', hl_name },
+		{ '▏', hl_name },
+		{ ' ', hl_name },
+		{ '▔', hl_name },
+		{ ' ', hl_name },
+		{ '▕', hl_name },
+	}
+end
+
 local options = {
 	hijack_cursor = true, -- para tener el cursor un espacio después del nombre
 	sort_by = 'case_sensitive', -- Como se ordena en directorio: 'name', 'case_sensitive', 'modification_time', 'extension'
@@ -39,6 +52,7 @@ local options = {
 			enable = config.windows_float,
 			open_win_config = {
 				--border = 'rounded' -- default rounded
+				border = border('FloatBorder'),
 				width = config.width,
 				height = config.height - 2,
 				row = (vim.api.nvim_list_uis()[1].height - config.height) * 0.5,
@@ -55,7 +69,7 @@ local options = {
 		root_folder_label = function(path)
 			local tail = vim.fn.fnamemodify(path, ':p:h:t')
 			local parent = vim.fn.fnamemodify(path, ':p:h:h:t')
-			return string.format(' ../%s/%s ', parent, tail)
+			return string.format('  ../%s/%s/  ', parent, tail)
 		end,
 		indent_width = 3,
 		indent_markers = {

@@ -1,8 +1,24 @@
+local function border(hl_name)
+	return {
+		{ ' ', hl_name },
+		{ '▁', hl_name },
+		{ ' ', hl_name },
+		{ '▏', hl_name },
+		{ ' ', hl_name },
+		{ '▔', hl_name },
+		{ ' ', hl_name },
+		{ '▕', hl_name },
+	}
+end
+
 return {
 	defaults = { lazy = true },
 	install = { colorscheme = { 'catppuccin' } },
 
 	ui = {
+		size = { width = 0.7, height = 0.8 },
+		border = border('FloatBorder'),
+
 		icons = {
 			ft = '',
 			lazy = '󰂠 ',

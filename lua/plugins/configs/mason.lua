@@ -1,3 +1,16 @@
+local function border(hl_name)
+	return {
+		{ ' ', hl_name },
+		{ '▁', hl_name },
+		{ ' ', hl_name },
+		{ '▏', hl_name },
+		{ ' ', hl_name },
+		{ '▔', hl_name },
+		{ ' ', hl_name },
+		{ '▕', hl_name },
+	}
+end
+
 local options = {
 	ensure_installed = {
 		'lua-language-server',
@@ -23,6 +36,10 @@ local options = {
 	PATH = 'skip',
 
 	ui = {
+		border = border('FloatBorder'),
+		width = 0.7,
+		height = 0.8,
+
 		icons = {
 			package_pending = ' ',
 			package_installed = '󰄳 ',
