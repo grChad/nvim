@@ -1,16 +1,19 @@
+-------------------------------------------------------------------------------
+--                           by grChad 󰊤
+
 require('core.settings')
 require('core.autocmds')
 require('core.utils').load_mappings()
 
 --------------------[ init Lazy ]-------------------------
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+local lazyPath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 -- bootstrap lazy.nvim!
-if not vim.loop.fs_stat(lazypath) then
-	require('core.bootstrap').lazy(lazypath)
+if not vim.loop.fs_stat(lazyPath) then
+   require('core.bootstrap').lazy(lazyPath)
 end
 
-vim.opt.rtp:prepend(lazypath)
+vim.opt.rtp:prepend(lazyPath)
 require('plugins')
 --------------------[ end Lazy ]--------------------------
 

@@ -13,7 +13,7 @@ opt.smartindent = true
 opt.tabstop = 2
 opt.softtabstop = 2
 
-opt.fillchars = { eob = ' ' }
+opt.fillchars = { eob = ' ', lastline = ' ' }
 opt.ignorecase = false
 opt.smartcase = true
 
@@ -48,29 +48,31 @@ opt.linebreak = true
 opt.breakindent = true
 opt.hidden = true
 opt.writebackup = false
-opt.backup = false -- creates a backup file
-opt.swapfile = false -- creates a swapfile
+opt.backup = false                          -- creates a backup file
+opt.swapfile = false                        -- creates a swapfile
 opt.pumheight = 10
-opt.spelllang = { 'en', 'es', 'cjk' } -- Establecer idiomas en ese orden
-opt.spellsuggest = 'best,9' -- Muestra las 9 mejores opciones de correccion.
-opt.spelloptions = 'camel' -- Para que no muestre error ortografico en los CamelCase
+opt.spelllang = { 'en', 'es', 'cjk' }       -- Establecer idiomas en ese orden
+opt.spellsuggest = 'best,9'                 -- Muestra las 9 mejores opciones de correccion.
+opt.spelloptions = 'camel'                  -- Para que no muestre error ortografico en los CamelCase
 opt.inccommand = 'split'
-opt.scrolloff = 8 -- Dejar espacio encima o debajo del cursor
-opt.sidescrolloff = 8 -- Dejar espacio a los laterales del cursor
-opt.foldmethod = 'expr' -- folding, set to "expr" for treesitter based folding
+opt.scrolloff = 8                           -- Dejar espacio encima o debajo del cursor
+opt.sidescrolloff = 8                       -- Dejar espacio a los laterales del cursor
+opt.foldmethod = 'expr'                     -- folding, set to "expr" for treesitter based folding
 opt.foldexpr = 'nvim_treesitter#foldexpr()' -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+opt.list = true                             -- for mini.indentscope
+opt.listchars = 'tab:▏ ,lead: ,trail:-'   -- for mini.indentscope
 
 local icon_os = {
-	fedora = ' ',
-	debian = ' ',
-	arch = ' ',
-	ubuntu = ' ',
-	manjaro = ' ',
-	linuxmint = ' ',
-	pop = ' ',
-	zorin = ' ',
-	cereus = '󰶵 ',
-	linux = ' ',
+   fedora = ' ',
+   debian = ' ',
+   arch = ' ',
+   ubuntu = ' ',
+   manjaro = ' ',
+   linuxmint = ' ',
+   pop = ' ',
+   zorin = ' ',
+   cereus = '󰶵 ',
+   linux = ' ',
 }
 
 local hostname = vim.fn.hostname()
@@ -92,12 +94,20 @@ vim.o.foldlevelstart = 99
 
 -------------------------------------- vim.g -----------------------------------------
 vim.g.mapleader = ' '
-vim.g.mkdp_auto_start = 0 -- for MarkdownPriview
-vim.g.mkdp_auto_close = 0 -- for MarkdownPriview
+vim.g.mkdp_auto_start = 0          -- for MarkdownPriview
+vim.g.mkdp_auto_close = 0          -- for MarkdownPriview
+
+vim.g.codeium_disable_bindings = 1 -- desactivar las combinaciones de teclas de Codeum
+vim.cmd([[
+let g:codeium_filetypes = {
+   \ "bash": v:false,
+   \ "markdown": v:false,
+   \ }
+]])
 
 -- disable some default providers
 for _, provider in ipairs({ 'node', 'perl', 'python3', 'ruby' }) do
-	vim.g['loaded_' .. provider .. '_provider'] = 0
+   vim.g['loaded_' .. provider .. '_provider'] = 0
 end
 
 -- add binaries installed by mason.nvim to path

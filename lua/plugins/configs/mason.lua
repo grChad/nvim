@@ -1,64 +1,70 @@
 local function border(hl_name)
-	return {
-		{ ' ', hl_name },
-		{ '▁', hl_name },
-		{ ' ', hl_name },
-		{ '▏', hl_name },
-		{ ' ', hl_name },
-		{ '▔', hl_name },
-		{ ' ', hl_name },
-		{ '▕', hl_name },
-	}
+   return {
+      { ' ',   hl_name },
+      { '▁', hl_name },
+      { ' ',   hl_name },
+      { '▏', hl_name },
+      { ' ',   hl_name },
+      { '▔', hl_name },
+      { ' ',   hl_name },
+      { '▕', hl_name },
+   }
 end
 
 local options = {
-	ensure_installed = {
-		'lua-language-server',
-		'html-lsp',
-		'emmet-ls',
-		'css-lsp',
-		'stylelint-lsp',
-		'tailwindcss-language-server',
-		'typescript-language-server',
-		'svelte-language-server',
-		'json-lsp',
-		'pyright',
-		'rust-analyzer',
-		'marksman',
-		'yaml-language-server',
+   ensure_installed = {
+      'lua-language-server',
+      'html-lsp',
+      'emmet-ls',
+      'css-lsp',
+      'stylelint-lsp',
+      'tailwindcss-language-server',
+      'typescript-language-server',
+      'svelte-language-server',
+      'json-lsp',
+      'pyright',
+      'rust-analyzer',
+      'clangd',
+      'marksman',
+      'yaml-language-server',
+      'texlab',
 
-		-- formatter & Linter
-		'stylua',
-		'prettierd',
-		'eslint_d',
-	},
+      -- formatter & Linter
+      'stylua', -- formatting for lua
+      'selene', -- diagnostic for lua
+      'prettierd',
+      'eslint_d',
+      'taplo',   -- formatting for toml
+      'black',   -- formatting for python
+      'latexindent', -- formatting for latex
+   },
 
-	PATH = 'skip',
+   PATH = 'skip',
 
-	ui = {
-		border = border('FloatBorder'),
-		width = 0.7,
-		height = 0.8,
+   ui = {
+      border = border('FloatBorder'),
+      width = 0.7,
+      height = 0.8,
 
-		icons = {
-			package_pending = ' ',
-			package_installed = '󰄳 ',
-			package_uninstalled = ' 󰚌',
-		},
+      icons = {
+         package_pending = ' ',
+         package_installed = '󰄳 ',
+         package_uninstalled = ' 󰚌',
+      },
 
-		keymaps = {
-			toggle_server_expand = '<CR>',
-			install_server = 'i',
-			update_server = 'u',
-			check_server_version = 'c',
-			update_all_servers = 'U',
-			check_outdated_servers = 'C',
-			uninstall_server = 'X',
-			cancel_installation = '<C-c>',
-		},
-	},
+      keymaps = {
+         toggle_server_expand = '<CR>',
+         install_server = 'i',
+         update_server = 'u',
+         check_server_version = 'c',
+         update_all_servers = 'U',
+         check_outdated_servers = 'C',
+         uninstall_server = 'X',
+         cancel_installation = '<C-c>',
+      },
+   },
 
-	max_concurrent_installers = 10,
+   max_concurrent_installers = 10,
 }
 
 return options
