@@ -4,10 +4,12 @@ local default_plugins = {
    { -- dashboard
       'goolord/alpha-nvim',
       lazy = false,
+      dependencies = { 'nvim-tree/nvim-web-devicons' },
       config = function()
-         require('plugins.configs.alpha_config').setup()
+         require('plugins.configs.alpha').setup()
       end,
    },
+
    { -- Theme
       'grChad/theme-custom',
       -- dir = '~/Escritorio/lua/theme-custom',

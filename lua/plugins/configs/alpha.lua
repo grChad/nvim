@@ -188,7 +188,7 @@ end
 local day = capitalized(tostring(os.date('%A')))
 local month = capitalized(tostring(os.date('%B')))
 
-local fecha = ' ' .. day .. os.date(' %d de ') .. month .. os.date('  -   %R')
+local fecha = ' ' .. day .. os.date(' %d de ') .. month .. os.date('  -   %R')
 
 local fecha_actual = group_custom(fecha, {
    { 'SecondColor', 0, 4 },
@@ -323,7 +323,9 @@ function M.setup()
       vim.api.nvim_create_autocmd('FileType', {
          group = 'alpha_tabline',
          pattern = 'alpha',
-         command = 'set showtabline=0 laststatus=0 noruler',
+         callback = function()
+            vim.opt_local.laststatus = 0
+         end,
       })
 
       vim.api.nvim_create_autocmd('FileType', {
@@ -333,7 +335,11 @@ function M.setup()
             vim.api.nvim_create_autocmd('BufUnload', {
                group = 'alpha_tabline',
                buffer = 0,
-               command = 'set showtabline=2 ruler laststatus=3',
+               callback = function()
+                  vim.defer_fn(function()
+                     vim.opt.laststatus = 3
+                  end, 100)
+               end,
             })
          end,
       })
