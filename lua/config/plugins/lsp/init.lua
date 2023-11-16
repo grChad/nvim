@@ -42,31 +42,9 @@ return {
          local handlers_ufo = require('config.plugins.lsp.util_lsp').handler_ufo
 
          local lspconfig = require('lspconfig')
-         local typescript_present, typescript = pcall(require, 'typescript')
 
          -- configuracion completa de los diagnosticos
          require('config.plugins.lsp.util_lsp').config_diagnostics(opts)
-
-         -- It enables tsserver automatically so no need to call lspconfig.tsserver.setup
-         if typescript_present then
-            typescript.setup({
-               disable_commands = false, -- prevent the plugin from creating Vim commands
-               debug = false,            -- enable debug logging for commands
-               -- LSP Config options
-               server = {
-                  root_dir = lspconfig.util.root_pattern(
-                     'package.json',
-                     'tsconfig.json',
-                     'jsconfig.json',
-                     '.git'
-                  ),
-                  capabilities = require('config.plugins.lsp.servers.tsserver').capabilities,
-                  handlers = require('config.plugins.lsp.servers.tsserver').handlers,
-                  on_attach = require('config.plugins.lsp.servers.tsserver').on_attach,
-                  settings = require('config.plugins.lsp.servers.tsserver').settings,
-               },
-            })
-         end
 
          lspconfig.lua_ls.setup({
             on_attach = on_attach,
@@ -78,12 +56,13 @@ return {
          })
 
          lspconfig.tailwindcss.setup({
-            root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
-            capabilities = require('config.plugins.lsp.servers.tailwindcss').capabilities,
-            filetypes = require('config.plugins.lsp.servers.tailwindcss').filetypes,
-            handlers = handlers,
-            init_options = require('config.plugins.lsp.servers.tailwindcss').init_options,
             on_attach = require('config.plugins.lsp.servers.tailwindcss').on_attach,
+            capabilities = require('config.plugins.lsp.servers.tailwindcss').capabilities,
+            handlers = handlers,
+
+            root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
+            filetypes = require('config.plugins.lsp.servers.tailwindcss').filetypes,
+            init_options = require('config.plugins.lsp.servers.tailwindcss').init_options,
             settings = require('config.plugins.lsp.servers.tailwindcss').settings,
          })
 
@@ -95,7 +74,14 @@ return {
             settings = require('config.plugins.lsp.servers.stylelint').settings,
          })
 
-         for _, lsp in ipairs({ 'cssls', 'html', 'emmet_ls' }) do
+         lspconfig.emmet_ls.setup({
+            filetypes = { 'astro', 'css', 'html', 'htmldjango', 'sass', 'scss' },
+            on_attach = on_attach,
+            capabilities = capabilities,
+            handlers = handlers,
+         })
+
+         for _, lsp in ipairs({ 'cssls', 'html' }) do
             lspconfig[lsp].setup({
                capabilities = capabilities,
                handlers = handlers,
@@ -152,7 +138,6 @@ return {
             'css-lsp',
             'stylelint-lsp',
             'tailwindcss-language-server',
-            'typescript-language-server',
             'svelte-language-server',
             'json-lsp',
             'pyright',

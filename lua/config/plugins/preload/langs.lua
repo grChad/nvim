@@ -1,6 +1,43 @@
 return {
    -- NOTE: -------------------[for typescript]---------------------
-   { 'jose-elias-alvarez/typescript.nvim' }, -- for tsserver
+   {
+      'pmizio/typescript-tools.nvim',
+      event = { 'BufRead', 'BufWinEnter', 'BufNewFile' },
+      dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+      opts = {
+         on_attach = function(client, bufnr)
+            client.server_capabilities.semanticTokensProvider = nil
+         end,
+         handlers = {
+            ['textDocument/hover'] = vim.lsp.with(
+               vim.lsp.handlers.hover,
+               { border = 'rounded', title = ' Hover ', silent = true }
+            ),
+            ['textDocument/signatureHelp'] = vim.lsp.with(
+               vim.lsp.handlers.signature_help,
+               { border = 'rounded', title = ' Help ' }
+            ),
+            ['textDocument/publishDiagnostics'] = vim.lsp.with(
+               vim.lsp.diagnostic.on_publish_diagnostics,
+               { virtual_text = true }
+            ),
+         },
+         settings = {
+            separate_diagnostic_server = true,
+            tsserver_file_preferences = {
+               includeInlayParameterNameHints = 'all',
+               includeCompletionsForModuleExports = true,
+               quotePreference = 'auto',
+            },
+            tsserver_plugins = {
+               -- for TypeScript v4.9+
+               '@styled/typescript-styled-plugin',
+               -- or for older TypeScript versions
+               -- "typescript-styled-plugin",
+            },
+         },
+      },
+   },
 
    -- NOTE: ----------------------[for dart]------------------------
    {
