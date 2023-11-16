@@ -11,4 +11,7 @@ end
 return {
    { 'folke/lazy.nvim',                version = '*' },
    { import = 'config.plugins.preload' },
+
+   -- recomendado para otros usuarios
+   -- { import = 'config.plugins.custom.nimi_animate' },
 }
