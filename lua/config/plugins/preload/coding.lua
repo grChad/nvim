@@ -4,8 +4,8 @@ return {
    {
       'L3MON4D3/LuaSnip',
       build = (not jit.os:find('Windows'))
-            and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-         or nil,
+          and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+          or nil,
       dependencies = {
          'rafamadriz/friendly-snippets',
          config = function()
@@ -17,18 +17,20 @@ return {
          history = true,
          delete_check_events = 'TextChanged',
       },
-    -- stylua: ignore
-    keys = {
-      {
-        "<tab>",
-        function()
-          return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
-        end,
-        expr = true, silent = true, mode = "i",
+      -- stylua: ignore
+      keys = {
+         {
+            "<tab>",
+            function()
+               return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
+            end,
+            expr = true,
+            silent = true,
+            mode = "i",
+         },
+         { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
+         { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
       },
-      { "<tab>", function() require("luasnip").jump(1) end, mode = "s" },
-      { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
-    },
    },
 
    {
@@ -89,7 +91,7 @@ return {
                { name = 'nvim_lsp' },
                { name = 'luasnip' },
                { name = 'path' },
-               { name = 'emoji', option = { insert = true } },
+               { name = 'emoji',   option = { insert = true } },
             }, {
                { name = 'buffer' },
             }),
@@ -177,8 +179,8 @@ return {
       'echasnovski/mini.surround',
       opts = {
          mappings = {
-            add = 'as', -- Add surrounding in Normal and Visual modes
-            delete = 'ds', -- Delete surrounding
+            add = 'as',     -- Add surrounding in Normal and Visual modes
+            delete = 'ds',  -- Delete surrounding
             replace = 'cs', -- Change surrounding
             find = '',
             find_left = '',
@@ -206,14 +208,14 @@ return {
          options = {
             custom_commentstring = function()
                return require('ts_context_commentstring.internal').calculate_commentstring()
-                  or vim.bo.commentstring
+                   or vim.bo.commentstring
             end,
          },
          mappings = {
-            comment = 'gc', -- Normal and Visual modes
-            comment_line = ' /', -- Toggle comment on current line
+            comment = 'gc',        -- Normal and Visual modes
+            comment_line = ' /',   -- Toggle comment on current line
             comment_visual = 'gc', -- Toggle comment on visual selection
-            textobject = 'gc', -- Define 'comment' textobject (like `dgc` - delete whole comment block)
+            textobject = 'gc',     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
          },
       },
    },
