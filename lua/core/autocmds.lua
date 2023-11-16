@@ -17,7 +17,7 @@ augroups.disable_node = {
    },
 }
 
--- NOTE: Eliminar linear porteriores al guardar, al final de la linea y al final del documento
+-- NOTE: Eliminar lineas porteriores al guardar, al final de la linea y al final del documento
 augroups.buf_write_pre = {
    mkdir_before_saving = {
       event = { 'BufWritePre', 'FileWritePre' },
@@ -59,7 +59,7 @@ augroups.prose = {
 augroups.indent_spaces = {
    three_space = {
       event = 'Filetype',
-      pattern = { 'lua', 'vim', 'css', 'json', 'NvimTree' },
+      pattern = { 'lua', 'vim', 'NvimTree' },
       callback = function()
          vim.opt_local.tabstop = 3
          vim.opt_local.shiftwidth = 3
@@ -71,36 +71,6 @@ augroups.indent_spaces = {
       callback = function()
          vim.opt_local.tabstop = 4
          vim.opt_local.shiftwidth = 4
-      end,
-   },
-}
-
-augroups.custom_statusColumn = {
-   status_column_on = {
-      event = 'Filetype',
-      pattern = {
-         'html',
-         'css',
-         'scss',
-         'javascript',
-         'javascriptreact',
-         'jsx',
-         'typescript',
-         'typescriptreact',
-         'vue',
-         'tsx',
-         'json',
-         'python',
-         'dart',
-         'rust',
-         'lua',
-         'svelte',
-         'c',
-         'cpp',
-         'tex',
-      },
-      callback = function()
-         vim.opt_local.statuscolumn = "%!v:lua.require('core.utils').status_column()"
       end,
    },
 }
@@ -131,31 +101,31 @@ augroups.lsp_Attach = {
       event = 'LspAttach',
       desc = 'Acciones LSP',
       callback = function()
-         local signs = {
-            Error = '',
-            Warn = '',
-            Info = '',
-            Hint = '󰋗',
-         }
-
-         for type, icon in pairs(signs) do
-            local hl = 'DiagnosticSign' .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-         end
-
-         vim.diagnostic.config({
-            virtual_text = true,
-            severity_sort = true,
-            signs = true,
-            update_in_insert = false,
-
-            float = {
-               border = 'rounded',
-               max_width = 90,
-               source = 'always',
-               title = ' Diagnostic ',
-            },
-         })
+         -- local signs = {
+         --    Error = '',
+         --    Warn = '',
+         --    Info = '',
+         --    Hint = '󰋗',
+         -- }
+         --
+         -- for type, icon in pairs(signs) do
+         --    local hl = 'DiagnosticSign' .. type
+         --    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+         -- end
+         --
+         -- vim.diagnostic.config({
+         --    virtual_text = true,
+         --    severity_sort = true,
+         --    signs = true,
+         --    update_in_insert = false,
+         --
+         --    float = {
+         --       border = 'rounded',
+         --       max_width = 90,
+         --       source = 'always',
+         --       title = ' Diagnostic ',
+         --    },
+         -- })
 
          local bufmap = function(mode, lhs, rhs)
             local opts = { buffer = true }

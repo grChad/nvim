@@ -36,7 +36,17 @@ M.general = {
       ['<leader>w'] = { Cmd('write'), 'Save file' },
       ['<leader>q'] = { Cmd('quit'), 'Quit NVim' },
       ['<leader>y'] = { Cmd('%y+'), 'copy whole file' },
-      ['m'] = { Cmd('nohl'), 'no highlight', silent },
+      ['m'] = {
+         function()
+            require('core.utils').clear_search()
+            vim.cmd('nohl')
+         end,
+         'no highlight',
+         silent,
+      },
+
+      --keywordprg doc for 'man'
+      ['gk'] = { '<cmd>norm! K<cr>', 'Keywordprg' },
 
       -- switch between windows
       ['<C-h>'] = { '<C-w>h', 'Window left' },
@@ -68,6 +78,11 @@ M.general = {
       -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
       ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
       ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+
+      -- FIXME: siempre que no se use 'barbar'
+      ['<leader>x'] = { Cmd('bdelete'), 'Delete Buffer', opts },
+      ['<leader>k'] = { Cmd('bnext'), 'Next Buffer', opts },
+      ['<leader>j'] = { Cmd('bprevious'), 'Previous Buffer', opts },
    },
 
    t = {
@@ -96,6 +111,20 @@ M.general = {
       -- Move current line / block with Alt-j/k ala vscode.
       ['<A-j>'] = { ":m '>+1<CR>gv-gv" },
       ['<A-k>'] = { ":m '<-2<CR>gv-gv" },
+   },
+}
+
+M.special = {
+   n = {
+      -- Toggle para habilitar 'spell'
+      ['<F9>'] = { Cmd("lua require('core.utils').spell_toggle()") },
+
+      -- Numero de coincidencias seleccionadas
+      ['n'] = { 'nzz' .. Cmd("lua require('core.utils').hl_search(0.1)") },
+      ['N'] = { 'Nzz' .. Cmd("lua require('core.utils').hl_search(0.1)") },
+
+      -- Toggle para booleanos: true|false, on|off, yes|no
+      ['<leader>b'] = { Cmd("lua require('core.utils').toggle_bool()") },
    },
 }
 
@@ -132,6 +161,7 @@ M.comment = {
 
 M.nvimtree = {
    plugin = true,
+
    n = {
       -- toggle
       ['<leader>e'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
@@ -282,22 +312,9 @@ M.gitsigns = {
 }
 
 M.treesitter_playground = {
+   plugin = true,
    n = {
       ['<leader>mo'] = { Cmd('TSHighlightCapturesUnderCursor'), 'view groups highlight' },
-   },
-}
-
-M.special = {
-   n = {
-      -- Toggle para habilitar 'spell'
-      ['<F9>'] = { Cmd("lua require('core.utils').spell_toggle()") },
-
-      -- Numero de coincidencias seleccionadas
-      ['n'] = { 'nzz' .. Cmd("lua require('core.utils').hl_search(0.1)") },
-      ['N'] = { 'Nzz' .. Cmd("lua require('core.utils').hl_search(0.1)") },
-
-      -- Toggle para booleanos: true|false, on|off, yes|no
-      ['<leader>b'] = { Cmd("lua require('core.utils').toggle_bool()") },
    },
 }
 

@@ -3,3 +3,6 @@ spell
 coc-settings.json
 .luarc.json
 lazy-lock.json
+
+# para tomar notas y cosas que mejorar
+progress.md
