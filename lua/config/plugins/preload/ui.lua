@@ -3,8 +3,8 @@ return {
 
    { -- barra de estado
 
-      -- 'grChad/statusStatic',
-      dir = '~/Escritorio/lua/statusStatic',
+      -- dir = '~/Escritorio/lua/statusStatic',
+      'grChad/statusStatic',
       lazy = false,
       dependencies = { 'grChad/icons-nvim' },
       config = function()
