@@ -18,7 +18,7 @@
 
 Antes de iniciar, asegúrate de tener tu sistema actualizado, dejare un comando para _Fedora_. Para otras distribuciones sera _casi_ lo mismo.
 
-```shell
+```bash
 sudo dnf update
 ```
 

@@ -1,5 +1,5 @@
 -- n, v, i, t = mode names
-function Cmd(str)
+local cmd = function(str)
    return '<cmd>' .. str .. '<CR>'
 end
 
@@ -33,9 +33,9 @@ M.general = {
    },
 
    n = {
-      ['<leader>w'] = { Cmd('write'), 'Save file' },
-      ['<leader>q'] = { Cmd('quit'), 'Quit NVim' },
-      ['<leader>y'] = { Cmd('%y+'), 'copy whole file' },
+      ['<leader>w'] = { cmd('write'), 'Save file' },
+      ['<leader>q'] = { cmd('quit'), 'Quit NVim' },
+      ['<leader>y'] = { cmd('%y+'), 'copy whole file' },
       ['m'] = {
          function()
             require('core.utils').clear_search()
@@ -80,9 +80,9 @@ M.general = {
       ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
 
       -- FIXME: siempre que no se use 'barbar'
-      ['<leader>x'] = { Cmd('bdelete'), 'Delete Buffer', opts },
-      ['<leader>k'] = { Cmd('bnext'), 'Next Buffer', opts },
-      ['<leader>j'] = { Cmd('bprevious'), 'Previous Buffer', opts },
+      ['<leader>x'] = { cmd('bdelete'), 'Delete Buffer', opts },
+      ['<leader>k'] = { cmd('bnext'), 'Next Buffer', opts },
+      ['<leader>j'] = { cmd('bprevious'), 'Previous Buffer', opts },
    },
 
    t = {
@@ -117,24 +117,25 @@ M.general = {
 M.special = {
    n = {
       -- Toggle para habilitar 'spell'
-      ['<F9>'] = { Cmd("lua require('core.utils').spell_toggle()") },
+      ['<F9>'] = { cmd("lua require('core.utils').spell_toggle()") },
 
       -- Numero de coincidencias seleccionadas
-      ['n'] = { 'nzz' .. Cmd("lua require('core.utils').hl_search(0.1)") },
-      ['N'] = { 'Nzz' .. Cmd("lua require('core.utils').hl_search(0.1)") },
+      ['n'] = { 'nzz' .. cmd("lua require('core.utils').hl_search(0.1)") },
+      ['N'] = { 'Nzz' .. cmd("lua require('core.utils').hl_search(0.1)") },
 
       -- Toggle para booleanos: true|false, on|off, yes|no
-      ['<leader>b'] = { Cmd("lua require('core.utils').toggle_bool()") },
+      ['<leader>b'] = { cmd("lua require('core.utils').toggle_bool()") },
    },
 }
 
 M.barbar = {
    plugin = true,
+
    n = {
-      ['<leader>x'] = { Cmd('BufferClose'), 'Delete Buffer', opts },
-      ['<leader>k'] = { Cmd('BufferNext'), 'Next Buffer', opts },
-      ['<leader>j'] = { Cmd('BufferPrevious'), 'Previous Buffer', opts },
-      [','] = { Cmd('BufferPick'), opts },
+      ['<leader>x'] = { cmd('BufferClose'), 'Delete Buffer', opts },
+      ['<leader>k'] = { cmd('BufferNext'), 'Next Buffer', opts },
+      ['<leader>j'] = { cmd('BufferPrevious'), 'Previous Buffer', opts },
+      [','] = { cmd('BufferPick'), opts },
    },
 }
 
@@ -163,7 +164,6 @@ M.nvimtree = {
    plugin = true,
 
    n = {
-      -- toggle
       ['<leader>e'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
    },
 }
@@ -311,10 +311,41 @@ M.gitsigns = {
    },
 }
 
+M.lua_snip = {
+   plugin = true,
+
+   i = {
+      ['<Tab>'] = {
+         function()
+            return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>'
+         end,
+         {
+            silent = true,
+         },
+      },
+
+      ['<s-tab>'] = { cmd("lua require('luasnip').jump(-1)") },
+   },
+
+   s = {
+      ['<tab>'] = { cmd("lua require('luasnip').jump(1)") },
+      ['<s-tab>'] = { cmd("lua require('luasnip').jump(-1)") },
+   },
+}
+
 M.treesitter_playground = {
    plugin = true,
+
    n = {
-      ['<leader>mo'] = { Cmd('TSHighlightCapturesUnderCursor'), 'view groups highlight' },
+      ['<leader>mo'] = { cmd('TSHighlightCapturesUnderCursor'), 'view groups highlight' },
+   },
+}
+
+M.markdown_preview = {
+   plugin = true,
+
+   n = {
+      ['<leader>mp'] = { cmd('MarkdownPreviewToggle'), 'Toggle markdown preview' },
    },
 }
 

@@ -104,18 +104,13 @@ return {
 
    {
       'iamcco/markdown-preview.nvim',
-      cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
       build = function()
          vim.fn['mkdp#util#install']()
       end,
-      keys = {
-         {
-            '<leader>cp',
-            ft = 'markdown',
-            '<cmd>MarkdownPreviewToggle<cr>',
-            desc = 'Markdown Preview',
-         },
-      },
+      cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+      init = function()
+         require('core.utils').load_mappings('markdown_preview')
+      end,
       config = function()
          vim.cmd([[do FileType]])
       end,

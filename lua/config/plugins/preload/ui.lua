@@ -1,8 +1,5 @@
 return {
-   -- icons
-
    { -- barra de estado
-
       -- dir = '~/Escritorio/lua/statusStatic',
       'grChad/statusStatic',
       lazy = false,
@@ -84,11 +81,6 @@ return {
    -- NOTE: ver su utilidad y tratar de reemplazarlo
    {
       'kevinhwang91/nvim-ufo',
-      dependencies = 'kevinhwang91/promise-async',
-      config = function()
-         vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
-         vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
-         vim.keymap.set('n', 'zr', require('ufo').openFoldsExceptKinds)
-      end,
+      dependencies = { 'kevinhwang91/promise-async' },
    },
 }

@@ -13,10 +13,6 @@ return {
             require('luasnip.loaders.from_vscode').lazy_load({ paths = './lua/config/snippets/' })
          end,
       },
-      opts = {
-         history = true,
-         delete_check_events = 'TextChanged',
-      },
       -- stylua: ignore
       keys = {
          {
@@ -30,6 +26,10 @@ return {
          },
          { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
          { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+      },
+      opts = {
+         history = true,
+         delete_check_events = 'TextChanged',
       },
    },
 
