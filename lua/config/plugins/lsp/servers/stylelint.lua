@@ -5,7 +5,6 @@ M.settings = {
       autoFixOnSave = true,
       autoFixOnFormat = true,
       validateOnSave = true,
-      configFile = vim.fn.expand('~/.config/nvim/lua/config/static/stylelintrc.json'),
    },
 }
 
