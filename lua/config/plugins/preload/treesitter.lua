@@ -53,7 +53,7 @@ return {
       cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
       keys = {
          { '<c-space>', desc = 'Increment selection' },
-         { '<bs>',      desc = 'Decrement selection', mode = 'x' },
+         { '<bs>', desc = 'Decrement selection', mode = 'x' },
       },
       ---@type TSConfig
       ---@diagnostic disable-next-line: missing-fields
@@ -68,7 +68,7 @@ return {
             'jsdoc', 'jsonc', 'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline',
             'python', 'htmldjango', 'query', 'regex', 'toml', 'typescript',
             'tsx', 'svelte', 'vue', 'vim', 'vimdoc', 'yaml', 'rust', 'cpp',
-            'dart', 'latex', 'comment', 'gitignore', 'git_config',
+            'dart', 'latex', 'comment', 'gitignore', 'git_config', 'astro'
          },
          incremental_selection = {
             enable = true,
@@ -93,7 +93,7 @@ return {
          playground = {
             enable = true,
             disable = {},
-            updatetime = 25,         -- Debounced time for highlighting nodes in the playground from source code
+            updatetime = 25, -- Debounced time for highlighting nodes in the playground from source code
             persist_queries = false, -- Whether the query persists across vim sessions
             keybindings = {
                toggle_query_editor = 'o',

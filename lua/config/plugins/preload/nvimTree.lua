@@ -43,10 +43,10 @@ return {
          }
 
          local options = {
-            hijack_cursor = true,       -- para tener el cursor un espacio después del nombre
+            hijack_cursor = true, -- para tener el cursor un espacio después del nombre
             sort_by = 'case_sensitive', -- Como se ordena en directorio: 'name', 'case_sensitive', 'modification_time', 'extension'
-            sync_root_with_cwd = true,  -- Cambiar el directorio raiz del arbol en DirChanged
-            respect_buf_cwd = true,     -- Cambiar el CWD de NvimTree al nuevo buffer al abrir NvimTree
+            sync_root_with_cwd = true, -- Cambiar el directorio raiz del arbol en DirChanged
+            respect_buf_cwd = true, -- Cambiar el CWD de NvimTree al nuevo buffer al abrir NvimTree
 
             view = {
                width = config.width,
@@ -64,9 +64,9 @@ return {
             },
 
             renderer = {
-               add_trailing = true,             -- Agrega '/' al final de los directorios
+               add_trailing = true, -- Agrega '/' al final de los directorios
                -- group_empty = false, -- Compactar Carpetas que solo tienen una carpeta, Problema al agregar o renombrar, default = false
-               highlight_git = true,            -- Habilitar el resaltado de Git.
+               highlight_git = true, -- Habilitar el resaltado de Git.
                highlight_opened_files = 'name', -- Resaltado del archivo si este esta abierto. 'none', 'icon', 'name', 'all'
                root_folder_label = function(path)
                   local tail = vim.fn.fnamemodify(path, ':p:h:t')
@@ -77,7 +77,7 @@ return {
                indent_markers = {
                   -- Indentado
                   enable = true, -- Habilitar el indentado
-                  icons = {      -- Iconos para el indentado Custom
+                  icons = { -- Iconos para el indentado Custom
                      corner = '╰',
                   },
                },
@@ -114,7 +114,7 @@ return {
 
             filters = {
                dotfiles = true, -- No mostrar archivos ocultos, Alternar con 'H' -> toggle_dotfiles
-               custom = {       -- Filtra archivos o ficheros
+               custom = { -- Filtra archivos o ficheros
                   '.swp',
                   '.pyc',
                   'node_modules',
@@ -128,8 +128,9 @@ return {
                   '__tests__',
                   'style.css.map',
                   '.git',
+                  '.vscode',
                },
-               exclude = { '.gitignore' },
+               exclude = { '.git*' },
             },
 
             git = {

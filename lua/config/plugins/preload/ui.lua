@@ -1,7 +1,7 @@
 return {
    { -- barra de estado
-      -- dir = '~/Escritorio/lua/statusStatic',
       'grChad/statusStatic',
+      dev = true,
       lazy = false,
       dependencies = { 'grChad/icons-nvim' },
       config = function()
@@ -14,19 +14,19 @@ return {
       version = '*',
       lazy = false,
       config = function()
-         vim.opt.termguicolors = true
          require('bufferline').setup()
       end,
    },
 
    -- FIXME: problemas con Flutter: buffers para debugs
-   {
-      'grChad/bufferSplitSimple',
-      lazy = false,
-      config = function()
-         require('buffer-split-simple').setup()
-      end,
-   },
+   -- {
+   --    'grChad/bufferSplitSimple',
+   --    dev = true,
+   --    lazy = false,
+   --    config = function()
+   --       require('buffer-split-simple').setup()
+   --    end,
+   -- },
 
    {
       'lukas-reineke/indent-blankline.nvim',
@@ -34,6 +34,7 @@ return {
       main = 'ibl',
       opts = {
          indent = { highlight = 'IndentBlanklineChar', char = '▏', tab_char = '▏' },
+         -- indent = { char = '▏', tab_char = '▏' },
          -- scope = { highlight = 'IndentBlanklineContextChar' },
          scope = { enabled = false },
       },
@@ -55,23 +56,6 @@ return {
       end,
    },
 
-   {
-      'stevearc/dressing.nvim',
-      lazy = true,
-      init = function()
-         ---@diagnostic disable-next-line: duplicate-set-field
-         vim.ui.select = function(...)
-            require('lazy').load({ plugins = { 'dressing.nvim' } })
-            return vim.ui.select(...)
-         end
-         ---@diagnostic disable-next-line: duplicate-set-field
-         vim.ui.input = function(...)
-            require('lazy').load({ plugins = { 'dressing.nvim' } })
-            return vim.ui.input(...)
-         end
-      end,
-   },
-
    { -- mini Lsp progress
       'j-hui/fidget.nvim',
       event = 'VeryLazy',
@@ -82,5 +66,16 @@ return {
    {
       'kevinhwang91/nvim-ufo',
       dependencies = { 'kevinhwang91/promise-async' },
+   },
+   { -- Para ver los simbolos y la posicion de las variables y funciones en una barra lateral
+      'hedyhli/outline.nvim',
+      lazy = true,
+      cmd = { 'Outline', 'OutlineOpen' },
+      keys = { -- Example mapping to toggle outline
+         { '<leader>o', '<cmd>Outline<CR>', desc = 'Toggle outline' },
+      },
+      opts = {
+         -- Your setup opts here
+      },
    },
 }

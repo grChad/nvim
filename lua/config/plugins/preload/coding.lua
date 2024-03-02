@@ -1,11 +1,22 @@
 local bordered = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
 
+local buffer_option = {
+   -- Complete from all visible buffers (splits)
+   get_bufnrs = function()
+      local bufs = {}
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+         bufs[vim.api.nvim_win_get_buf(win)] = true
+      end
+      return vim.tbl_keys(bufs)
+   end,
+}
+
 return {
    {
       'L3MON4D3/LuaSnip',
       build = (not jit.os:find('Windows'))
-          and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-          or nil,
+            and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
+         or nil,
       dependencies = {
          'rafamadriz/friendly-snippets',
          config = function()
@@ -16,7 +27,7 @@ return {
       -- stylua: ignore
       keys = {
          {
-            "<tab>",
+            "<Right>",
             function()
                return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
             end,
@@ -24,8 +35,8 @@ return {
             silent = true,
             mode = "i",
          },
-         { "<tab>",   function() require("luasnip").jump(1) end,  mode = "s" },
-         { "<s-tab>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+         { "<Right>",   function() require("luasnip").jump(1) end,  mode = "s" },
+         { "<Left>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
       },
       opts = {
          history = true,
@@ -91,7 +102,7 @@ return {
                { name = 'nvim_lsp' },
                { name = 'luasnip' },
                { name = 'path' },
-               { name = 'emoji',   option = { insert = true } },
+               { name = 'emoji', option = { insert = true } },
             }, {
                { name = 'buffer' },
             }),
@@ -120,30 +131,26 @@ return {
    {
       'Exafunction/codeium.vim',
       event = 'BufEnter',
-      init = function()
-         vim.cmd([[
-         let g:codeium_filetypes = {
-           \ "bash": v:false,
-           \ "markdown": v:false,
-           \ }
-         ]])
-      end,
-      config = function()
-         -- Change '<C-g>' here to any keycode you like.
-         vim.keymap.set('i', '<C-i>', function()
-            return vim.fn['codeium#Accept']()
-         end, { expr = true })
-         vim.keymap.set('i', '<c-;>', function()
-            return vim.fn['codeium#CycleCompletions'](1)
-         end, { expr = true })
-         vim.keymap.set('i', '<c-,>', function()
-            return vim.fn['codeium#CycleCompletions'](-1)
-         end, { expr = true })
-         vim.keymap.set('i', '<C-c>', function()
-            return vim.fn['codeium#Clear']()
-         end, { expr = true })
-      end,
    },
+   -- {
+   --    'Exafunction/codeium.vim',
+   --    event = 'BufEnter',
+   --    config = function()
+   --       -- Change '<C-g>' here to any keycode you like.
+   --       vim.keymap.set('i', '<Tab>', function()
+   --          return vim.fn['codeium#Accept']()
+   --       end, { expr = true })
+   --       vim.keymap.set('i', '<c-;>', function()
+   --          return vim.fn['codeium#CycleCompletions'](1)
+   --       end, { expr = true })
+   --       vim.keymap.set('i', '<c-,>', function()
+   --          return vim.fn['codeium#CycleCompletions'](-1)
+   --       end, { expr = true })
+   --       vim.keymap.set('i', '<C-c>', function()
+   --          return vim.fn['codeium#Clear']()
+   --       end, { expr = true })
+   --    end,
+   -- },
 
    {
       'windwp/nvim-autopairs',
@@ -177,10 +184,11 @@ return {
 
    {
       'echasnovski/mini.surround',
+      event = 'VeryLazy',
       opts = {
          mappings = {
-            add = 'as',     -- Add surrounding in Normal and Visual modes
-            delete = 'ds',  -- Delete surrounding
+            add = 'as', -- Add surrounding in Normal and Visual modes
+            delete = 'ds', -- Delete surrounding
             replace = 'cs', -- Change surrounding
             find = '',
             find_left = '',
@@ -202,22 +210,17 @@ return {
    },
 
    {
-      'echasnovski/mini.comment',
-      event = 'VeryLazy',
-      opts = {
-         options = {
-            custom_commentstring = function()
-               return require('ts_context_commentstring.internal').calculate_commentstring()
-                   or vim.bo.commentstring
-            end,
-         },
-         mappings = {
-            comment = 'gc',        -- Normal and Visual modes
-            comment_line = ' /',   -- Toggle comment on current line
-            comment_visual = 'gc', -- Toggle comment on visual selection
-            textobject = 'gc',     -- Define 'comment' textobject (like `dgc` - delete whole comment block)
-         },
-      },
+      'numToStr/Comment.nvim',
+      lazy = false,
+      keys = { 'gcc', 'gbc' },
+      init = function()
+         require('core.utils').load_mappings('comment')
+      end,
+      config = function()
+         require('Comment').setup({
+            pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+         })
+      end,
    },
 
    {
