@@ -10,7 +10,7 @@ return {
       end,
       dependencies = {
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false, dependencies = { 'nvim-lspconfig' } },
-         { 'folke/neodev.nvim',  opts = {} },
+         { 'folke/neodev.nvim', opts = {} },
       },
       opts = {
          diagnostics = {
@@ -39,7 +39,6 @@ return {
          local on_attach_sin_highlight = require('config.plugins.lsp.util_lsp').on_attach_sin_highlight
          local capabilities = require('config.plugins.lsp.util_lsp').capabilities
          local handlers = require('config.plugins.lsp.util_lsp').handlers
-         local handlers_ufo = require('config.plugins.lsp.util_lsp').handler_ufo
 
          local lspconfig = require('lspconfig')
 
@@ -53,6 +52,21 @@ return {
 
             root_dir = require('config.plugins.lsp.servers.sumneko_lua').root_dir,
             settings = require('config.plugins.lsp.servers.sumneko_lua').settings,
+         })
+
+         -- lspconfig.tsserver.setup({
+         --    on_attach = on_attach,
+         --    capabilities = capabilities,
+         --    handlers = require('config.plugins.lsp.servers.tsserver').handlers,
+         --    settings = require('config.plugins.lsp.servers.tsserver').settings,
+         -- })
+         lspconfig.biome.setup({})
+
+         lspconfig.eslint.setup({
+            capabilities = capabilities,
+            handlers = handlers,
+            on_attach = require('config.plugins.lsp.servers.eslint').on_attach,
+            settings = require('config.plugins.lsp.servers.eslint').settings,
          })
 
          lspconfig.tailwindcss.setup({
@@ -74,25 +88,36 @@ return {
             settings = require('config.plugins.lsp.servers.stylelint').settings,
          })
 
-         lspconfig.emmet_ls.setup({
-            filetypes = { 'astro', 'css', 'html', 'htmldjango', 'sass', 'scss' },
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-         })
-
-         for _, lsp in ipairs({ 'cssls', 'html' }) do
+         for _, lsp in ipairs({ 'html' }) do
             lspconfig[lsp].setup({
                capabilities = capabilities,
                handlers = handlers,
                on_attach = on_attach_sin_highlight,
             })
          end
+         lspconfig.emmet_language_server.setup({
+            filetypes = { 'html', 'htmldjango', 'css', 'scss', 'vue' },
+         })
+
+         lspconfig.cssls.setup({
+            capabilities = require('config.plugins.lsp.util_lsp').capabilitiesCss,
+            settings = {
+               css = {
+                  validate = true,
+               },
+               less = {
+                  validate = true,
+               },
+               scss = {
+                  validate = true,
+               },
+            },
+         })
 
          -- stylua: ignore
          local servers = {
             'svelte', 'jsonls', 'marksman', 'pyright',
-            'yamlls', 'rust_analyzer', 'clangd', 'texlab',
+            'yamlls', 'rust_analyzer', 'clangd', 'texlab', 'astro'
          }
 
          for _, lsp in ipairs(servers) do
@@ -119,7 +144,7 @@ return {
          -- end
 
          require('ufo').setup({
-            fold_virt_text_handler = handlers_ufo,
+            fold_virt_text_handler = require('config.plugins.lsp.util_lsp').handler_ufo,
             close_fold_kinds = {},
          })
       end,
@@ -134,7 +159,7 @@ return {
          ensure_installed = {
             'lua-language-server',
             'html-lsp',
-            'emmet-ls',
+            'emmet-language-server',
             'css-lsp',
             'stylelint-lsp',
             'tailwindcss-language-server',
@@ -146,14 +171,17 @@ return {
             'marksman',
             'yaml-language-server',
             'texlab',
+            'astro-language-server',
+            'eslint-lsp',
 
             -- formatter & Linter
             'stylua', -- formatting for lua
             -- 'selene', -- diagnostic for lua
-            'prettierd',
+            'prettierd', -- formatting for 'html'
+            'biome', -- change for prettierd
             'eslint_d',
-            'taplo',       -- formatting for toml
-            'black',       -- formatting for python
+            'taplo', -- formatting for toml
+            'black', -- formatting for python
             'latexindent', -- formatting for latex
          },
 
