@@ -1,9 +1,9 @@
 <p align="center">
-    <img src="https://github.com/grChad/my-assets/blob/main/config-nvim/intro-nvim.webp" />
+  <img src="https://github.com/grChad/my-assets/blob/main/config-nvim/intro-nvim.webp"  alt="imagen de muestra" title="imagen de muestra"/>
 </p>
 
 <p align="center">
-    Mi Configuración de NeoVim para cualquiera que le guste.
+  Mi Configuración de NeoVim para cualquiera que le guste.
 </p>
 
 ## Requisitos
@@ -39,7 +39,8 @@ git clone https://github.com/grChad/nvim.git ~/.config/nvim --depth 1 && cd ~/.c
 Es posible que no todo salga según lo planeado y puedan surgir algunos problemas al utilizar _nvim_. Para evitar que sea demasiado detallado, me gustaría compartir dos problemas comunes junto con sus soluciones que me han sido de ayuda en situaciones similares.
 
 <details>
-    <summary>El porta-papeles</summary>
+  <summary><u>El porta-papeles</u></summary>
+  <br/>
 
 Esto se debe a la falta de soporte al porta-papeles o la incompatibilidad de algunas distribuciones. Principalmente con _X11_ o _Wayland_ y para cada caso hay una solución diferente.
 
@@ -55,10 +56,11 @@ Y para usuarios de Wayland instalar `wl-clipboard`, ejemplo en **Fedora**:
 sudo dnf install wl-clipboard
 ```
 
-</details>
+</details >
 
 <details>
-    <summary>Compilación de TreeSitter</summary>
+  <summary><u>Compilación de TreeSitter</u></summary>
+  <br/>
 
 Me centrare en **Fedora**, si usas otra distribución podría darte alguna idea.
 
@@ -106,7 +108,8 @@ Plugin para comentar código:
 Tanto en modo Normal y en Visual, para comentar en linea o toda una seleccion funciona con el atajo. **`<leader> + /`**.
 
 <details>
-    <summary>General</summary>
+  <summary><u>General</u></summary>
+  <br/>
 
 En modo Normal:
 
@@ -149,7 +152,8 @@ En modo Visual:
 </details>
 
 <details>
-    <summary>Plugin para pestañas <strong>Barbar</strong></summary>
+  <summary><u>Para el buffer</u></summary>
+  <br/>
 
 En modo Normal:
 
@@ -165,7 +169,8 @@ En modo Normal:
 </details>
 
 <details>
-    <summary>Toggle NvimTree</summary>
+  <summary><u>Toggle NvimTree</u></summary>
+  <br/>
 
 En modo Normal:
 
@@ -179,9 +184,11 @@ Una vez dentro de NvimTree, esta tiene muchos atajos, seria recomendable visitar
 
 </details>
 
-Telescope
+<details>
+  <summary><u>Telescope</u></summary>
+  <br/>
 
-En modo Normal:
+En modo **Normal**:
 
 |       Comando       | Descripción                             |
 | :-----------------: | --------------------------------------- |
@@ -191,3 +198,5 @@ En modo Normal:
 | **`<leader> + fb`** | Telescope buffers `navegar`             |
 | **`<leader> + fh`** | Telescope help `documentación de ayuda` |
 | **`<leader> + fo`** | busca archivos abiertos recientemente   |
+
+</details>
