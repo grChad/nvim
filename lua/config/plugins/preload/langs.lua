@@ -23,6 +23,7 @@ return {
             ),
          },
          settings = {
+            tsserver_locale = 'es',
             separate_diagnostic_server = true,
             tsserver_file_preferences = {
                includeInlayParameterNameHints = 'all',
@@ -33,46 +34,10 @@ return {
                -- for TypeScript v4.9+
                '@styled/typescript-styled-plugin',
                -- or for older TypeScript versions
-               -- "typescript-styled-plugin",
+               -- 'typescript-styled-plugin',
             },
          },
       },
-   },
-
-   -- NOTE: ----------------------[for dart]------------------------
-   {
-      'dart-lang/dart-vim-plugin',
-      ft = 'dart',
-      init = function()
-         vim.cmd([[
-            let dart_html_in_string=v:true
-            let g:dart_style_guide = 2
-            let g:dart_format_on_save = 1
-            let g:dart_trailing_comma_indent = v:true
-         ]])
-      end,
-   },
-
-   {
-      'akinsho/flutter-tools.nvim',
-      ft = 'dart',
-      config = function()
-         require('flutter-tools').setup({
-            ui = { border = 'rounded' },
-            lsp = {
-               color = {
-                  -- show the derived colours for dart variables
-                  enabled = true, -- whether or not to highlight color variables at all, only supported on flutter >= 2.10
-                  background = true,
-                  foreground = false,
-                  virtual_text = false, -- show the highlight using virtual text
-               },
-               on_attach = require('config.plugins.lsp.util_lsp').on_attach,
-               capabilities = require('config.plugins.lsp.util_lsp').capabilities,
-            },
-            dev_log = { enabled = true },
-         })
-      end,
    },
 
    -- NOTE: --------------------[for markdown]----------------------
@@ -104,15 +69,11 @@ return {
 
    {
       'iamcco/markdown-preview.nvim',
-      build = function()
-         vim.fn['mkdp#util#install']()
-      end,
+      build = 'cd app && npm install',
       cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-      init = function()
-         require('core.utils').load_mappings('markdown_preview')
-      end,
+      ft = 'markdown',
       config = function()
-         vim.cmd([[do FileType]])
+         vim.keymap.set('n', '<leader>mp', ':MarkdownPreviewToggle<CR>')
       end,
    },
 }
