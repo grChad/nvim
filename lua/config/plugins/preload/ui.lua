@@ -29,6 +29,30 @@ return {
    -- },
 
    {
+      'b0o/incline.nvim',
+      event = 'BufReadPre',
+      priority = 1200,
+      config = function()
+         require('incline').setup({
+            highlight = {
+               groups = {
+                  InclineNormal = { guibg = '#000000', guifg = '#EEFFFF' },
+                  InclineNormalNC = { guibg = '#000000', guifg = '#EEFFFF' },
+               },
+            },
+            window = { margin = { vertical = 1, horizontal = 1 } },
+            hide = { cursorline = true, focused_win = true },
+            render = function(props)
+               local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ':t')
+
+               local icon, color = require('nvim-web-devicons').get_icon_color(filename)
+               return { { icon, guifg = color }, { ' ' }, { filename } }
+            end,
+         })
+      end,
+   },
+
+   {
       'lukas-reineke/indent-blankline.nvim',
       lazy = false,
       main = 'ibl',
