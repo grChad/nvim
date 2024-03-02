@@ -60,7 +60,7 @@ M.general = {
       ['<A-S-Left>'] = { ':vertical resize -2<CR>' },
       ['<A-S-Right>'] = { ':vertical resize +2<CR>' },
 
-      -- Move current line / block with Alt-j/k a la vscode.
+      -- mover linea actual arriba arriba o abajo
       ['<A-j>'] = { ':m .+1<CR>==' },
       ['<A-k>'] = { ':m .-2<CR>==' },
 
@@ -346,6 +346,14 @@ M.markdown_preview = {
 
    n = {
       ['<leader>mp'] = { cmd('MarkdownPreviewToggle'), 'Toggle markdown preview' },
+   },
+}
+
+M.overseer = {
+   plugin = true,
+
+   n = {
+      ['<leader>co'] = { cmd('OverseerRun'), 'Run overseer' },
    },
 }
 

@@ -95,37 +95,42 @@ augroups.for_language = {
    },
 }
 
+augroups.custom_statusColumn = {
+   status_column_on = {
+      event = 'Filetype',
+      pattern = {
+         'html',
+         'css',
+         'scss',
+         'javascript',
+         'javascriptreact',
+         'jsx',
+         'typescript',
+         'typescriptreact',
+         'vue',
+         'tsx',
+         'json',
+         'python',
+         'dart',
+         'rust',
+         'lua',
+         'svelte',
+      },
+      callback = function()
+         vim.opt_local.statuscolumn = "%!v:lua.require('core.utils').status_column()"
+         -- vim.opt_local.statuscolumn = "%!v:lua.require('core.utils').statuscolumn()"
+      end,
+   },
+}
+
 -- HACK: Lsp, es mas rapido que declararlo en el on_attach.
 augroups.lsp_Attach = {
    lsp_on_attach = {
       event = 'LspAttach',
       desc = 'Acciones LSP',
-      callback = function()
-         -- local signs = {
-         --    Error = '',
-         --    Warn = '',
-         --    Info = '',
-         --    Hint = '󰋗',
-         -- }
-         --
-         -- for type, icon in pairs(signs) do
-         --    local hl = 'DiagnosticSign' .. type
-         --    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
-         -- end
-         --
-         -- vim.diagnostic.config({
-         --    virtual_text = true,
-         --    severity_sort = true,
-         --    signs = true,
-         --    update_in_insert = false,
-         --
-         --    float = {
-         --       border = 'rounded',
-         --       max_width = 90,
-         --       source = 'always',
-         --       title = ' Diagnostic ',
-         --    },
-         -- })
+      callback = function(args)
+         local client = vim.lsp.get_client_by_id(args.data.client_id)
+         client.server_capabilities.semanticTokensProvider = nil
 
          local bufmap = function(mode, lhs, rhs)
             local opts = { buffer = true }

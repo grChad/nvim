@@ -1,3 +1,4 @@
+local colorscheme = require('config.plugins.preload.colorscheme')
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazypath) then
@@ -14,6 +15,16 @@ require('lazy').setup('config.plugins', {
       lazy = true,
       version = false, -- always use the latest git commit
    },
+   dev = {
+      path = '~/Escritorio/lua', -- directorio de desarrollo
+   },
+   ui = {
+      size = { width = 0.7, height = 0.8 },
+      border = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
+   },
+   install = { colorscheme = { 'default' } },
+   checker = { enabled = false }, -- automatically check for plugin updates
+   change_detection = { notify = false },
    performance = {
       rtp = {
          disabled_plugins = {
@@ -29,10 +40,4 @@ require('lazy').setup('config.plugins', {
          },
       },
    },
-   ui = {
-      size = { width = 0.7, height = 0.8 },
-      border = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
-   },
-   checker = { enabled = false }, -- automatically check for plugin updates
-   change_detection = { notify = false },
 })

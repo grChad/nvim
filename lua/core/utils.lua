@@ -267,4 +267,64 @@ M.statuscolumn = function()
    return table.concat(components, '')
 end
 
+function M.get_signss()
+   local buf = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+   return vim.tbl_map(function(sign)
+      return vim.fn.sign_getdefined(sign.name)[1]
+   end, vim.fn.sign_getplaced(buf, { group = '*', lnum = vim.v.lnum })[1].signs)
+end
+
+M.status_column = function()
+   local win = vim.g.statusline_winid
+
+   vim.api.nvim_set_hl(0, 'FoldSignsOpen', { fg = '#EEFFFF', bg = '#292C3C' })
+   vim.api.nvim_set_hl(0, 'FoldSignsClosed', { fg = '#a5adce', bg = '#292C3C' })
+
+   local sign, git_sign
+   for _, s in ipairs(M.get_signss()) do
+      if s.name:find('GitSign') then
+         git_sign = s
+      else
+         sign = s
+      end
+   end
+
+   local column_num = function()
+      local is_num = vim.wo[win].number
+      local is_relnum = vim.wo[win].relativenumber
+
+      if is_num and is_relnum then
+         return '%=%{v:relnum?(v:virtnum>0?"":v:relnum):(v:virtnum>0?"":v:lnum)} '
+      elseif is_num and not is_relnum then
+         return '%=%{v:virtnum>0?"":v:lnum} '
+      elseif is_relnum and not is_num then
+         return '%=%{v:virtnum>0?"":v:relnum} '
+      else
+         return ''
+      end
+   end
+
+   local column_fold = function()
+      if vim.fn.eval('foldlevel(v:lnum) > foldlevel(v:lnum - 1)') == 1 then
+         if vim.fn.eval('foldclosed(v:lnum) == -1') == 1 then
+            return '%#FoldSignsClosed# %T'
+         elseif vim.fn.eval('foldclosed(v:lnum) != -1') == 1 then
+            return '%#FoldSignsOpen# %T'
+         end
+      else
+         return '  %T'
+      end
+   end
+
+   return table.concat({
+      -- sign and ('%#' .. sign.texthl .. '#' .. sign.text .. '%*%T') or '  %T',
+      -- [[%=]],
+      -- [[%{&nu?(&rnu&&v:relnum?v:relnum:v:lnum):''} ]],
+      -- git_sign and ('%#' .. git_sign.texthl .. '#' .. git_sign.text .. '%*') or '  ',
+      '%s%=%T',
+      column_num(),
+      column_fold(),
+   })
+end
+
 return M
