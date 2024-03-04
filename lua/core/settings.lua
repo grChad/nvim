@@ -112,6 +112,15 @@ vim.g.markdown_recommended_style = 0 -- Fix markdown indentation settings
 vim.g.mkdp_auto_start = 0 -- for MarkdownPriview
 vim.g.mkdp_auto_close = 0 -- for MarkdownPriview
 
+-- for codeium
+vim.g.codeium_disable_bindings = 1
+vim.cmd([[
+let g:codeium_filetypes = {
+  \ "bash": v:false,
+  \ "markdown": v:false,
+  \ }
+]])
+
 -- disable some default providers
 for _, provider in ipairs({ 'node', 'perl', 'python3', 'ruby' }) do
    vim.g['loaded_' .. provider .. '_provider'] = 0
@@ -120,10 +129,3 @@ end
 -- add binaries installed by mason.nvim to path
 local is_windows = vim.loop.os_uname().sysname == 'Windows_NT'
 vim.env.PATH = vim.env.PATH .. (is_windows and ';' or ':') .. vim.fn.stdpath('data') .. '/mason/bin'
-
-vim.cmd([[
-let g:codeium_filetypes = {
-  \ "bash": v:false,
-  \ "markdown": v:false,
-  \ }
-]])
