@@ -18,6 +18,7 @@ return {
             scss = { names = true },
             svelte = { names = true },
             astro = { names = true },
+            mdx = { names = true },
          },
          user_default_options = {
             RGB = true, -- #RGB hex codes

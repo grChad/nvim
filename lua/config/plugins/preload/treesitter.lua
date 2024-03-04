@@ -111,6 +111,9 @@ return {
       },
       ---@param opts TSConfig
       config = function(_, opts)
+         -- registrar markdownJsx o 'mdx' por markdown o 'md'
+         vim.treesitter.language.register('markdown', 'mdx')
+
          if type(opts.ensure_installed) == 'table' then
             ---@type table<string, boolean>
             local added = {}
