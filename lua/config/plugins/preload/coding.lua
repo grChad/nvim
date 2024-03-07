@@ -1,3 +1,18 @@
+-- :31 L3MON4D3/LuaSnip
+-- :36 rafamadriz/friendly-snippets
+-- :63 hrsh7th/nvim-cmp
+--   'hrsh7th/cmp-nvim-lsp',
+--   'hrsh7th/cmp-buffer',
+--   'hrsh7th/cmp-path',
+--   'saadparwaiz1/cmp_luasnip',
+--   'hrsh7th/cmp-emoji',
+-- :147 'Exafunction/codeium.vim',
+-- :166 'windwp/nvim-autopairs',
+-- :196 'echasnovski/mini.surround',
+-- :215 'JoosepAlviste/nvim-ts-context-commentstring',
+-- :223 'numToStr/Comment.nvim',
+-- :237 'Wansmer/treesj',
+
 local bordered = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
 
 local buffer_option = {
@@ -26,8 +41,9 @@ return {
       },
       -- stylua: ignore
       keys = {
+         -- si da problema usar <A-,> en lugar de <M-,>
          {
-            "<Right>",
+            "<M-l>",
             function()
                return require("luasnip").jumpable(1) and "<Plug>luasnip-jump-next" or "<tab>"
             end,
@@ -35,8 +51,8 @@ return {
             silent = true,
             mode = "i",
          },
-         { "<Right>",   function() require("luasnip").jump(1) end,  mode = "s" },
-         { "<Left>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
+         { "<M-l>",   function() require("luasnip").jump(1) end,  mode = "s" },
+         { "<M-h>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
       },
       opts = {
          history = true,
