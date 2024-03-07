@@ -7,6 +7,11 @@ local on_attach = function(client, bufnr)
    end
 
    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+   -- vim.api.nvim_create_autocmd('BufWritePre', {
+   --    buffer = bufnr,
+   --    command = 'EslintFixAll',
+   -- })
 end
 
 M.on_attach = on_attach

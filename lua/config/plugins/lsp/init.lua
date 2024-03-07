@@ -64,7 +64,7 @@ return {
 
          lspconfig.eslint.setup({
             capabilities = capabilities,
-            handlers = handlers,
+            root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
             on_attach = require('config.plugins.lsp.servers.eslint').on_attach,
             settings = require('config.plugins.lsp.servers.eslint').settings,
          })
