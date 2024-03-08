@@ -1,4 +1,13 @@
--- n, v, i, t = mode names
+-- :i  :inoremap    Insert
+-- :n  :nnoremap     Normal
+-- :v  :vnoremap    Visual and Select
+-- :x  :xnoremap    Visual
+-- :s  :snoremap    Select
+-- :o  :onoremap    Operator-pending
+-- :l  :lnoremap    Insert, Command-line, Lang-Arg
+-- :c  :cnoremap    Command-line
+-- :t  :tnoremap    Terminal
+
 local cmd = function(str)
    return '<cmd>' .. str .. '<CR>'
 end
@@ -111,6 +120,18 @@ M.general = {
       -- Move current line / block with Alt-j/k ala vscode.
       ['<A-j>'] = { ":m '>+1<CR>gv-gv" },
       ['<A-k>'] = { ":m '<-2<CR>gv-gv" },
+   },
+   c = {
+      -- navigate within insert mode
+      ['<C-h>'] = { '<Left>', 'Move left' },
+      ['<C-l>'] = { '<Right>', 'Move right' },
+
+      -- detele arrows
+      ['<Left>'] = { '<Nop>', silent },
+      ['<Right>'] = { '<Nop>', silent },
+
+      ['<A-h>'] = { '<BS>', 'delete to left' },
+      ['<A-l>'] = { '<Del>', 'delete to right' },
    },
 }
 
