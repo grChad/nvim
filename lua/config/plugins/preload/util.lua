@@ -1,6 +1,13 @@
 return {
    -- dependencies
    {
+      'smjonas/inc-rename.nvim',
+      cmd = 'IncRename',
+      config = function()
+         require('inc_rename').setup()
+      end,
+   },
+   {
       'nvim-tree/nvim-web-devicons',
       lazy = true,
       config = function()

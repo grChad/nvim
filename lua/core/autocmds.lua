@@ -168,7 +168,8 @@ augroups.lsp_Attach = {
          -- bufmap('n', '<leader>re', function()
          --    require('core.renamer').open()
          -- end)
-         bufmap('n', '<leader>re', vim.lsp.buf.rename)
+         -- bufmap('n', '<leader>re', vim.lsp.buf.rename)
+         bufmap('n', '<leader>re', ':IncRename')
 
          -- formatear manualmente
          bufmap('n', '<leader>fr', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>')
