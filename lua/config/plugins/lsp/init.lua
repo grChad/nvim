@@ -154,7 +154,6 @@ return {
       keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
       opts = {
          ensure_installed = user.mason.ensure_installed,
-         PATH = 'skip',
          ui = {
             icons = {
                package_pending = ' ',
@@ -165,7 +164,6 @@ return {
             width = 0.7,
             height = 0.8,
          },
-         max_concurrent_installers = 5,
       },
       ---@param opts MasonSettings | {ensure_installed: string[]}
       config = function(_, opts)
