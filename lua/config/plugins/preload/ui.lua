@@ -3,7 +3,6 @@ return {
       'grChad/statusStatic',
       dev = true,
       lazy = false,
-      dependencies = { 'grChad/icons-nvim' },
       config = function()
          require('status-static').setup()
       end,

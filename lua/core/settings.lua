@@ -113,7 +113,6 @@ vim.g.mkdp_auto_start = 0 -- for MarkdownPriview
 vim.g.mkdp_auto_close = 0 -- for MarkdownPriview
 
 -- for codeium
-vim.g.codeium_disable_bindings = 1
 vim.cmd([[
 let g:codeium_filetypes = {
   \ "bash": v:false,
