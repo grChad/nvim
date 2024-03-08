@@ -1,4 +1,10 @@
+-- :7 'neovim/nvim-lspconfig',
+--      :17 'folke/neoconf.nvim'
+--      :18 'folke/neodev.nvim'
+-- :156 'williamboman/mason.nvim',
+
 local Util = require('config.util')
+local user = require('core.user')
 
 return {
    -- lspconfig
@@ -134,15 +140,6 @@ return {
             })
          end
 
-         -- FIXME: deshabilitar tsserver o denols
-         -- if Util.lsp.get_config('denols') and Util.lsp.get_config('tsserver') then
-         -- 	local is_deno = require('lspconfig.util').root_pattern('deno.json', 'deno.jsonc')
-         -- 	Util.lsp.disable('tsserver', is_deno)
-         -- 	Util.lsp.disable('denols', function(root_dir)
-         -- 		return not is_deno(root_dir)
-         -- 	end)
-         -- end
-
          require('ufo').setup({
             fold_virt_text_handler = require('config.plugins.lsp.util_lsp').handler_ufo,
             close_fold_kinds = {},
@@ -152,48 +149,28 @@ return {
 
    {
       'williamboman/mason.nvim',
-      cmd = 'Mason',
-      keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
+      cmd = { 'Mason', 'MasonInstall', 'MasonInstallAll', 'MasonUpdate' },
       build = ':MasonUpdate',
+      keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
       opts = {
-         ensure_installed = {
-            'lua-language-server',
-            'html-lsp',
-            'emmet-language-server',
-            'css-lsp',
-            'stylelint-lsp',
-            'tailwindcss-language-server',
-            'svelte-language-server',
-            'json-lsp',
-            'pyright',
-            'rust-analyzer',
-            'clangd',
-            'marksman',
-            'yaml-language-server',
-            'texlab',
-            'astro-language-server',
-            'eslint-lsp',
-
-            -- formatter & Linter
-            'stylua', -- formatting for lua
-            -- 'selene', -- diagnostic for lua
-            'prettierd', -- formatting for 'html'
-            'biome', -- change for prettierd
-            'eslint_d',
-            'taplo', -- formatting for toml
-            'black', -- formatting for python
-            'latexindent', -- formatting for latex
-         },
-
+         ensure_installed = user.mason.ensure_installed,
+         PATH = 'skip',
          ui = {
-            border = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
+            icons = {
+               package_pending = ' ',
+               package_installed = '󰄳 ',
+               package_uninstalled = ' 󰚌',
+            },
+            border = user.ui.border_inset,
             width = 0.7,
             height = 0.8,
          },
+         max_concurrent_installers = 5,
       },
       ---@param opts MasonSettings | {ensure_installed: string[]}
       config = function(_, opts)
          require('mason').setup(opts)
+
          local mr = require('mason-registry')
          mr:on('package:install:success', function()
             vim.defer_fn(function()

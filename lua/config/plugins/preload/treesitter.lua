@@ -1,3 +1,4 @@
+local user = require('core.user').treesitter
 return {
    {
       'nvim-treesitter/nvim-treesitter',
@@ -63,13 +64,7 @@ return {
          autotag = { enable = true }, -- for plugin
 
          -- stylua: ignore
-         ensure_installed = {
-            'bash', 'c', 'diff', 'html', 'css', 'scss', 'javascript', 'json',
-            'jsdoc', 'jsonc', 'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline',
-            'python', 'htmldjango', 'query', 'regex', 'toml', 'typescript',
-            'tsx', 'svelte', 'vue', 'vim', 'vimdoc', 'yaml', 'rust', 'cpp',
-            'dart', 'latex', 'comment', 'gitignore', 'git_config', 'astro'
-         },
+         ensure_installed = user.ensure_installed,
          incremental_selection = {
             enable = true,
             keymaps = {

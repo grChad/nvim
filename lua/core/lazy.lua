@@ -1,11 +1,25 @@
-local colorscheme = require('config.plugins.preload.colorscheme')
+-- local colorscheme = require('config.plugins.preload.colorscheme')
+
+local print_echo = function(msg)
+   vim.cmd('redraw')
+   vim.api.nvim_echo({ { msg, 'Bold' } }, true, {})
+end
+
+----------------------------------------------------------------------------------
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
 if not vim.loop.fs_stat(lazypath) then
-   -- bootstrap lazy.nvim
    -- stylua: ignore
-   vim.fn.system({ "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable",
-      lazypath
+	print_echo('  Instalando lazy.nvim & plugins ...')
+
+   vim.fn.system({
+      'git',
+      'clone',
+      '--filter=blob:none',
+      'https://github.com/folke/lazy.nvim.git',
+      '--branch=stable',
+      lazypath,
    })
 end
 vim.opt.rtp:prepend(vim.env.LAZY or lazypath)
