@@ -56,15 +56,15 @@ return {
       config = function()
          require('conform').setup({
             formatters_by_ft = {
-               ['javascript'] = { 'prettierd' },
-               ['javascriptreact'] = { 'prettierd' },
-               ['typescript'] = { 'prettierd' },
-               ['typescriptreact'] = { 'prettierd' },
+               ['javascript'] = { { 'biome', 'prettierd' } },
+               ['javascriptreact'] = { { 'biome', 'prettierd' } },
+               ['typescript'] = { { 'biome', 'prettierd' } },
+               ['typescriptreact'] = { { 'biome', 'prettierd' } },
+               ['json'] = { { 'biome', 'prettierd' } },
+               ['jsonc'] = { { 'biome', 'prettierd' } },
                ['vue'] = { 'prettierd' },
                ['svelte'] = { 'prettierd' },
                ['html'] = { 'prettierd' },
-               ['json'] = { 'prettierd' },
-               ['jsonc'] = { 'prettierd' },
                ['yaml'] = { 'prettierd' },
                ['markdown'] = { 'prettierd' },
                ['markdown.mdx'] = { 'prettierd' },
@@ -96,6 +96,10 @@ return {
                      'prettier.config.mjs',
                      'prettier.config.cjs',
                   }),
+                  require_cwd = true,
+               },
+               biome = {
+                  cwd = require('conform.util').root_file({ 'biome.json' }),
                   require_cwd = true,
                },
             },
