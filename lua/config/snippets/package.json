@@ -1,22 +1,29 @@
 {
-	"contributes": {
-		"snippets": [
-			{
-				"language": "lua",
-				"path": "./lua.json"
-			},
-			{
-				"language": "javascript",
-				"path": "./javascript.json"
-			},
-			{
-				"language": "javascriptreact",
-				"path": "./javascriptreact.json"
-			},
-			{
-				"language": "typescript",
-				"path": "./typescript.json"
-			}
-		]
-	}
+  "contributes": {
+    "snippets": [
+      {
+        "language": "lua",
+        "path": "./lua.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./javascript.json"
+      },
+      {
+        "language": "javascriptreact",
+        "path": "./javascriptreact.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./typescript.json"
+      },
+      {
+        "language": [
+          "javascriptreact",
+          "typescriptreact"
+        ],
+        "path": "./snippets/javascript/react-es7.json"
+      }
+    ]
+  }
 }

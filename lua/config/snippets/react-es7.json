@@ -1,0 +1,36 @@
+{
+  "Function Array": {
+    "prefix": "fag",
+    "body": "const ${1:variable} = (${2}) => {\n\t${3}\n}",
+    "description": "Función Array de proposito general"
+  },
+  "reactFunctionComponent": {
+    "prefix": "rfc",
+    "body": "\nconst ${TM_FILENAME_BASE} = () => {\n\treturn (\n\t\t$0\n\t)\n}\n\nexport default ${TM_FILENAME_BASE}",
+    "description": "Crear una React function component"
+  },
+  "exportDefaultFunction": {
+    "prefix": "edf",
+    "body": [
+      "export default (${1:first}) => {${2:second}}"
+    ],
+    "description": "Export default function"
+  },
+  "exportDefaultNamedFunction": {
+    "prefix": "ednf",
+    "body": [
+      "export default function ${1:first}(${2:second}) {${3:third}}"
+    ],
+    "description": "Export default named function"
+  }
+
+        "body": [
+    "constructor(props) {",
+    "  super(props)",
+    "",
+    "  this.state = {",
+    "     ${1:first}",
+    "  }",
+    "}"
+  ],
+}
