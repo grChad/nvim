@@ -165,18 +165,15 @@ augroups.lsp_Attach = {
          bufmap('n', '<leader>rf', '<cmd>lua vim.lsp.buf.references()<cr>')
 
          -- Renombrar símbolo
-         -- bufmap('n', '<leader>re', function()
-         --    require('core.renamer').open()
-         -- end)
+         bufmap('n', '<leader>re', function()
+            require('core.renamer').open()
+         end)
          -- bufmap('n', '<leader>re', vim.lsp.buf.rename)
-         bufmap('n', '<leader>re', ':IncRename')
 
          -- formatear manualmente
          bufmap('n', '<leader>fr', '<cmd>lua vim.lsp.buf.format({ async = true })<CR>')
 
-         -- Listar "code actions" disponibles en la posición del cursor
-         bufmap('n', '<F4>', '<cmd>lua vim.lsp.buf.code_action()<cr>')
-         bufmap('x', '<F4>', '<cmd>lua vim.lsp.buf.range_code_action()<cr>')
+         bufmap({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action)
 
          -- Mostrar diagnósticos de la línea actual
          bufmap('n', '<leader>d', '<cmd>lua vim.diagnostic.open_float()<cr>')
