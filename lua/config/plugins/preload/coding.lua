@@ -34,10 +34,7 @@ return {
          or nil,
       dependencies = {
          'rafamadriz/friendly-snippets',
-         config = function()
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_vscode').lazy_load({ paths = './lua/config/snippets/' })
-         end,
+         dev = true,
       },
       -- stylua: ignore
       keys = {
@@ -54,10 +51,14 @@ return {
          { "<M-l>",   function() require("luasnip").jump(1) end,  mode = "s" },
          { "<M-h>", function() require("luasnip").jump(-1) end, mode = { "i", "s" } },
       },
-      opts = {
-         history = true,
-         delete_check_events = 'TextChanged',
-      },
+      config = function()
+         require('luasnip').setup({
+            history = true,
+            delete_check_events = 'TextChanged',
+         })
+         require('luasnip.loaders.from_vscode').lazy_load()
+         -- require('luasnip.loaders.from_vscode').lazy_load({ paths = './lua/config/snippets/' })
+      end,
    },
 
    {
