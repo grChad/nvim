@@ -117,6 +117,7 @@ vim.cmd([[
 let g:codeium_filetypes = {
   \ "bash": v:false,
   \ "markdown": v:false,
+  \ "": v:false,
   \ }
 ]])
 
