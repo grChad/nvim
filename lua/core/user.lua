@@ -9,7 +9,7 @@ M.mason = {
       'lua-language-server', 'html-lsp', 'emmet-language-server',  'stylelint-lsp',
       'css-lsp', 'tailwindcss-language-server', 'svelte-language-server', 'json-lsp',
       'pyright', 'rust-analyzer', 'clangd', 'marksman', 'yaml-language-server', 'texlab',
-      'astro-language-server', 'eslint-lsp', 'sqls',
+      'astro-language-server', 'eslint-lsp', 'sqlls',
 
       -- formatter & Linter
       'stylua', 'prettierd', 'biome', 'taplo', 'black', 'latexindent',

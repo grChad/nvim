@@ -67,7 +67,7 @@ return {
          --    settings = require('config.plugins.lsp.servers.tsserver').settings,
          -- })
          lspconfig.biome.setup({})
-         lspconfig.sqls.setup({})
+         lspconfig.sqlls.setup({})
 
          lspconfig.eslint.setup({
             capabilities = capabilities,
