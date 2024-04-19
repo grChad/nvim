@@ -1,5 +1,5 @@
 -- :i  :inoremap    Insert
--- :n  :nnoremap     Normal
+-- :n  :nnoremap    Normal
 -- :v  :vnoremap    Visual and Select
 -- :x  :xnoremap    Visual
 -- :s  :snoremap    Select
@@ -92,6 +92,9 @@ M.general = {
       ['<leader>x'] = { cmd('bdelete'), 'Delete Buffer', opts },
       ['<leader>k'] = { cmd('bnext'), 'Next Buffer', opts },
       ['<leader>j'] = { cmd('bprevious'), 'Previous Buffer', opts },
+
+      -- options for spell
+      ['fs'] = { 'i<C-x>s', 'Spell check' },
    },
 
    t = {
