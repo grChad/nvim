@@ -34,7 +34,6 @@ return {
       --       ['lua'] = { 'stylua' },
       --       ['toml'] = { 'taplo' },
       --       ['python'] = { 'black' },
-      --       ['latex'] = { 'latexindent' },
       --    },
       --    format_on_save = { timeout_ms = 500, lsp_fallback = true },
       --    formatters = { -- Customize formatters
@@ -74,7 +73,6 @@ return {
                ['lua'] = { 'stylua' },
                ['toml'] = { 'taplo' },
                ['python'] = { 'black' },
-               ['latex'] = { 'latexindent' },
             },
             format_on_save = { timeout_ms = 500, lsp_fallback = true },
             formatters = { -- Customize formatters

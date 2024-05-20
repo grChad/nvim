@@ -124,7 +124,7 @@ return {
          -- stylua: ignore
          local servers = {
             'svelte', 'jsonls', 'marksman', 'pyright',
-            'yamlls', 'rust_analyzer', 'clangd', 'texlab', 'astro'
+            'yamlls', 'rust_analyzer', 'clangd', 'astro'
          }
 
          for _, lsp in ipairs(servers) do
@@ -136,7 +136,6 @@ return {
                   python = require('config.plugins.lsp.servers.pyright').settings.python,
                   yaml = require('config.plugins.lsp.servers.yaml').settings.yaml,
                   Rust = require('config.plugins.lsp.servers.rust_analyzer').settings.Rust,
-                  texlab = require('config.plugins.lsp.servers.texlab_set'),
                },
             })
          end
