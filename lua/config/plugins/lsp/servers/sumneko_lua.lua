@@ -37,14 +37,19 @@ M.lua_ls = {
             maxPreload = 100000,
             preloadFileSize = 10000,
          },
+         codeLens = { enable = true },
          hint = {
             enable = true,
-            setType = false,
-            paramType = true,
-            paramName = 'Disable',
-            semicolon = 'Disable',
-            arrayIndex = 'Disable',
+            -- setType = false,
+            -- paramType = true,
+            -- paramName = 'Disable',
+            -- semicolon = 'Disable',
+            -- arrayIndex = 'Disable',
          },
+         doc = {
+            privateName = { '^_' },
+         },
+
          type = {
             castNumberToInteger = true,
          },
