@@ -58,7 +58,7 @@ return {
       end,
       config = function()
          require('overseer').setup({
-            templates = { 'compile', 'build_love2D', 'build-pygame' },
+            templates = { 'compile', 'build_love2D' },
          })
       end,
    },
@@ -72,7 +72,7 @@ return {
       },
       keys = {
          -- suggested keymap
-         { '<leader>i', '<cmd>PasteImage<cr>', desc = 'Paste clipboard image' },
+         { '<leader>pi', '<cmd>PasteImage<cr>', desc = 'Paste clipboard image' },
       },
    },
 }

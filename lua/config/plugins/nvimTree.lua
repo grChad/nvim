@@ -1,3 +1,5 @@
+local User = require('core.user').NvimTree
+
 return {
    {
       'nvim-tree/nvim-tree.lua',
@@ -24,10 +26,10 @@ return {
          end
 
          local config = {
-            windows_float = true,
-            width = 40,
+            windows_float = User.windows_float,
+            width = User.width,
             height = calculate_height(),
-            position = 'left', -- if windows_float = false: => 'left' and 'right'
+            position = User.position, -- if windows_float = false: => 'left' and 'right'
          }
          -- +--------------------------------------------------------------------+
 
