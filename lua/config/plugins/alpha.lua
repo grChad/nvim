@@ -24,7 +24,7 @@ return {
 
          dashboard.section.terminal.command = 'sh '
             .. os.getenv('HOME')
-            .. '/.config/nvim/lua/config/static/logo-grChad.sh'
+            .. '/.config/nvim/lua/config/util/logo-grChad.sh'
          dashboard.section.terminal.width = width
          dashboard.section.terminal.height = height
          -- dashboard.section.terminal.opts.redraw = true
