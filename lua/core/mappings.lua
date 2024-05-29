@@ -95,6 +95,9 @@ M.general = {
 
       -- options for spell
       ['fs'] = { 'i<C-x>s', 'Spell check' },
+
+      -- Inspect for Treesitter
+      ['<leader>i'] = { '<cmd>Inspect<cr>', 'Inspect' },
    },
 
    t = {
@@ -354,14 +357,6 @@ M.lua_snip = {
    s = {
       ['<tab>'] = { cmd("lua require('luasnip').jump(1)") },
       ['<s-tab>'] = { cmd("lua require('luasnip').jump(-1)") },
-   },
-}
-
-M.treesitter_playground = {
-   plugin = true,
-
-   n = {
-      ['<leader>mo'] = { cmd('TSHighlightCapturesUnderCursor'), 'view groups highlight' },
    },
 }
 

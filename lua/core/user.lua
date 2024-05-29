@@ -3,6 +3,12 @@ M.ui = {
    border_inset = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
 }
 
+M.NvimTree = {
+   windows_float = true,
+   width = 40,
+   position = 'left', -- if windows_float = false: => 'left' and 'right'
+}
+
 M.mason = {
    -- stylua: ignore
    ensure_installed = {
@@ -20,11 +26,10 @@ M.mason = {
 M.treesitter = {
    -- stylua: ignore
    ensure_installed = {
-      'bash', 'c', 'diff', 'html', 'css', 'scss', 'javascript', 'json', 'jsdoc', 'jsonc',
+      'bash', 'diff', 'html', 'css', 'scss', 'javascript', 'json', 'jsdoc', 'jsonc',
       'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline', 'python', 'htmldjango',
       'query', 'regex', 'toml', 'typescript', 'tsx', 'svelte', 'vue', 'vim', 'vimdoc',
-      'yaml', 'rust', 'cpp', 'comment', 'gitignore', 'git_config', 'astro',
-      'sql'
+      'yaml', 'rust', 'comment', 'gitignore', 'git_config', 'astro', 'sql'
    },
 }
 
