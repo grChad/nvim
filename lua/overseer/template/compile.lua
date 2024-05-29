@@ -19,7 +19,12 @@ return {
       return {
          cmd = cmd,
          components = {
-            { 'on_output_quickfix', set_diagnostics = true, open = true },
+            {
+               'on_output_quickfix',
+               set_diagnostics = true,
+               open = true,
+               open_height = 7,
+            },
             'on_result_diagnostics',
             'default',
          },
