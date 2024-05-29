@@ -18,7 +18,9 @@ return {
          { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false, dependencies = { 'nvim-lspconfig' } },
          { 'folke/neodev.nvim', opts = {} },
       },
+      -- -@class PluginLspOpts
       opts = {
+         -- -@type vim.diagnostic.Opts
          diagnostics = {
             underline = true,
             update_in_insert = false,
@@ -32,7 +34,9 @@ return {
             },
             severity_sort = true,
          },
-         inlay_hints = { enabled = false },
+         inlay_hints = { enabled = true },
+         codelens = { enabled = false },
+         document_highlight = { enabled = true },
          format = { formatting_options = nil, timeout_ms = nil },
       },
       config = function(_, opts)

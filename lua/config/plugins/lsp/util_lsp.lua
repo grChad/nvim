@@ -130,13 +130,13 @@ U.config_diagnostics = function(opts)
    end
 
    -- configure inlay hints
-   if opts.inlay_hints.enabled then
-      on_attach_nose(function(client, buffer)
-         if client.supports_method('textDocument/inlayHint') then
-            vim.lsp.inlay_hint.enable(buffer, true)
-         end
-      end)
-   end
+   -- if opts.inlay_hints.enabled then
+   --    on_attach_nose(function(client, buffer)
+   --       if client.supports_method('textDocument/inlayHint') then
+   --          vim.lsp.inlay_hint(buffer, true)
+   --       end
+   --    end)
+   -- end
 
    if type(opts.diagnostics.virtual_text) == 'table' and opts.diagnostics.virtual_text.prefix == 'icons' then
       opts.diagnostics.virtual_text.prefix = vim.fn.has('nvim-0.10.0') == 0 and '●'
