@@ -40,8 +40,6 @@ return {
                end
             end,
          },
-         { 'windwp/nvim-ts-autotag' },
-
          {
             'm-demare/hlargs.nvim',
             config = function()
@@ -61,7 +59,6 @@ return {
       opts = {
          highlight = { enable = true },
          indent = { enable = true },
-         autotag = { enable = true }, -- for plugin
 
          -- stylua: ignore
          ensure_installed = user.ensure_installed,

@@ -6,3 +6,5 @@ require('core.autocmds')
 require('core.utils').load_mappings()
 
 require('core.lazy')
+
+require('config.util.filetype')
