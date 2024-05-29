@@ -9,6 +9,19 @@ augroups.text_yank = {
    },
 }
 
+augroups.clean_file_qf = {
+   clean_qf = {
+      event = 'Filetype',
+      pattern = 'qf',
+      callback = function()
+         vim.opt_local.relativenumber = false
+         vim.opt_local.number = false
+         vim.opt_local.signcolumn = 'no'
+         vim.opt_local.colorcolumn = ''
+      end,
+   },
+}
+
 augroups.disable_node = {
    node_modules = {
       event = { 'BufRead', 'BufNewFile' },
