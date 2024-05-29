@@ -1,34 +1,17 @@
 {
-	"Function Array": {
-		"prefix": "fag",
-		"body": "const ${1:variable} = (${2}) => {\n\t${3}\n}",
-		"description": "Función Array de proposito general"
-	},
-
-	"module default export function": {
-		"prefix": "edf",
-		"body": "export default function ${TM_FILENAME_BASE}(${2}) {\n\t${0}\n}"
-	},
-
-	"reactFunctionComponent": {
-		"prefix": "rfc",
-		"body": "\nconst ${TM_FILENAME_BASE} = () => {\n\treturn (\n\t\t$0\n\t)\n}\n\nexport default ${TM_FILENAME_BASE}",
-		"description": "Crear una React function component"
-	},
-
-	"Web component": {
-		"prefix": "weco",
-		"body": [
-			"class ${TM_FILENAME_BASE} extends HTMLElement {",
-			"\tconstructor() {\n\t\tsuper()",
-			"\t\tthis.attachShadow({ mode: 'open' })\n\t}",
-			"\n\tstatic get styles() {\n\t\treturn /* css */ ` \n\t\t:host {}\n\t\t`\n\t}",
-			"\n\tconnectedCallback() {\n\t\tthis.render()\n\t}",
-			"\n\trender() {\n\t\tthis.shadowRoot.innerHTML = /* html */ `",
-			"\t\t\t<style>${${TM_FILENAME_BASE}.styles}</style>",
-			"\t\t\t<h1>${1:contenido}</h1>\n\t\t`\n\t}\n}",
-			"\ncustomElements.define('${2:custom-element}', ${TM_FILENAME_BASE})\n${0}"
-		],
-		"description": "Web component custom"
-	}
+  "Web component": {
+    "prefix": "weco",
+    "body": [
+      "class ${TM_FILENAME_BASE} extends HTMLElement {",
+      "\tconstructor() {\n\t\tsuper()",
+      "\t\tthis.attachShadow({ mode: 'open' })\n\t}",
+      "\n\tstatic get styles() {\n\t\treturn /* css */ ` \n\t\t:host {}\n\t\t`\n\t}",
+      "\n\tconnectedCallback() {\n\t\tthis.render()\n\t}",
+      "\n\trender() {\n\t\tthis.shadowRoot.innerHTML = /* html */ `",
+      "\t\t\t<style>${${TM_FILENAME_BASE}.styles}</style>",
+      "\t\t\t<h1>${1:contenido}</h1>\n\t\t`\n\t}\n}",
+      "\ncustomElements.define('${2:custom-element}', ${TM_FILENAME_BASE})\n${0}"
+    ],
+    "description": "Web component custom"
+  }
 }

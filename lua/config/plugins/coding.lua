@@ -32,10 +32,7 @@ return {
       build = (not jit.os:find('Windows'))
             and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
          or nil,
-      dependencies = {
-         'rafamadriz/friendly-snippets',
-         dev = true,
-      },
+      dependencies = { 'rafamadriz/friendly-snippets' },
       -- stylua: ignore
       keys = {
          -- si da problema usar <A-,> en lugar de <M-,>
@@ -57,7 +54,7 @@ return {
             delete_check_events = 'TextChanged',
          })
          require('luasnip.loaders.from_vscode').lazy_load()
-         -- require('luasnip.loaders.from_vscode').lazy_load({ paths = './lua/config/snippets/' })
+         require('luasnip.loaders.from_vscode').lazy_load({ paths = './lua/config/snippets/' })
       end,
    },
 

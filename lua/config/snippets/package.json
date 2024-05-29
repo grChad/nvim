@@ -10,19 +10,20 @@
         "path": "./javascript.json"
       },
       {
-        "language": "javascriptreact",
-        "path": "./javascriptreact.json"
-      },
-      {
-        "language": "typescript",
-        "path": "./typescript.json"
+        "language": [
+          "javascript",
+          "typescript",
+          "javascriptreact",
+          "typescriptreact"
+        ],
+        "path": "./js_ts_react.json"
       },
       {
         "language": [
           "javascriptreact",
           "typescriptreact"
         ],
-        "path": "./snippets/javascript/react-es7.json"
+        "path": "./all_react.json"
       }
     ]
   }
