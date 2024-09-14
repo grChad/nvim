@@ -1,15 +1,14 @@
-local User = require('core.user').NvimTree
+local ctree = grvim.nvimTree
+local icons = grvim.ui.icons.git
 
 return {
    {
       'nvim-tree/nvim-tree.lua',
-      cmd = 'NvimTreeToggle',
-      init = function()
-         require('core.utils').load_mappings('nvimtree')
-      end,
+      version = '*',
+      cmd = { 'NvimTreeToggle', 'NvimTreeClose' },
+      keys = require('core.key_plugins').nvimtree,
       config = function()
          local present, nvimtree = pcall(require, 'nvim-tree')
-         local icons = require('i-nvim').git
 
          if not present then
             return
@@ -26,22 +25,20 @@ return {
          end
 
          local config = {
-            windows_float = User.windows_float,
-            width = User.width,
+            windows_float = ctree.windows_float,
+            width = ctree.width,
             height = calculate_height(),
-            position = User.position, -- if windows_float = false: => 'left' and 'right'
+            position = ctree.position, -- if windows_float = false: => 'left' and 'right'
          }
          -- +--------------------------------------------------------------------+
 
-         local nvimtree_icons = {
-            git = {
-               unstaged = icons.modifier,
-               staged = icons.check,
-               unmerged = icons.icon_branch,
-               untracked = icons.add,
-               deleted = icons.remove,
-               ignored = icons.ignored,
-            },
+         local git_icons = {
+            unstaged = icons.modifier,
+            staged = icons.check,
+            unmerged = icons.icon_branch,
+            untracked = icons.add,
+            deleted = icons.remove,
+            ignored = icons.ignored,
          }
 
          local options = {
@@ -56,7 +53,7 @@ return {
                float = {
                   enable = config.windows_float,
                   open_win_config = {
-                     border = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
+                     border = grvim.ui.border_inset,
                      width = config.width,
                      height = config.height - 2,
                      row = (vim.api.nvim_list_uis()[1].height - config.height) * 0.5,
@@ -77,26 +74,18 @@ return {
                end,
                indent_width = 3,
                indent_markers = {
-                  -- Indentado
-                  enable = true, -- Habilitar el indentado
-                  icons = { -- Iconos para el indentado Custom
-                     corner = '╰',
+                  enable = true,
+                  icons = {
+                     corner = grvim.ui.icons.separators.corners.curve_bottom_left,
                   },
                },
                icons = {
                   -- Iconos de carpetas y diagnosticos de Git
                   show = {
-                     folder_arrow = false, -- "" si el folder esta abierto o "" cerrado
+                     folder_arrow = false, -- "" open directory or "" closed
                   },
                   glyphs = {
-                     git = nvimtree_icons.git,
-                     -- git = {
-                     --    unstaged = '',
-                     --    staged = '',
-                     --    unmerged = '',
-                     --    untracked = '',
-                     --    deleted = '',
-                     -- },
+                     git = git_icons,
                   },
                },
                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md', 'package.json', '.env' },
@@ -110,44 +99,31 @@ return {
 
             diagnostics = {
                -- Diagnosticos LSP
-               enable = true,
+               enable = true, -- default 'false'
                icons = { hint = '󰋗' },
             },
 
             filters = {
                dotfiles = true, -- No mostrar archivos ocultos, Alternar con 'H' -> toggle_dotfiles
-               custom = { -- Filtra archivos o ficheros
-                  '.swp',
-                  '.pyc',
-                  'node_modules',
-                  '.cache',
-                  '.watchmanconfig',
-                  '.ruby-version',
-                  'Gemfile',
-                  '.flowconfig',
-                  'buckconfig',
-                  '.bundle',
-                  '__tests__',
-                  'style.css.map',
-                  '.git',
-                  '.vscode',
+               git_ignored = false, -- no muestra archivos de .gitignore
+               -- stylua: ignore
+               custom = {           -- Filtra archivos o ficheros
+                  '.swp', '.pyc', 'node_modules', '.watchmanconfig',
+                  '.ruby-version', 'Gemfile', '.flowconfig', 'buckconfig', '.bundle',
+                  '__tests__', 'style.css.map', '.vscode',
                },
-               exclude = { '.git*' },
-            },
-
-            git = {
-               ignore = false, -- Ignora los archivos dentro de '.gitignore' require git.enable = true
+               -- exclude = { '.gitignore' },
             },
 
             actions = {
                change_dir = {
-                  global = false, -- cambiar de directorio con :cd
+                  global = false, -- change directory
                },
                file_popup = {
                   open_win_config = { border = 'rounded' },
                },
                open_file = {
-                  quit_on_open = true, -- Cierra la ventana de NvimTree al seleccionar un elemento
+                  quit_on_open = ctree.quit_on_open, -- Cierra la ventana de NvimTree al seleccionar un elemento
                   window_picker = {
                      -- todas estas opciones estan por default, habilitar si se quiere cambiar
                      -- exclude = {

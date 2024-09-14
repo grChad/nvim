@@ -1,5 +1,6 @@
 return {
    -- dependencies
+   { 'grChad/grUtils.nvim', dev = true },
    {
       'nvim-tree/nvim-web-devicons',
       lazy = true,
@@ -12,19 +13,14 @@ return {
                   name = 'Gitignore',
                },
                ['.prettierrc.json'] = {
-                  icon = '󰏣',
-                  color = '#9E5351',
+                  icon = '',
+                  color = '#BF85BF',
                   name = 'PrettierRC',
                },
                ['.prettierrc.js'] = {
-                  icon = '󰏣',
-                  color = '#9E5351',
+                  icon = '',
+                  color = '#BF85BF',
                   name = 'PrettierRC',
-               },
-               ['readme.md'] = {
-                  icon = '',
-                  color = '#42A5F5',
-                  name = 'ReadmePrincipal',
                },
                ['package-lock.json'] = {
                   icon = '',
@@ -36,43 +32,42 @@ return {
                   color = '#c0b13a',
                   name = 'FileLock',
                },
+               ['biome.json'] = {
+                  icon = '󰔶',
+                  color = '#60A5FA',
+                  name = 'Biome',
+               },
             },
             override_by_extension = {
                ['astro'] = {
-                  icon = '󰣇',
+                  icon = '',
                   color = '#F76A02',
                   name = 'Astro',
+               },
+               ['toml'] = {
+                  icon = '',
+                  color = '#9C4221',
+                  name = 'Toms',
+               },
+               ['gd'] = {
+                  icon = '',
+                  color = '#478cbf',
+                  name = 'Godot',
                },
             },
          })
       end,
    },
-   { 'nvim-lua/plenary.nvim', lazy = true },
-   { 'grChad/icons-nvim', dev = true, lazy = true },
+   { 'nvim-lua/plenary.nvim' },
    {
       'stevearc/overseer.nvim',
       ft = { 'lua', 'python', 'go', 'javascript', 'rust' },
       cmd = 'OverseerRun',
-      init = function()
-         require('core.utils').load_mappings('overseer')
-      end,
+      keys = require('core.key_plugins').overseer,
       config = function()
          require('overseer').setup({
             templates = { 'compile', 'build_love2D' },
          })
       end,
-   },
-   {
-      'HakonHarnes/img-clip.nvim',
-      cmd = 'PasteImage',
-      ft = { 'markdown', 'text' },
-      opts = {
-         -- add options here
-         -- or leave it empty to use the default settings
-      },
-      keys = {
-         -- suggested keymap
-         { '<leader>pi', '<cmd>PasteImage<cr>', desc = 'Paste clipboard image' },
-      },
    },
 }

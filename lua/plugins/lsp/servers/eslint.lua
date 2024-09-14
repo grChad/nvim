@@ -1,20 +1,11 @@
 local M = {}
 
 local on_attach = function(client, bufnr)
-   client.server_capabilities.documentFormattingProvider = true
-   local function buf_set_option(...)
-      vim.api.nvim_buf_set_option(bufnr, ...)
-   end
-
-   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-   -- vim.api.nvim_create_autocmd('BufWritePre', {
-   --    buffer = bufnr,
-   --    command = 'EslintFixAll',
-   -- })
+   vim.api.nvim_create_autocmd('BufWritePre', {
+      buffer = bufnr,
+      command = 'EslintFixAll',
+   })
 end
-
-M.on_attach = on_attach
 
 M.settings = {
    codeAction = {
@@ -33,7 +24,9 @@ M.settings = {
    format = true,
    nodePath = '',
    onIgnoredFiles = 'off',
-   packageManager = 'npm',
+   problems = {
+      shortenToSingleLine = false,
+   },
    quiet = false,
    rulesCustomizations = {},
    run = 'onType',
@@ -44,4 +37,5 @@ M.settings = {
    },
 }
 
+M.on_attach = on_attach
 return M

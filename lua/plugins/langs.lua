@@ -5,30 +5,26 @@ return {
       event = { 'BufRead', 'BufWinEnter', 'BufNewFile' },
       dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
       opts = {
-         on_attach = function(client, bufnr)
-            client.server_capabilities.semanticTokensProvider = nil
-         end,
-         handlers = {
-            ['textDocument/hover'] = vim.lsp.with(
-               vim.lsp.handlers.hover,
-               { border = 'rounded', title = ' Hover ', silent = true }
-            ),
-            ['textDocument/signatureHelp'] = vim.lsp.with(
-               vim.lsp.handlers.signature_help,
-               { border = 'rounded', title = ' Help ' }
-            ),
-            ['textDocument/publishDiagnostics'] = vim.lsp.with(
-               vim.lsp.diagnostic.on_publish_diagnostics,
-               { virtual_text = true }
-            ),
-         },
+         -- on_attach = function(client, bufnr)
+         --    client.server_capabilities.semanticTokensProvider = nil
+         -- end,
+         handlers = require('plugins.lsp.util_lsp').handlers,
          settings = {
             tsserver_locale = 'es',
             separate_diagnostic_server = true,
             tsserver_file_preferences = {
-               includeInlayParameterNameHints = 'all',
+               quotePreference = 'single',
                includeCompletionsForModuleExports = true,
-               quotePreference = 'auto',
+               includeCompletionsForImportStatements = true,
+
+               includeInlayParameterNameHints = 'literals', -- 'none' | 'literals' | 'all'
+               includeInlayParameterNameHintsWhenArgumentMatchesName = true, --'boolean'
+               includeInlayFunctionParameterTypeHints = true, -- 'boolean'
+               includeInlayVariableTypeHints = true, -- 'boolean'
+               includeInlayVariableTypeHintsWhenTypeMatchesName = true, -- 'boolean'
+               includeInlayPropertyDeclarationTypeHints = true, -- 'boolean'
+               includeInlayFunctionLikeReturnTypeHints = true, -- 'boolean'
+               includeInlayEnumMemberValueHints = true, -- 'boolean'
             },
             tsserver_plugins = {
                -- for TypeScript v4.9+
@@ -69,11 +65,17 @@ return {
 
    {
       'iamcco/markdown-preview.nvim',
-      build = 'cd app && npm install',
       cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+      build = 'cd app && yarn install',
       ft = 'markdown',
-      config = function()
-         vim.keymap.set('n', '<leader>mp', ':MarkdownPreviewToggle<CR>')
-      end,
+      keys = require('core.key_plugins').markdown_preview,
+   },
+
+   {
+      'HakonHarnes/img-clip.nvim',
+      cmd = 'PasteImage',
+      ft = 'markdown',
+      opts = {},
+      keys = require('core.key_plugins').img_clip,
    },
 }

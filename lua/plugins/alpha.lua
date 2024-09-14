@@ -22,9 +22,7 @@ return {
          local width = 57 -- 104
          local height = 8 -- 28
 
-         dashboard.section.terminal.command = 'sh '
-            .. os.getenv('HOME')
-            .. '/.config/nvim/lua/config/util/logo-grChad.sh'
+         dashboard.section.terminal.command = 'sh ' .. os.getenv('HOME') .. '/.config/nvim/lua/utils/logo-grChad.sh'
          dashboard.section.terminal.width = width
          dashboard.section.terminal.height = height
          -- dashboard.section.terminal.opts.redraw = true
@@ -113,8 +111,7 @@ return {
             local plugins_lazy = require('lazy').plugins()
             local value_str = 'NeoVim v%d.%d.%d -  %d Plugins'
 
-            return string.format(value_str, v.major, v.minor, v.patch, #plugins_lazy)
-               .. ' | by · @grchad 󰊤'
+            return string.format(value_str, v.major, v.minor, v.patch, #plugins_lazy) .. ' | by · @grchad 󰊤'
          end
 
          local the_footer = group_custom(footer(), {

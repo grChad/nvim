@@ -1,10 +1,34 @@
 return {
-   { -- barra de estado
-      'grChad/statusStatic',
+   {
+      'grChad/statusbar.nvim',
       dev = true,
       lazy = false,
       config = function()
-         require('status-static').setup()
+         require('grbar').setup({
+            -- background = '#07196F',
+            -- foreground = '#DFDFDF',
+            -- sub_foreground = '#838383',
+            -- separator_color = '#FAFFC6',
+            -- mode_style = 'foreground', -- 'foreground' | 'background'
+            user = {
+               -- enabled = true,
+               -- icon = ' ',
+               -- color_icon = ' ',
+               name = 'Gabriel',
+            },
+            ia = {
+               supermaven = {
+                  enabled = true,
+                  icon = ' ',
+                  --    color_icon = '#13e2de',
+               },
+               -- codeium = {
+               --    enabled = true,
+               --    -- icon = '',
+               --    -- color_icon = '',
+               -- },
+            },
+         })
       end,
    },
 
@@ -12,20 +36,23 @@ return {
       'akinsho/bufferline.nvim',
       version = '*',
       lazy = false,
+      cmd = { 'BufferLinePick', 'BufferLineCycleNext', 'BufferLineCyclePrev' },
+      keys = require('core.key_plugins').bufferline,
       config = function()
-         require('bufferline').setup()
+         require('bufferline').setup({
+            options = {
+               offsets = {
+                  {
+                     filetype = 'NvimTree',
+                     text = 'File Explorer',
+                     text_align = 'center', -- 'left' | 'center' | 'right',
+                     separator = false,
+                  },
+               },
+            },
+         })
       end,
    },
-
-   -- FIXME: problemas con Flutter: buffers para debugs
-   -- {
-   --    'grChad/bufferSplitSimple',
-   --    dev = true,
-   --    lazy = false,
-   --    config = function()
-   --       require('buffer-split-simple').setup()
-   --    end,
-   -- },
 
    {
       'b0o/incline.nvim',
@@ -79,12 +106,6 @@ return {
       end,
    },
 
-   { -- mini Lsp progress
-      'j-hui/fidget.nvim',
-      event = 'VeryLazy',
-      opts = {},
-   },
-
    -- NOTE: ver su utilidad y tratar de reemplazarlo
    {
       'kevinhwang91/nvim-ufo',
@@ -94,9 +115,7 @@ return {
       'hedyhli/outline.nvim',
       lazy = true,
       cmd = { 'Outline', 'OutlineOpen' },
-      keys = { -- Example mapping to toggle outline
-         { '<leader>o', '<cmd>Outline<CR>', desc = 'Toggle outline' },
-      },
+      keys = require('core.key_plugins').outline,
       opts = {
          -- Your setup opts here
       },

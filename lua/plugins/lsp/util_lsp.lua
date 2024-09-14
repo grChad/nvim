@@ -61,10 +61,13 @@ U.capabilitiesCss.textDocument.completion.completionItem.snippetSupport = true
 
 -- NOTE: Handlers -------------------------------------------------------------
 U.handlers = {
-   ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'rounded', title = ' Hover ' }),
+   ['textDocument/hover'] = vim.lsp.with(
+      vim.lsp.handlers.hover,
+      { border = 'rounded', title = ' Hover ', max_width = 85, max_height = 18 }
+   ),
    ['textDocument/signatureHelp'] = vim.lsp.with(
       vim.lsp.handlers.signature_help,
-      { border = 'rounded', title = ' Help ' }
+      { border = 'rounded', title = ' Help ', max_width = 85, max_height = 18 }
    ),
    ['textDocument/publishDiagnostics'] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics,
@@ -77,6 +80,7 @@ U.handler_ufo = function(virtText, lnum, endLnum, width, truncate)
    local newVirtText = {}
    local suffix = (' ... %d Hidden Lines '):format(endLnum - lnum)
    local sufWidth = vim.fn.strdisplaywidth(suffix)
+   ---@type integer
    local targetWidth = width - sufWidth
    local curWidth = 0
 
@@ -119,24 +123,15 @@ end
 
 U.config_diagnostics = function(opts)
    -- border en la ventana de LspInfo
-   require('lspconfig.ui.windows').default_options.border = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' }
+   require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
 
    -- NOTE: ----------------------[diagnostics]-----------------------
-   local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+   local signs = grvim.lsp.signs
 
    for name, icon in pairs(signs) do
       name = 'DiagnosticSign' .. name
       vim.fn.sign_define(name, { text = icon, texthl = name, numhl = '' })
    end
-
-   -- configure inlay hints
-   -- if opts.inlay_hints.enabled then
-   --    on_attach_nose(function(client, buffer)
-   --       if client.supports_method('textDocument/inlayHint') then
-   --          vim.lsp.inlay_hint(buffer, true)
-   --       end
-   --    end)
-   -- end
 
    if type(opts.diagnostics.virtual_text) == 'table' and opts.diagnostics.virtual_text.prefix == 'icons' then
       opts.diagnostics.virtual_text.prefix = vim.fn.has('nvim-0.10.0') == 0 and '●'

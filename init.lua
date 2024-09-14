@@ -1,10 +1,14 @@
 -------------------------------------------------------------------------------
 --                           by grChad 󰊤
 
-require('core.settings')
-require('core.autocmds')
-require('core.utils').load_mappings()
+-- config user Global 'grvim'
+require('core.user')
 
+require('core.settings')
+require('core.mappings')
+require('core.autocmds')
+
+-- Plugin manager for NeoVim
 require('core.lazy')
 
-require('config.util.filetype')
+require('utils.filetype')

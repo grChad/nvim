@@ -1,5 +1,5 @@
 return {
-   name = 'Run Script',
+   name = 'Compile default',
    builder = function()
       local file = vim.fn.expand('%:p')
       local cmd = { file }

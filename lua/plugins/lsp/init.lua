@@ -1,10 +1,5 @@
 -- :7 'neovim/nvim-lspconfig',
---      :17 'folke/neoconf.nvim'
---      :18 'folke/neodev.nvim'
 -- :156 'williamboman/mason.nvim',
-
-local Util = require('config.util')
-local user = require('core.user')
 
 return {
    -- lspconfig
@@ -15,53 +10,30 @@ return {
          vim.cmd('silent! do FileType')
       end,
       dependencies = {
-         { 'folke/neoconf.nvim', cmd = 'Neoconf', config = false, dependencies = { 'nvim-lspconfig' } },
-         { 'folke/neodev.nvim', opts = {} },
+         { 'j-hui/fidget.nvim', opts = {} }, -- $progress and notify
       },
-      -- -@class PluginLspOpts
-      opts = {
-         -- -@type vim.diagnostic.Opts
-         diagnostics = {
-            underline = true,
-            update_in_insert = false,
-            signs = true,
-            virtual_text = { spacing = 4, source = 'if_many', prefix = '●' },
-            float = {
-               border = 'rounded',
-               max_width = 90,
-               source = 'always',
-               title = ' Diagnostic ',
-            },
-            severity_sort = true,
-         },
-         inlay_hints = { enabled = true },
-         codelens = { enabled = false },
-         document_highlight = { enabled = true },
-         format = { formatting_options = nil, timeout_ms = nil },
-      },
+      opts = require('plugins.lsp.opts_lsp'),
       config = function(_, opts)
-         if Util.has('neoconf.nvim') then
-            local plugin = require('lazy.core.config').spec.plugins['neoconf.nvim']
-            require('neoconf').setup(require('lazy.core.plugin').values(plugin, 'opts', false))
-         end
+         require('plugins.lsp.util_lsp').config_diagnostics(opts)
+         require('plugins.lsp.on_attach')
 
-         local on_attach = require('config.plugins.lsp.util_lsp').on_attach
-         local on_attach_sin_highlight = require('config.plugins.lsp.util_lsp').on_attach_sin_highlight
-         local capabilities = require('config.plugins.lsp.util_lsp').capabilities
-         local handlers = require('config.plugins.lsp.util_lsp').handlers
+         -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+         -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
+         -- local on_attach = require('plugins.lsp.util_lsp').on_attach
+         local on_attach_sin_highlight = require('plugins.lsp.util_lsp').on_attach_sin_highlight
+         local capabilities = require('plugins.lsp.util_lsp').capabilities
+         local handlers = require('plugins.lsp.util_lsp').handlers
+         --
          local lspconfig = require('lspconfig')
 
          -- configuracion completa de los diagnosticos
-         require('config.plugins.lsp.util_lsp').config_diagnostics(opts)
 
          lspconfig.lua_ls.setup({
-            on_attach = on_attach,
+            -- on_attach = on_attach,
             capabilities = capabilities,
             handlers = handlers,
-
-            root_dir = require('config.plugins.lsp.servers.sumneko_lua').root_dir,
-            settings = require('config.plugins.lsp.servers.sumneko_lua').settings,
+            settings = require('plugins.lsp.servers.lua_ls'),
          })
 
          -- lspconfig.tsserver.setup({
@@ -71,34 +43,31 @@ return {
          --    settings = require('config.plugins.lsp.servers.tsserver').settings,
          -- })
          lspconfig.biome.setup({})
-         lspconfig.sqlls.setup({})
-
+         --
          lspconfig.eslint.setup({
-            capabilities = capabilities,
-            root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
-            on_attach = require('config.plugins.lsp.servers.eslint').on_attach,
-            settings = require('config.plugins.lsp.servers.eslint').settings,
+            -- root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
+            on_attach = require('plugins.lsp.servers.eslint').on_attach,
+            settings = require('plugins.lsp.servers.eslint').settings,
          })
-
+         --
          lspconfig.tailwindcss.setup({
-            on_attach = require('config.plugins.lsp.servers.tailwindcss').on_attach,
-            capabilities = require('config.plugins.lsp.servers.tailwindcss').capabilities,
+            capabilities = require('plugins.lsp.servers.tailwindcss').capabilities,
             handlers = handlers,
 
             root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
-            filetypes = require('config.plugins.lsp.servers.tailwindcss').filetypes,
-            init_options = require('config.plugins.lsp.servers.tailwindcss').init_options,
-            settings = require('config.plugins.lsp.servers.tailwindcss').settings,
+            filetypes = require('plugins.lsp.servers.tailwindcss').filetypes,
+            init_options = require('plugins.lsp.servers.tailwindcss').init_options,
+            settings = require('plugins.lsp.servers.tailwindcss').settings,
          })
-
+         --
          lspconfig.stylelint_lsp.setup({
             filetypes = { 'css', 'scss', 'vue' },
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-            settings = require('config.plugins.lsp.servers.stylelint').settings,
+            -- on_attach = on_attach,
+            -- capabilities = capabilities,
+            -- handlers = handlers,
+            settings = require('plugins.lsp.servers.stylelint').settings,
          })
-
+         --
          for _, lsp in ipairs({ 'html' }) do
             lspconfig[lsp].setup({
                capabilities = capabilities,
@@ -109,9 +78,9 @@ return {
          lspconfig.emmet_language_server.setup({
             filetypes = { 'html', 'htmldjango', 'css', 'scss', 'vue' },
          })
-
+         --
          lspconfig.cssls.setup({
-            capabilities = require('config.plugins.lsp.util_lsp').capabilitiesCss,
+            capabilities = require('plugins.lsp.util_lsp').capabilitiesCss,
             settings = {
                css = {
                   validate = true,
@@ -125,27 +94,31 @@ return {
             },
          })
 
+         -- formater and linter for 'Python', made in Rust
+         lspconfig.ruff_lsp.setup({})
+
          -- stylua: ignore
          local servers = {
-            'svelte', 'jsonls', 'marksman', 'pyright',
-            'yamlls', 'rust_analyzer', 'clangd', 'astro'
+            'jsonls', 'marksman', 'pyright', 'yamlls', 'rust_analyzer',
+            'clangd', 'astro', 'texlab',
          }
 
          for _, lsp in ipairs(servers) do
             lspconfig[lsp].setup({
-               on_attach = on_attach,
+               -- on_attach = on_attach,
                capabilities = capabilities,
                handlers = handlers,
                settings = {
-                  python = require('config.plugins.lsp.servers.pyright').settings.python,
-                  yaml = require('config.plugins.lsp.servers.yaml').settings.yaml,
-                  Rust = require('config.plugins.lsp.servers.rust_analyzer').settings.Rust,
+                  python = require('plugins.lsp.servers.pyright').settings.python,
+                  yaml = require('plugins.lsp.servers.yaml').settings.yaml,
+                  Rust = require('plugins.lsp.servers.rust_analyzer').settings.Rust,
+                  texlab = require('plugins.lsp.servers.tex_lab'),
                },
             })
          end
-
+         --
          require('ufo').setup({
-            fold_virt_text_handler = require('config.plugins.lsp.util_lsp').handler_ufo,
+            fold_virt_text_handler = require('plugins.lsp.util_lsp').handler_ufo,
             close_fold_kinds = {},
          })
       end,
@@ -155,16 +128,16 @@ return {
       'williamboman/mason.nvim',
       cmd = { 'Mason', 'MasonInstall', 'MasonInstallAll', 'MasonUpdate' },
       build = ':MasonUpdate',
-      keys = { { '<leader>cm', '<cmd>Mason<cr>', desc = 'Mason' } },
+      keys = require('core.key_plugins').mason,
       opts = {
-         ensure_installed = user.mason.ensure_installed,
+         ensure_installed = grvim.mason.ensure_installed,
          ui = {
             icons = {
                package_pending = ' ',
                package_installed = '󰄳 ',
                package_uninstalled = ' 󰚌',
             },
-            border = user.ui.border_inset,
+            border = grvim.ui.border_inset,
             width = 0.7,
             height = 0.8,
          },

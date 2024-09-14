@@ -1,10 +1,11 @@
-local user = require('core.user').treesitter
 return {
    {
       'nvim-treesitter/nvim-treesitter',
       version = false, -- last release is way too old and doesn't work on Windows
       build = ':TSUpdate',
       event = 'VeryLazy',
+      cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
+      keys = require('core.key_plugins').treesitter,
       init = function(plugin)
          -- PERF: consultar personalizadas para otros plugins de treesitter
          require('lazy.core.loader').add_to_rtp(plugin)
@@ -49,11 +50,6 @@ return {
             end,
          },
       },
-      cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-      keys = {
-         { '<c-space>', desc = 'Increment selection' },
-         { '<bs>', desc = 'Decrement selection', mode = 'x' },
-      },
       ---@type TSConfig
       ---@diagnostic disable-next-line: missing-fields
       opts = {
@@ -61,7 +57,7 @@ return {
          indent = { enable = true },
 
          -- stylua: ignore
-         ensure_installed = user.ensure_installed,
+         ensure_installed = grvim.treesitter.ensure_installed,
          incremental_selection = {
             enable = true,
             keymaps = {

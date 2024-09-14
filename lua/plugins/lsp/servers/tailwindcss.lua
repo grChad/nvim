@@ -9,12 +9,6 @@ capabilities.textDocument.foldingRange = {
 }
 
 -- Settings
-local on_attach = function(client, bufnr)
-   if client.server_capabilities.colorProvider then
-      require('tailwindcss-colors').buf_attach(bufnr)
-   end
-end
-
 local filetypes = {
    'html',
    'mdx',
@@ -61,7 +55,6 @@ local settings = {
    },
 }
 
-M.on_attach = on_attach
 M.filetypes = filetypes
 M.capabilities = capabilities
 M.settings = settings

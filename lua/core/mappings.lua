@@ -12,368 +12,103 @@ local cmd = function(str)
    return '<cmd>' .. str .. '<CR>'
 end
 
-local silent = { silent = true }
--- local noremap = { noremap = true }
-local opts = { noremap = true, silent = true }
+local map = vim.keymap.set
 
-local M = {}
+map('n', '<leader>w', cmd('write'), { desc = 'Save file' })
+map('n', '<leader>q', cmd('quit'), { desc = 'Save file' })
+map('n', '<leader>y', cmd('%y+'), { desc = 'copy whole file' })
+-- Don't copy the replaced text after pasting in visual mode
+-- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
+map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
 
-M.general = {
-   i = {
-      -- go to  beginning and end
-      ['<C-b>'] = { '<ESC>^i', 'Beginning of line' },
-      ['<C-e>'] = { '<End>', 'End of line' },
+-- Espacar del modo insertar
+map('i', 'kj', '<Esc>', { silent = true, desc = 'Escap' })
+map('i', 'KJ', '<Esc>', { silent = true, desc = 'Escap' })
 
-      -- Espacar del modo insertar
-      ['kj'] = { '<esc>', 'Escap', silent },
-      ['KJ'] = { '<esc>', 'Escap', silent },
+-- Allow moving the cursor through wrapped lines with j, k
+-- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
+-- empty mode is same as using <cmd> :map
+-- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
+map({ 'n', 'v' }, 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
+map({ 'n', 'v' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
 
-      -- detele arrows
-      ['<up>'] = { '<Nop>', silent },
-      ['<down>'] = { '<Nop>', silent },
-      ['<left>'] = { '<Nop>', silent },
-      ['<right>'] = { '<Nop>', silent },
+-- Re-configurar las teclas de flechas
+map({ 'i', 'v' }, '<Up>', '<Nop>', { desc = 'delete arrow up' })
+map({ 'i', 'v' }, '<Down>', '<Nop>', { desc = 'delete arrow down' })
+map({ 'n', 'i', 'v', 'c' }, '<Right>', '<Nop>', { desc = 'delete arrow right' })
+map({ 'n', 'i', 'v', 'c' }, '<Left>', '<Nop>', { desc = 'delete arrow left' })
+map('n', '<Up>', '<ScrollWheelUp>')
+map('n', '<Down>', '<ScrollWheelDown>')
 
-      -- navigate within insert mode
-      ['<C-h>'] = { '<Left>', 'Move left' },
-      ['<C-l>'] = { '<Right>', 'Move right' },
-      ['<C-j>'] = { '<Down>', 'Move down' },
-      ['<C-k>'] = { '<Up>', 'Move up' },
-   },
+-- navigate within insert mode
+map({ 'i', 'c' }, '<C-h>', '<Left>', { desc = 'Move left' })
+map({ 'i', 'c' }, '<C-l>', '<Right>', { desc = 'Move right' })
+map('i', '<C-j>', '<Down>', { desc = 'Move down' })
+map('i', '<C-k>', '<Up>', { desc = 'Move up' })
 
-   n = {
-      ['<leader>w'] = { cmd('write'), 'Save file' },
-      ['<leader>q'] = { cmd('quit'), 'Quit NVim' },
-      ['<leader>y'] = { cmd('%y+'), 'copy whole file' },
-      ['m'] = {
-         function()
-            require('core.utils').clear_search()
-            vim.cmd('nohl')
-         end,
-         'no highlight',
-         silent,
-      },
+-- Deleted characters in mode 'Command'
+map('c', '<A-h>', '<BS>', { desc = 'delete to left' })
+map('c', '<A-l>', '<Del>', { desc = 'delete to right' })
 
-      --keywordprg doc for 'man'
-      ['gk'] = { '<cmd>norm! K<cr>', 'Keywordprg' },
+--  See `:help wincmd` for a list of all window commands
+map('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
+map('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
+map('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
+map('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-      -- switch between windows
-      ['<C-h>'] = { '<C-w>h', 'Window left' },
-      ['<C-l>'] = { '<C-w>l', 'Window right' },
-      ['<C-j>'] = { '<C-w>j', 'Window down' },
-      ['<C-k>'] = { '<C-w>k', 'Window up' },
+-- mover Linea/Bloque arriba o abajo
+map('n', '<A-j>', ':m .+1<CR>==', { desc = 'Move line down' })
+map('n', '<A-k>', ':m .-2<CR>==', { desc = 'Move line up' })
+map('x', '<A-j>', ":m '>+1<CR>gv-gv")
+map('x', '<A-k>', ":m '<-2<CR>gv-gv")
 
-      -- Resize with arrows
-      ['<A-S-Up>'] = { ':resize -2<CR>' },
-      ['<A-S-Down>'] = { ':resize +2<CR>' },
-      ['<A-S-Left>'] = { ':vertical resize -2<CR>' },
-      ['<A-S-Right>'] = { ':vertical resize +2<CR>' },
+-- Better indenting
+map({ 'x' }, '<', '<gv', { desc = 'Indent left' })
+map({ 'x' }, '>', '>gv', { desc = 'Indent right' })
 
-      -- mover linea actual arriba arriba o abajo
-      ['<A-j>'] = { ':m .+1<CR>==' },
-      ['<A-k>'] = { ':m .-2<CR>==' },
+-- Resize with arrows
+map('n', '<A-S-Up>', ':resize -2<CR>', { desc = 'Resize up' })
+map('n', '<A-S-Down>', ':resize +2<CR>', { desc = 'Resize down' })
+map('n', '<A-S-Left>', ':vertical resize -2<CR>', { desc = 'Resize left' })
+map('n', '<A-S-Right>', ':vertical resize +2<CR>', { desc = 'Resize right' })
 
-      -- moverse mas rapido up an down
-      ['<Up>'] = { '<ScrollWheelUp>' },
-      ['<Down>'] = { '<ScrollWheelDown>' },
+-- ahora se usa toggleterm
+-- map('n', '<leader>t', cmd('bo terminal'), { desc = 'Open terminal' })
+-- map('t', '<leader>n', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
-      -- detele arrows
-      ['<Left>'] = { '<Nop>', silent },
-      ['<Right>'] = { '<Nop>', silent },
+-- NOTE: para el buffer --------------------------------------------------------------
+-- map('n', '<leader>x', function()
+--    vim.cmd('BufferLineMoveNext')
+--    vim.cmd('bprevious')
+--    vim.cmd('BufferLineCloseRight')
+-- end, { desc = 'Delete Buffer' })
+-- map('n', '<leader>k', cmd('bnext'), { desc = 'Next Buffer' })
+-- map('n', '<leader>j', cmd('bprevious'), { desc = 'Previous Buffer' })
 
-      -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
-      -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
-      -- empty mode is same as using <cmd> :map
-      -- also don't use g[j|k] when in operator pending mode, so it doesn't alter d, y or c behaviour
-      ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-      ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+-- NOTE: atajos especiales -----------------------------------------------------------
+-- Options for search: clear highlight and word coincidences
+map('n', 'm', cmd("lua require('utils.search').clear_search()"), { silent = true, desc = 'no highlight' })
+map('n', 'n', 'nzz' .. cmd("lua require('utils.search').hl_search()"), { desc = 'Next search' })
+map('n', 'N', 'Nzz' .. cmd("lua require('utils.search').hl_search()"), { desc = 'Previous search' })
 
-      -- FIXME: siempre que no se use 'barbar'
-      ['<leader>x'] = { cmd('bdelete'), 'Delete Buffer', opts },
-      ['<leader>k'] = { cmd('bnext'), 'Next Buffer', opts },
-      ['<leader>j'] = { cmd('bprevious'), 'Previous Buffer', opts },
+--keywordprg doc for 'man'
+map('n', 'gk', cmd('norm! K'), { desc = 'Keywordprg' })
 
-      -- options for spell
-      ['fs'] = { 'i<C-x>s', 'Spell check' },
+-- options for spell select
+map('n', 'fs', 'i<C-x>s', { desc = 'Spell options' })
 
-      -- Inspect for Treesitter
-      ['<leader>i'] = { '<cmd>Inspect<cr>', 'Inspect' },
-   },
+-- Inspect for Treesitter
+map('n', '<leader>i', cmd('Inspect'), { desc = 'Inspect highlight' })
 
-   t = {
-      ['<C-x>'] = { vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), 'Escape terminal mode' },
-   },
+-- Toggle para booleanos: true|false, on|off, yes|no
+map('n', '<leader>b', cmd("lua require('utils.toggle_bool').run()"), { desc = 'Toggle boolean' })
 
-   v = {
-      -- detele arrows
-      ['<up>'] = { '<Nop>', silent },
-      ['<down>'] = { '<Nop>', silent },
-      ['<left>'] = { '<Nop>', silent },
-      ['<right>'] = { '<Nop>', silent },
+-- NOTE: Diagnostics for LSP ---------------------------------------------------------
+-- disable diagnostics 'vim.diagnostic.open_float()'
+vim.keymap.del('n', '<C-W>d')
+vim.keymap.del('n', '<C-W><C-D>')
 
-      -- Better indenting
-      ['<'] = { '<gv' },
-      ['>'] = { '>gv' },
-   },
-
-   x = {
-      ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-      ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-      -- Don't copy the replaced text after pasting in visual mode
-      -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
-      ['p'] = { 'p:let @+=@0<CR>:let @"=@0<CR>', 'Dont copy replaced text', opts = { silent = true } },
-
-      -- Move current line / block with Alt-j/k ala vscode.
-      ['<A-j>'] = { ":m '>+1<CR>gv-gv" },
-      ['<A-k>'] = { ":m '<-2<CR>gv-gv" },
-   },
-   c = {
-      -- navigate within insert mode
-      ['<C-h>'] = { '<Left>', 'Move left' },
-      ['<C-l>'] = { '<Right>', 'Move right' },
-
-      -- detele arrows
-      ['<Left>'] = { '<Nop>', silent },
-      ['<Right>'] = { '<Nop>', silent },
-
-      ['<A-h>'] = { '<BS>', 'delete to left' },
-      ['<A-l>'] = { '<Del>', 'delete to right' },
-   },
-}
-
-M.special = {
-   n = {
-      -- Toggle para habilitar 'spell'
-      ['<F9>'] = { cmd("lua require('core.utils').spell_toggle()") },
-
-      -- Numero de coincidencias seleccionadas
-      ['n'] = { 'nzz' .. cmd("lua require('core.utils').hl_search(0.1)") },
-      ['N'] = { 'Nzz' .. cmd("lua require('core.utils').hl_search(0.1)") },
-
-      -- Toggle para booleanos: true|false, on|off, yes|no
-      ['<leader>b'] = { cmd("lua require('core.utils').toggle_bool()") },
-   },
-}
-
-M.barbar = {
-   plugin = true,
-
-   n = {
-      ['<leader>x'] = { cmd('BufferClose'), 'Delete Buffer', opts },
-      ['<leader>k'] = { cmd('BufferNext'), 'Next Buffer', opts },
-      ['<leader>j'] = { cmd('BufferPrevious'), 'Previous Buffer', opts },
-      [','] = { cmd('BufferPick'), opts },
-   },
-}
-
-M.comment = {
-   plugin = true,
-
-   -- toggle comment in both modes
-   n = {
-      ['<leader>/'] = {
-         function()
-            require('Comment.api').toggle.linewise.current()
-         end,
-         'Toggle comment',
-      },
-   },
-
-   v = {
-      ['<leader>/'] = {
-         "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
-         'Toggle comment',
-      },
-   },
-}
-
-M.nvimtree = {
-   plugin = true,
-
-   n = {
-      ['<leader>e'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
-   },
-}
-
-M.telescope = {
-   plugin = true,
-
-   n = {
-      -- find
-      ['<leader>ff'] = { '<cmd> Telescope find_files <CR>', 'Find files' },
-      ['<leader>fa'] = {
-         '<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>',
-         'Find all',
-      },
-      ['<leader>fw'] = { '<cmd> Telescope live_grep <CR>', 'Live grep' },
-      ['<leader>fb'] = { '<cmd> Telescope buffers <CR>', 'Find buffers' },
-      ['<leader>fh'] = { '<cmd> Telescope help_tags <CR>', 'Help page' },
-      ['<leader>fo'] = { '<cmd> Telescope oldfiles <CR>', 'Find oldfiles' },
-
-      -- git
-      ['<leader>cm'] = { '<cmd> Telescope git_commits <CR>', 'Git commits' },
-      ['<leader>gt'] = { '<cmd> Telescope git_status <CR>', 'Git status' },
-
-      -- pick a hidden term
-      ['<leader>pt'] = { '<cmd> Telescope terms <CR>', 'Pick hidden term' },
-
-      -- theme switcher
-      ['<leader>th'] = { '<cmd> Telescope themes <CR>', 'Nvchad themes' },
-
-      ['<leader>ma'] = { '<cmd> Telescope marks <CR>', 'telescope bookmarks' },
-   },
-}
-
-M.nvterm = {
-   plugin = true,
-
-   n = {
-      -- toggle in normal mode
-      ['<A-i>'] = {
-         function()
-            require('nvterm.terminal').toggle('float')
-         end,
-         'Toggle floating term',
-      },
-
-      ['<leader>h'] = {
-         function()
-            require('nvterm.terminal').toggle('horizontal')
-         end,
-         'Toggle horizontal term',
-      },
-
-      ['<leader>v'] = {
-         function()
-            require('nvterm.terminal').toggle('vertical')
-         end,
-         'Toggle vertical term',
-      },
-   },
-}
-
-M.blankline = {
-   plugin = true,
-
-   n = {
-      ['<leader>cc'] = {
-         function()
-            local ok, start = require('indent_blankline.utils').get_current_context(
-               vim.g.indent_blankline_context_patterns,
-               vim.g.indent_blankline_use_treesitter_scope
-            )
-
-            if ok then
-               vim.api.nvim_win_set_cursor(vim.api.nvim_get_current_win(), { start, 0 })
-               vim.cmd([[normal! _]])
-            end
-         end,
-
-         'Jump to current context',
-      },
-   },
-}
-
-M.gitsigns = {
-   plugin = true,
-
-   n = {
-      -- Navigation through hunks
-      [']c'] = {
-         function()
-            if vim.wo.diff then
-               return ']c'
-            end
-            vim.schedule(function()
-               require('gitsigns').next_hunk()
-            end)
-            return '<Ignore>'
-         end,
-         'Jump to next hunk',
-         opts = { expr = true },
-      },
-
-      ['[c'] = {
-         function()
-            if vim.wo.diff then
-               return '[c'
-            end
-            vim.schedule(function()
-               require('gitsigns').prev_hunk()
-            end)
-            return '<Ignore>'
-         end,
-         'Jump to prev hunk',
-         opts = { expr = true },
-      },
-
-      -- Actions
-      ['<leader>rh'] = {
-         function()
-            require('gitsigns').reset_hunk()
-         end,
-         'Reset hunk',
-      },
-
-      ['<leader>ph'] = {
-         function()
-            require('gitsigns').preview_hunk()
-         end,
-         'Preview hunk',
-      },
-
-      ['<leader>gb'] = {
-         function()
-            package.loaded.gitsigns.blame_line()
-         end,
-         'Blame line',
-      },
-
-      ['<leader>td'] = {
-         function()
-            require('gitsigns').toggle_deleted()
-         end,
-         'Toggle deleted',
-      },
-   },
-}
-
-M.lua_snip = {
-   plugin = true,
-
-   i = {
-      ['<Tab>'] = {
-         function()
-            return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>'
-         end,
-         {
-            silent = true,
-         },
-      },
-
-      ['<s-tab>'] = { cmd("lua require('luasnip').jump(-1)") },
-   },
-
-   s = {
-      ['<tab>'] = { cmd("lua require('luasnip').jump(1)") },
-      ['<s-tab>'] = { cmd("lua require('luasnip').jump(-1)") },
-   },
-}
-
-M.markdown_preview = {
-   plugin = true,
-
-   n = {
-      ['<leader>mp'] = { cmd('MarkdownPreviewToggle'), 'Toggle markdown preview' },
-   },
-}
-
-M.overseer = {
-   plugin = true,
-
-   n = {
-      ['<leader>co'] = { cmd('OverseerRun'), 'Run overseer' },
-   },
-}
-
-return M
+map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
+-- vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })

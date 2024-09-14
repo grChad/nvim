@@ -28,8 +28,8 @@ M.open = function()
    vim.cmd('startinsert')
 
    local keymaps = {
-      i = "<cmd>stopinsert | lua require'core.renamer'.apply('" .. currName .. "'," .. win .. ')<CR>',
-      n = "<cmd>stopinsert | lua require'core.renamer'.apply('" .. currName .. "'," .. win .. ')<CR>',
+      i = "<cmd>stopinsert | lua require'utils.renamer'.apply('" .. currName .. "'," .. win .. ')<CR>',
+      n = "<cmd>stopinsert | lua require'utils.renamer'.apply('" .. currName .. "'," .. win .. ')<CR>',
    }
 
    for mode, mapping in pairs(keymaps) do
