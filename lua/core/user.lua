@@ -4,13 +4,11 @@ _G.grvim = {}
 
 ---@alias UiHiglightStyle 'background'|'foreground'|'virtual'
 
----@class GrUi
----@field hig_colors {style: UiHiglightStyle, tailwind: boolean}
----@type GrUi
 grvim.ui = {
    border_inset = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
    border_rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
    icons = gr_icons,
+   ---@type {style: UiHiglightStyle, tailwind: boolean}
    hig_colors = {
       style = 'virtual',
       tailwind = true,
@@ -53,10 +51,11 @@ grvim.formatter = {
 }
 
 grvim.nvimTree = {
-   windows_float = true,
+   isfloat = true,
    quit_on_open = true, -- Cierra la ventana al seleccionar elemento
    width = 40,
-   position = 'left', -- if windows_float = false: => 'left' and 'right'
+   ---@type 'left' | 'right'
+   position = 'left',
 }
 
 grvim.mason = {
