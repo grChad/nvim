@@ -1,5 +1,42 @@
-local ctree = grvim.nvimTree
-local icons = grvim.ui.icons.git
+local vtree = grvim.nvimTree
+local icons = require('utils.icons').git
+
+local function get_current_path()
+   local handle = io.popen('pwd')
+   if not handle then
+      error('No se pudo ejecutar el comando "pwd"')
+   end
+
+   local current_path = handle:read('*l')
+   handle:close()
+   return current_path
+end
+
+local function count_files_and_directories()
+   local path = get_current_path()
+   local total_files = 0
+   local total_dirs = 0
+
+   -- Usa 'ls' para listar todos los archivos, excepto '.' y '..' y 'ocultos'
+   local p = io.popen('ls ' .. path)
+   if not p then
+      error('No se pudo ejecutar el comando "ls"')
+   end
+   local output = p:read('*all')
+   p:close()
+
+   -- Contar archivos y directorios
+   for file in output:gmatch('[^\n]+') do
+      local attr = io.popen('test -d ' .. path .. '/' .. file .. ' && echo directory || echo file'):read('*l')
+      if attr == 'directory' then
+         total_dirs = total_dirs + 1
+      else
+         total_files = total_files + 1
+      end
+   end
+
+   return total_files + total_dirs
+end
 
 return {
    {
@@ -14,22 +51,26 @@ return {
             return
          end
 
-         local calculate_height = function()
-            local height_editor = vim.api.nvim_get_option('lines')
-
-            if height_editor <= 30 then
-               return height_editor - 2
-            end
-
-            return 28
+         if vim.filetype == 'NvimTree' then
+            vim.opt_local.loaded_netrw = 1
+            vim.opt_local.loaded_netrwPlugin = 1
          end
 
-         local config = {
-            windows_float = ctree.windows_float,
-            width = ctree.width,
-            height = calculate_height(),
-            position = ctree.position, -- if windows_float = false: => 'left' and 'right'
-         }
+         local floatHeigh = function()
+            local height_editor = vim.api.nvim_get_option_value('lines', {})
+            local total_files = count_files_and_directories()
+            local margin = 2
+            local min_files = 20
+
+            if height_editor <= total_files then
+               return height_editor - margin
+            elseif total_files <= min_files then
+               return min_files + margin
+            else
+               return total_files + margin
+            end
+         end
+
          -- +--------------------------------------------------------------------+
 
          local git_icons = {
@@ -48,16 +89,16 @@ return {
             respect_buf_cwd = true, -- Cambiar el CWD de NvimTree al nuevo buffer al abrir NvimTree
 
             view = {
-               width = config.width,
-               side = config.position, -- El lado del panel NvimTree
+               width = vtree.width,
+               side = vtree.position,
                float = {
-                  enable = config.windows_float,
+                  enable = vtree.isfloat,
                   open_win_config = {
                      border = grvim.ui.border_inset,
-                     width = config.width,
-                     height = config.height - 2,
-                     row = (vim.api.nvim_list_uis()[1].height - config.height) * 0.5,
-                     col = (vim.api.nvim_list_uis()[1].width - config.width) * 0.5,
+                     width = vtree.width,
+                     height = floatHeigh() - 2,
+                     row = (vim.api.nvim_list_uis()[1].height - floatHeigh()) * 0.5,
+                     col = (vim.api.nvim_list_uis()[1].width - vtree.width) * 0.5,
                   },
                },
             },
@@ -123,7 +164,7 @@ return {
                   open_win_config = { border = 'rounded' },
                },
                open_file = {
-                  quit_on_open = ctree.quit_on_open, -- Cierra la ventana de NvimTree al seleccionar un elemento
+                  quit_on_open = vtree.quit_on_open, -- Cierra la ventana de NvimTree al seleccionar un elemento
                   window_picker = {
                      -- todas estas opciones estan por default, habilitar si se quiere cambiar
                      -- exclude = {
@@ -147,20 +188,8 @@ return {
          vim.api.nvim_create_autocmd('VimResized', {
             pattern = '*',
             callback = function()
-               local view = _G.nvim_tree_view
-               local height_editor = vim.api.nvim_get_option('lines')
-               local new_height = 25
-
-               if height_editor <= 30 then
-                  new_height = height_editor - 2
-               else
-                  new_height = 28
-               end
-
-               view.row = (vim.api.nvim_get_option('lines') - new_height) * 0.5
-               view.col = (vim.api.nvim_get_option('columns') - 41) * 0.5
-
-               view.height = new_height - 2
+               nvim_tree_view.row = (vim.api.nvim_get_option_value('lines', {}) - floatHeigh()) * 0.5
+               nvim_tree_view.col = (vim.api.nvim_get_option_value('columns', {}) - vtree.width) * 0.5
             end,
          })
       end,
