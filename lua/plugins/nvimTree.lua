@@ -60,7 +60,7 @@ return {
             local height_editor = vim.api.nvim_get_option_value('lines', {})
             local total_files = count_files_and_directories()
             local margin = 2
-            local min_files = 20
+            local min_files = 25
 
             if height_editor <= total_files then
                return height_editor - margin
