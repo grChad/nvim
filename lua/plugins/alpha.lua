@@ -22,7 +22,8 @@ return {
          local width = 57 -- 104
          local height = 8 -- 28
 
-         dashboard.section.terminal.command = 'sh ' .. os.getenv('HOME') .. '/.config/nvim/lua/utils/logo-grChad.sh'
+         local path_logo = '~/.config/nvim/lua/core/alpha-logo.sh'
+         dashboard.section.terminal.command = 'sh ' .. path_logo
          dashboard.section.terminal.width = width
          dashboard.section.terminal.height = height
          -- dashboard.section.terminal.opts.redraw = true
