@@ -94,20 +94,6 @@ GROUPS.for_all = {
    end,
 }
 
-GROUPS.custom_statusColumn = {
-   event = 'Filetype',
-   -- stylua: ignore
-   pattern = {
-      'html', 'css', 'scss', 'javascript', 'javascriptreact', 'jsx', 'typescript',
-      'typescriptreact', 'vue', 'tsx', 'json', 'python', 'dart', 'rust', 'lua',
-      'svelte',
-   },
-   callback = function()
-      vim.opt_local.statuscolumn = "%!v:lua.require('utils.status_column').status_column()"
-      -- vim.opt_local.statuscolumn = "%!v:lua.require('core.utils').statuscolumn()"
-   end,
-}
-
 for group, opts in pairs(GROUPS) do
    local augroup = vim.api.nvim_create_augroup('AU_' .. group, { clear = true })
 
