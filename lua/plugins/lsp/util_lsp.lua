@@ -75,52 +75,6 @@ U.handlers = {
    ),
 }
 
--- NOTE: Handlers para plugin Ufo ---------------------------------------------
-U.handler_ufo = function(virtText, lnum, endLnum, width, truncate)
-   local newVirtText = {}
-   local suffix = (' ... %d Hidden Lines '):format(endLnum - lnum)
-   local sufWidth = vim.fn.strdisplaywidth(suffix)
-   ---@type integer
-   local targetWidth = width - sufWidth
-   local curWidth = 0
-
-   for _, chunk in ipairs(virtText) do
-      local chunkText = chunk[1]
-      local chunkWidth = vim.fn.strdisplaywidth(chunkText)
-      if targetWidth > curWidth + chunkWidth then
-         table.insert(newVirtText, chunk)
-      else
-         chunkText = truncate(chunkText, targetWidth - curWidth)
-         local hlGroup = chunk[2]
-         table.insert(newVirtText, { chunkText, hlGroup })
-         chunkWidth = vim.fn.strdisplaywidth(chunkText)
-         -- str width returned from truncate() may less than 2nd argument, need padding
-         if curWidth + chunkWidth < targetWidth then
-            suffix = suffix .. (' '):rep(targetWidth - curWidth - chunkWidth)
-         end
-         break
-      end
-      curWidth = curWidth + chunkWidth
-   end
-
-   vim.api.nvim_set_hl(0, 'Msg_Fold', { fg = '#E7E4E0', italic = true })
-
-   table.insert(newVirtText, { suffix, 'Msg_Fold' })
-
-   return newVirtText
-end
-
----@param on_attach fun(client, buffer)
-local on_attach_nose = function(on_attach)
-   vim.api.nvim_create_autocmd('LspAttach', {
-      callback = function(args)
-         local buffer = args.buf ---@type number
-         local client = vim.lsp.get_client_by_id(args.data.client_id)
-         on_attach(client, buffer)
-      end,
-   })
-end
-
 U.config_diagnostics = function(opts)
    -- border en la ventana de LspInfo
    require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset

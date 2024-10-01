@@ -87,9 +87,9 @@ map('n', '<A-S-Right>', ':vertical resize +2<CR>', { desc = 'Resize right' })
 
 -- NOTE: atajos especiales -----------------------------------------------------------
 -- Options for search: clear highlight and word coincidences
-map('n', 'm', cmd("lua require('utils.search').clear_search()"), { silent = true, desc = 'no highlight' })
-map('n', 'n', 'nzz' .. cmd("lua require('utils.search').hl_search()"), { desc = 'Next search' })
-map('n', 'N', 'Nzz' .. cmd("lua require('utils.search').hl_search()"), { desc = 'Previous search' })
+map('n', 'm', cmd("lua require('gr-utils').search.clear()"), { silent = true, desc = 'no highlight' })
+map('n', 'n', 'nzz' .. cmd("lua require('gr-utils').search.run()"), { desc = 'Next search' })
+map('n', 'N', 'Nzz' .. cmd("lua require('gr-utils').search.run()"), { desc = 'Previous search' })
 
 --keywordprg doc for 'man'
 map('n', 'gk', cmd('norm! K'), { desc = 'Keywordprg' })
@@ -101,7 +101,7 @@ map('n', 'fs', 'i<C-x>s', { desc = 'Spell options' })
 map('n', '<leader>i', cmd('Inspect'), { desc = 'Inspect highlight' })
 
 -- Toggle para booleanos: true|false, on|off, yes|no
-map('n', '<leader>b', cmd("lua require('utils.toggle_bool').run()"), { desc = 'Toggle boolean' })
+map('n', '<leader>b', cmd("lua require('gr-utils').toggle()"), { desc = 'Toggle boolean' })
 
 -- NOTE: Diagnostics for LSP ---------------------------------------------------------
 -- disable diagnostics 'vim.diagnostic.open_float()'

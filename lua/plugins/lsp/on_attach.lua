@@ -10,16 +10,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
       lsp_map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
       lsp_map('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
       lsp_map('go', vim.lsp.buf.type_definition, 'Type [D]efinition')
-      lsp_map('<leader>re', function()
-         require('utils.renamer').open()
-      end, '[R]e[n]ame')
+      lsp_map('<leader>re', "<cmd>lua require('gr-utils').rename.run()<CR>", 'rename variable')
       lsp_map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-      lsp_map('K', function()
-         local winid = require('ufo').peekFoldedLinesUnderCursor()
-         if not winid then
-            vim.lsp.buf.hover()
-         end
-      end, 'Hover Documentation')
+      lsp_map('K', vim.lsp.buf.hover, 'Hover Documentation')
       lsp_map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
       --
 

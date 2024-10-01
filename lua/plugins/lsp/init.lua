@@ -116,11 +116,6 @@ return {
                },
             })
          end
-         --
-         require('ufo').setup({
-            fold_virt_text_handler = require('plugins.lsp.util_lsp').handler_ufo,
-            close_fold_kinds = {},
-         })
       end,
    },
 

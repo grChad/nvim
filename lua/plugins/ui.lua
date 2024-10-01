@@ -106,11 +106,6 @@ return {
       end,
    },
 
-   -- NOTE: ver su utilidad y tratar de reemplazarlo
-   {
-      'kevinhwang91/nvim-ufo',
-      dependencies = { 'kevinhwang91/promise-async' },
-   },
    { -- Para ver los simbolos y la posicion de las variables y funciones en una barra lateral
       'hedyhli/outline.nvim',
       lazy = true,
