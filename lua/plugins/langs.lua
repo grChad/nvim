@@ -63,19 +63,11 @@ return {
       end,
    },
 
-   -- TODO: Probar si se puede reeemplazar por live-preview
-   -- {
-   --    'iamcco/markdown-preview.nvim',
-   --    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-   --    build = 'cd app && yarn install',
-   --    ft = 'markdown',
-   --    keys = require('core.key_plugins').markdown_preview,
-   -- },
    {
       'brianhuster/live-preview.nvim',
       ft = { 'markdown', 'html' },
       config = function()
-         require('live-preview').setup({})
+         require('live-preview').setup()
       end,
    },
 

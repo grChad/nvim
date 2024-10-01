@@ -10,5 +10,3 @@ require('core.autocmds')
 
 -- Plugin manager for NeoVim
 require('core.lazy')
-
-require('utils.filetype')
