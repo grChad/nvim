@@ -1,5 +1,4 @@
-local vtree = grvim.nvimTree
-local icons = require('utils.icons').git
+local ntree = grvim.nvimTree
 
 local function get_current_path()
    local handle = io.popen('pwd')
@@ -73,15 +72,6 @@ return {
 
          -- +--------------------------------------------------------------------+
 
-         local git_icons = {
-            unstaged = icons.modifier,
-            staged = icons.check,
-            unmerged = icons.icon_branch,
-            untracked = icons.add,
-            deleted = icons.remove,
-            ignored = icons.ignored,
-         }
-
          local options = {
             hijack_cursor = true, -- para tener el cursor un espacio después del nombre
             sort_by = 'case_sensitive', -- Como se ordena en directorio: 'name', 'case_sensitive', 'modification_time', 'extension'
@@ -89,16 +79,16 @@ return {
             respect_buf_cwd = true, -- Cambiar el CWD de NvimTree al nuevo buffer al abrir NvimTree
 
             view = {
-               width = vtree.width,
-               side = vtree.position,
+               width = ntree.width,
+               side = ntree.position,
                float = {
-                  enable = vtree.isfloat,
+                  enable = ntree.isfloat,
                   open_win_config = {
                      border = grvim.ui.border_inset,
-                     width = vtree.width,
+                     width = ntree.width,
                      height = floatHeigh() - 2,
                      row = (vim.api.nvim_list_uis()[1].height - floatHeigh()) * 0.5,
-                     col = (vim.api.nvim_list_uis()[1].width - vtree.width) * 0.5,
+                     col = (vim.api.nvim_list_uis()[1].width - ntree.width) * 0.5,
                   },
                },
             },
@@ -116,18 +106,14 @@ return {
                indent_width = 3,
                indent_markers = {
                   enable = true,
-                  icons = {
-                     corner = grvim.ui.icons.separators.corners.curve_bottom_left,
-                  },
+                  icons = ntree.indent_markers_icon,
                },
                icons = {
                   -- Iconos de carpetas y diagnosticos de Git
                   show = {
                      folder_arrow = false, -- "" open directory or "" closed
                   },
-                  glyphs = {
-                     git = git_icons,
-                  },
+                  glyphs = { git = ntree.git_icons },
                },
                special_files = { 'Cargo.toml', 'Makefile', 'README.md', 'readme.md', 'package.json', '.env' },
             },
@@ -138,11 +124,7 @@ return {
                -- ignore_list = {},
             },
 
-            diagnostics = {
-               -- Diagnosticos LSP
-               enable = true, -- default 'false'
-               icons = { hint = '󰋗' },
-            },
+            diagnostics = ntree.diagnostics,
 
             filters = {
                dotfiles = true, -- No mostrar archivos ocultos, Alternar con 'H' -> toggle_dotfiles
@@ -164,7 +146,7 @@ return {
                   open_win_config = { border = 'rounded' },
                },
                open_file = {
-                  quit_on_open = vtree.quit_on_open, -- Cierra la ventana de NvimTree al seleccionar un elemento
+                  quit_on_open = ntree.quit_on_open, -- Cierra la ventana de NvimTree al seleccionar un elemento
                   window_picker = {
                      -- todas estas opciones estan por default, habilitar si se quiere cambiar
                      -- exclude = {
@@ -189,7 +171,7 @@ return {
             pattern = '*',
             callback = function()
                nvim_tree_view.row = (vim.api.nvim_get_option_value('lines', {}) - floatHeigh()) * 0.5
-               nvim_tree_view.col = (vim.api.nvim_get_option_value('columns', {}) - vtree.width) * 0.5
+               nvim_tree_view.col = (vim.api.nvim_get_option_value('columns', {}) - ntree.width) * 0.5
             end,
          })
       end,

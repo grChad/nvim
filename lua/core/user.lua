@@ -1,5 +1,3 @@
-local gr_icons = require('utils.icons')
-
 _G.grvim = {}
 
 ---@alias UiHiglightStyle 'background'|'foreground'|'virtual'
@@ -7,7 +5,6 @@ _G.grvim = {}
 grvim.ui = {
    border_inset = { ' ', '▁', ' ', '▏', ' ', '▔', ' ', '▕' },
    border_rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
-   icons = gr_icons,
    ---@type {style: UiHiglightStyle, tailwind: boolean}
    hig_colors = {
       style = 'virtual',
@@ -25,28 +22,15 @@ grvim.gitsigns = {
 }
 
 grvim.lsp = {
-   signs = {
-      Error = gr_icons.diagnostic.error .. ' ',
-      Warn = gr_icons.diagnostic.warning .. ' ',
-      Hint = gr_icons.diagnostic.hint .. ' ',
-      Info = gr_icons.diagnostic.info .. ' ',
-   },
+   signs = { Error = ' ', Warn = ' ', Hint = '󰌵 ', Info = ' ' },
 }
 
 grvim.formatter = {
+   -- stylua: ignore
    prettier_cwd = {
-      '.prettierrc',
-      '.prettierrc.json',
-      '.prettierrc.yml',
-      '.prettierrc.yaml',
-      '.prettierrc.json5',
-      '.prettierrc.js',
-      '.prettierrc.cjs',
-      '.prettierrc.mjs',
-      '.prettierrc.toml',
-      'prettier.config.js',
-      'prettier.config.cjs',
-      'prettier.config.mjs',
+      '.prettierrc', '.prettierrc.json', '.prettierrc.yml', '.prettierrc.yaml',
+      '.prettierrc.json5', '.prettierrc.js', '.prettierrc.cjs', '.prettierrc.mjs',
+      '.prettierrc.toml', 'prettier.config.js', 'prettier.config.cjs', 'prettier.config.mjs',
    },
 }
 
@@ -56,6 +40,14 @@ grvim.nvimTree = {
    width = 40,
    ---@type 'left' | 'right'
    position = 'left',
+   diagnostics = {
+      enable = true,
+      icons = { hint = '󰌵', info = '', warning = '', error = '' },
+   },
+   -- stylua: ignore
+   git_icons = { unstaged = '', staged = '', unmerged = '', untracked = '', deleted = '', ignored = '󱥸' },
+   indent_markers_icon = { corner = '╰' },
+   bottom = '─',
 }
 
 grvim.mason = {
@@ -73,10 +65,6 @@ grvim.mason = {
    },
 }
 
-grvim.telescope = {
-   borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-}
-
 grvim.treesitter = {
    -- stylua: ignore
    ensure_installed = {
@@ -86,4 +74,8 @@ grvim.treesitter = {
       'rust', 'comment', 'gitignore', 'git_config', 'astro', 'sql', 'latex', 'xml',
       'http'
    },
+}
+
+grvim.telescope = {
+   borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
 }

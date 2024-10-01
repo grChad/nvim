@@ -5,28 +5,9 @@ return {
       lazy = false,
       config = function()
          require('grbar').setup({
-            -- background = '#07196F',
-            -- foreground = '#DFDFDF',
-            -- sub_foreground = '#838383',
-            -- separator_color = '#FAFFC6',
-            -- mode_style = 'foreground', -- 'foreground' | 'background'
-            user = {
-               -- enabled = true,
-               -- icon = ' ',
-               -- color_icon = ' ',
-               name = 'Gabriel',
-            },
+            user = { name = 'Gabriel' },
             ia = {
-               supermaven = {
-                  enabled = true,
-                  icon = ' ',
-                  --    color_icon = '#13e2de',
-               },
-               -- codeium = {
-               --    enabled = true,
-               --    -- icon = '',
-               --    -- color_icon = '',
-               -- },
+               supermaven = { enabled = true, icon = ' ' },
             },
          })
       end,

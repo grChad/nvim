@@ -7,18 +7,13 @@ return {
       keys = require('core.key_plugins').telescope,
       opts = {
          defaults = {
+            -- stylua: ignore
             vimgrep_arguments = {
-               'rg',
-               '-L',
-               '--color=never',
-               '--no-heading',
-               '--with-filename',
-               '--line-number',
-               '--column',
-               '--smart-case',
+               'rg', '-L', '--color=never', '--no-heading', '--with-filename',
+               '--line-number', '--column', '--smart-case',
             },
             prompt_prefix = '  ',
-            selection_caret = ' ',
+            selection_caret = ' ',
             entry_prefix = '  ',
             initial_mode = 'insert',
             selection_strategy = 'reset',
