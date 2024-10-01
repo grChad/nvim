@@ -7,17 +7,6 @@ GROUPS.highlight_yank = {
    end,
 }
 
-GROUPS.clean_file_qf = {
-   event = 'Filetype',
-   pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
-   callback = function()
-      vim.opt_local.relativenumber = false
-      vim.opt_local.number = false
-      vim.opt_local.signcolumn = 'no'
-      vim.opt_local.colorcolumn = ''
-   end,
-}
-
 GROUPS.disable_node_modules = {
    event = { 'BufRead', 'BufNewFile' },
    pattern = '*/node_modules/*',
