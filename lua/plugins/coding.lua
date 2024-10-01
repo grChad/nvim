@@ -14,28 +14,12 @@
 
 return {
    {
-      'windwp/nvim-ts-autotag',
-      event = { 'BufReadPre', 'BufNewFile' },
-      opts = true,
-   },
-
-   {
-      'echasnovski/mini.surround',
+      'kylechui/nvim-surround',
+      version = '*',
       event = 'VeryLazy',
-      opts = {
-         mappings = {
-            add = 'as', -- Add surrounding in Normal and Visual modes
-            delete = 'ds', -- Delete surrounding
-            replace = 'cs', -- Change surrounding
-            find = '',
-            find_left = '',
-            highlight = '',
-            update_n_lines = '',
-
-            suffix_last = '',
-            suffix_next = '',
-         },
-      },
+      config = function()
+         require('nvim-surround').setup()
+      end,
    },
 
    {
