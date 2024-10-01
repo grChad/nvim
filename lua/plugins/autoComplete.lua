@@ -1,9 +1,8 @@
 return {
    {
       'L3MON4D3/LuaSnip',
-      build = (not jit.os:find('Windows'))
-            and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build'; make install_jsregexp"
-         or nil,
+      build = 'make install_jsregexp',
+      version = 'v2.*',
       dependencies = { 'grChad/snippets.nvim', dev = true },
       config = function()
          require('luasnip').setup({
@@ -36,7 +35,6 @@ return {
             },
             window = {
                completion = {
-                  -- border = grvim.ui.border_rounded,
                   border = 'rounded',
                   col_offset = 1,
                   side_padding = 0,

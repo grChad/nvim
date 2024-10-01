@@ -21,7 +21,7 @@ return {
             config = function()
                -- When in diff mode, we want to use the default
                -- vim text objects c & C instead of the treesitter ones.
-               local move = require('nvim-treesitter.textobjects.move') ---@type table<string,fun(...)>
+               local move = require('nvim-treesitter.textobjects.move')
                local configs = require('nvim-treesitter.configs')
                for name, fn in pairs(move) do
                   if name:find('goto') == 1 then
@@ -77,7 +77,6 @@ return {
             },
          },
       },
-      ---@param opts TSConfig
       config = function(_, opts)
          -- registrar markdownJsx o 'mdx' por markdown o 'md'
          vim.treesitter.language.register('markdown', 'mdx')

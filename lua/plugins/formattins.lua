@@ -27,7 +27,6 @@ return {
 
                ['lua'] = { 'stylua' },
                ['toml'] = { 'taplo' },
-               -- ['css'] = { 'stylelint' },
                -- ['latex'] = { 'latexindent' },
             },
             format_on_save = {

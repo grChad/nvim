@@ -19,8 +19,8 @@ return {
 
          dashboard.opts.opts.noautocmd = true
 
-         local width = 57 -- 104
-         local height = 8 -- 28
+         local width = 57
+         local height = 8
 
          local path_logo = '~/.config/nvim/lua/core/alpha-logo.sh'
          dashboard.section.terminal.command = 'sh ' .. path_logo

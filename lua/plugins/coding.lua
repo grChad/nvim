@@ -47,7 +47,7 @@ return {
       'numToStr/Comment.nvim',
       keys = require('core.key_plugins').comment,
       config = function()
-         -- Ignorar los warings de las opciones que faltal.
+         -- NOTE: Ignorar los warings de las opciones que faltal.
          require('Comment').setup({
             toggler = { line = '', block = '' },
             opleader = { line = '', block = '' },
@@ -79,9 +79,7 @@ return {
       cmd = 'ToggleTerm',
       keys = require('core.key_plugins').toggleterm,
       config = function()
-         require('toggleterm').setup({
-            size = 10,
-         })
+         require('toggleterm').setup({ size = 10 })
       end,
    },
 }

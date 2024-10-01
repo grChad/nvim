@@ -81,24 +81,4 @@ return {
          })
       end,
    },
-
-   -- FIXME: probar a usar hasta que se pueda reemplazar con mi extension
-   -- {
-   --    'EtiamNullam/fold-ribbon.nvim',
-   --    lazy = false,
-   --    config = function()
-   --       require('fold-ribbon').setup({
-   --          highlight_steps = {
-   --             { bg = '#ff8888' },
-   --             { bg = '#88ff88' },
-   --             { bg = '#8888ff' },
-   --             { bg = '#E5E223' },
-   --          },
-   --       })
-   --
-   --       local ribbon = require('fold-ribbon').get_ribbon()
-   --
-   --       vim.o.statuscolumn = '%l ' .. ribbon
-   --    end,
-   -- },
 }
