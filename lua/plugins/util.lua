@@ -8,7 +8,7 @@ return {
          local grUtils = require('gr-utils')
 
          grUtils.statuscolumn.setup({
-            ignore_fold_ft = { 'text', 'markdown', 'mdx' },
+            ignore_fold_ft = { 'text', 'markdown', 'mdx', 'help', 'qf', 'diff', 'fugitiveblame' },
          })
       end,
    },
