@@ -63,12 +63,20 @@ return {
       end,
    },
 
+   -- TODO: Probar si se puede reeemplazar por live-preview
+   -- {
+   --    'iamcco/markdown-preview.nvim',
+   --    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+   --    build = 'cd app && yarn install',
+   --    ft = 'markdown',
+   --    keys = require('core.key_plugins').markdown_preview,
+   -- },
    {
-      'iamcco/markdown-preview.nvim',
-      cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-      build = 'cd app && yarn install',
-      ft = 'markdown',
-      keys = require('core.key_plugins').markdown_preview,
+      'brianhuster/live-preview.nvim',
+      ft = { 'markdown', 'html' },
+      config = function()
+         require('live-preview').setup({})
+      end,
    },
 
    {
@@ -77,5 +85,13 @@ return {
       ft = 'markdown',
       opts = {},
       keys = require('core.key_plugins').img_clip,
+   },
+
+   -- NOTE: -------------------[for Rest API]---------------------
+   {
+      'lima1909/resty.nvim',
+      cmd = 'Resty',
+      keys = require('core.key_plugins').resty,
+      dependencies = { 'nvim-lua/plenary.nvim' },
    },
 }
