@@ -9,7 +9,7 @@ GROUPS.highlight_yank = {
 
 GROUPS.clean_file_qf = {
    event = 'Filetype',
-   pattern = 'qf',
+   pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
    callback = function()
       vim.opt_local.relativenumber = false
       vim.opt_local.number = false
@@ -22,22 +22,6 @@ GROUPS.disable_node_modules = {
    event = { 'BufRead', 'BufNewFile' },
    pattern = '*/node_modules/*',
    command = 'lua vim.diagnostic.disable(0)',
-}
-
--- NOTE: Eliminar lineas porteriores al guardar, al final de la linea y al final del documento
-GROUPS.mkdir_before_saving = {
-   event = { 'BufWritePre', 'FileWritePre' },
-   pattern = '*',
-   command = [[ silent! call mkdir(expand("<afile>:p:h"), "p") ]],
-}
-GROUPS.trim_extra_spaces_and_newlines = {
-   event = 'BufWritePre',
-   pattern = '*',
-   command = [[
-      let current_pos = getpos(".")
-      silent! %s/\v\s+$|\n+%$//e
-      silent! call setpos(".", current_pos)
-      ]],
 }
 
 -- NOTE: Para agregar el texto con wrap y con tabulacion.
