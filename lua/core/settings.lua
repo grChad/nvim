@@ -116,7 +116,7 @@ vim.o.encoding = 'utf-8'
 vim.cmd('set fileencoding=utf-8')
 
 vim.o.foldenable = true
-vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 
 -- add binaries installed by mason.nvim to path
