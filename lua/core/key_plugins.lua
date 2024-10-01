@@ -42,6 +42,10 @@ MAP.comment = {
    },
 }
 
+MAP.resty = {
+   { leader .. 'rr', cmd('Resty run'), desc = '[R]esty [R]un request under the cursor' },
+}
+
 MAP.markdown_preview = {
    {
       leader .. 'mp',

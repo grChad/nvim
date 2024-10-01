@@ -84,5 +84,6 @@ grvim.treesitter = {
       'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline', 'python', 'htmldjango',
       'query', 'regex', 'toml', 'typescript', 'tsx', 'vue', 'vim', 'vimdoc', 'yaml',
       'rust', 'comment', 'gitignore', 'git_config', 'astro', 'sql', 'latex', 'xml',
+      'http'
    },
 }
