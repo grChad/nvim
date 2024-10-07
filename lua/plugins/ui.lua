@@ -63,27 +63,25 @@ return {
       'lukas-reineke/indent-blankline.nvim',
       lazy = false,
       main = 'ibl',
-      opts = {
-         indent = { highlight = 'IndentBlanklineChar', char = '▏', tab_char = '▏' },
-         -- indent = { char = '▏', tab_char = '▏' },
-         -- scope = { highlight = 'IndentBlanklineContextChar' },
-         scope = { enabled = false },
-      },
-   },
+      config = function()
+         -- NOTE: los highlight groups se crean en el theme [ 'grChad/theme-custom' ]
+         -- stylua: ignore
+         local Indent_hightlight = {
+            'Ibl_RainbowRed', 'Ibl_RainbowYellow', 'Ibl_RainbowBlue', 'Ibl_RainbowOrange',
+            'Ibl_RainbowGreen', 'Ibl_RainbowViolet', 'Ibl_RainbowCyan',
+         }
 
-   {
-      'echasnovski/mini.indentscope',
-      version = false, -- wait till new 0.7.0 release to put it back on semver
-      lazy = false,
-      opts = { symbol = '▏' },
-      config = function(_, opts)
-         vim.api.nvim_create_autocmd('FileType', {
-            pattern = { 'help', 'alpha', 'neo-tree', 'NvimTree', 'noice', 'lazy', 'lspinfo', '' },
-            callback = function()
-               vim.b.miniindentscope_disable = true
-            end,
+         -- stylua: ignore
+         local scope_highlights = {
+            'Ibl_RainbowRedScope', 'Ibl_RainbowYellowScope', 'Ibl_RainbowBlueScope',
+            'Ibl_RainbowOrangeScope', 'Ibl_RainbowGreenScope', 'Ibl_RainbowVioletScope',
+            'Ibl_RainbowCyanScope',
+         }
+
+         require('ibl').setup({
+            indent = { highlight = Indent_hightlight, char = '▏', tab_char = '▏' },
+            scope = { highlight = scope_highlights },
          })
-         require('mini.indentscope').setup(opts)
       end,
    },
 
