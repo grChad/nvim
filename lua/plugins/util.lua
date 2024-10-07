@@ -8,7 +8,11 @@ return {
          local grUtils = require('gr-utils')
 
          grUtils.statuscolumn.setup({
-            ignore_fold_ft = { 'text', 'markdown', 'mdx', 'help', 'qf', 'diff', 'fugitiveblame' },
+            -- stylua: ignore
+            ignore_fold_ft = {
+               'text', 'markdown', 'mdx', 'help', 'qf', 'diff', 'fugitiveblame', 'alpha',
+               'mason', 'lspinfo', 'TelescopePrompt',
+            },
          })
       end,
    },
