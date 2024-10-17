@@ -12,12 +12,33 @@ local cmd = function(str)
    return '<cmd>' .. str .. '<CR>'
 end
 
+local deleteCustomBuffer = function()
+   local api = require('nvim-tree.api')
+
+   -- si es visible ejecutar una serie de comandos
+   if api.tree.is_visible() then
+      vim.cmd('NvimTreeClose')
+      vim.cmd('bdelete')
+      vim.cmd('NvimTreeOpen')
+      vim.cmd('wincmd l')
+   else
+      vim.cmd('bdelete')
+   end
+end
+
 ---------------------------------[ Plugin Mappings ]----------------------------------
 local MAP = {}
 
 MAP.bufferline = {
    { ',', cmd('BufferLinePick'), desc = 'Pick buffer' },
-   { leader .. 'x', cmd('bdelete'), desc = 'delete buffer' },
+   -- { leader .. 'x', cmd('bdelete'), desc = 'delete buffer' },
+   {
+      leader .. 'x',
+      function()
+         deleteCustomBuffer()
+      end,
+      desc = 'delete buffer',
+   },
    { leader .. 'k', cmd('BufferLineCycleNext'), desc = 'Next buffer' },
    { leader .. 'j', cmd('BufferLineCyclePrev'), desc = 'Previous buffer' },
 }

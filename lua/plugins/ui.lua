@@ -25,11 +25,13 @@ return {
                offsets = {
                   {
                      filetype = 'NvimTree',
-                     text = 'File Explorer',
+                     text = 'Explorador de Archivos',
                      text_align = 'center', -- 'left' | 'center' | 'right',
                      separator = false,
                   },
                },
+               hover = { enabled = true, delay = 200, reveal = { 'close' } },
+               indicator = { style = 'underline' },
             },
          })
       end,

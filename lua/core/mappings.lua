@@ -15,7 +15,7 @@ end
 local map = vim.keymap.set
 
 map('n', '<leader>w', cmd('write'), { desc = 'Save file' })
-map('n', '<leader>q', cmd('quit'), { desc = 'Save file' })
+map('n', '<leader>q', cmd('quit'), { desc = 'Quit file' })
 map('n', '<leader>y', cmd('%y+'), { desc = 'copy whole file' })
 -- Don't copy the replaced text after pasting in visual mode
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste

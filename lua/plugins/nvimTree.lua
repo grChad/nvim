@@ -155,6 +155,7 @@ return {
                      -- },
                   },
                },
+               remove_file = { close_window = false },
             },
 
             trash = {

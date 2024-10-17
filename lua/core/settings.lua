@@ -29,6 +29,7 @@ vim.opt.mouse = 'a'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.termguicolors = true
 vim.opt.mousemodel = 'popup'
+vim.opt.mousemoveevent = true
 
 -- para el Cmd y statusline
 -- opt.cmdheight = 0

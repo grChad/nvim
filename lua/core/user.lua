@@ -35,9 +35,9 @@ grvim.formatter = {
 }
 
 grvim.nvimTree = {
-   isfloat = true,
-   quit_on_open = true, -- Cierra la ventana al seleccionar elemento
-   width = 40,
+   isfloat = false, -- default true
+   quit_on_open = false, -- Cierra la ventana al seleccionar elemento
+   width = 32, -- default 40
    ---@type 'left' | 'right'
    position = 'left',
    diagnostics = {
