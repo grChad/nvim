@@ -26,12 +26,6 @@ return {
                includeInlayFunctionLikeReturnTypeHints = true, -- 'boolean'
                includeInlayEnumMemberValueHints = true, -- 'boolean'
             },
-            tsserver_plugins = {
-               -- for TypeScript v4.9+
-               '@styled/typescript-styled-plugin',
-               -- or for older TypeScript versions
-               -- 'typescript-styled-plugin',
-            },
          },
       },
    },
@@ -64,11 +58,11 @@ return {
    },
 
    {
-      'brianhuster/live-preview.nvim',
-      ft = { 'markdown', 'html' },
-      config = function()
-         require('live-preview').setup()
-      end,
+      'iamcco/markdown-preview.nvim',
+      cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
+      build = 'cd app && npm install',
+      ft = { 'markdown' },
+      keys = require('core.key_plugins').markdown_preview,
    },
 
    {

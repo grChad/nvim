@@ -76,7 +76,7 @@ return {
             })
          end
          lspconfig.emmet_language_server.setup({
-            filetypes = { 'html', 'htmldjango', 'css', 'scss', 'vue' },
+            -- filetypes = { 'html', 'htmldjango', 'css', 'scss', 'vue' },
          })
          --
          lspconfig.cssls.setup({
