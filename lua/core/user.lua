@@ -60,7 +60,7 @@ grvim.mason = {
 
       -- formatter & Linter
       'stylua', 'prettierd', 'biome', 'taplo', 'latexindent',
-      'ruff-lsp', -- linting and formatting for 'python'
+      'ruff', -- linting and formatting for 'python'
       -- 'selene', -- diagnostic for lua
    },
 }

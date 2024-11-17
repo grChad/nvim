@@ -95,7 +95,7 @@ return {
          })
 
          -- formater and linter for 'Python', made in Rust
-         lspconfig.ruff_lsp.setup({})
+         lspconfig.ruff.setup({})
 
          -- stylua: ignore
          local servers = {
