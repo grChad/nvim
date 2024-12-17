@@ -9,10 +9,12 @@
 ## Requisitos
 
 - NeoVim 0.9 o nightly, para _Fedora_ ve [**aquí**](https://github.com/grChad/my-dotfiles#neovim-)
+- curl
+- git
 - Una fuente con soporte de Glyphos: [_nert-fonts_](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts)
 - [_ripgrep_](https://github.com/BurntSushi/ripgrep) para Telescope (opcional)
 - [_NodeJs_](https://nodejs.org/en) para descargar algunos de los servidores. Tengo una guia de como instalarlo con _fnm_ [**aquí**](https://github.com/grChad/my-dotfiles/blob/main/other-settings/node.md)
-- Y otros recomendados como: git, make, pip, npm y cargo instalados en tu sistema.
+- Y otros recomendados como: make, pip, npm y cargo instalados en tu sistema.
 
 ## Instalar
 
