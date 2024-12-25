@@ -1,6 +1,4 @@
-local M = {}
-
-M.settings = {
+return {
    python = {
       analysis = {
          autoSearchPaths = true,
@@ -9,5 +7,3 @@ M.settings = {
       },
    },
 }
-
-return M

@@ -1,8 +1,4 @@
--- :7 'neovim/nvim-lspconfig',
--- :156 'williamboman/mason.nvim',
-
 return {
-   -- lspconfig
    {
       'neovim/nvim-lspconfig',
       event = { 'BufRead', 'BufWinEnter', 'BufNewFile' },
@@ -10,110 +6,86 @@ return {
          vim.cmd('silent! do FileType')
       end,
       dependencies = {
+         'saghen/blink.cmp',
          { 'j-hui/fidget.nvim', opts = {} }, -- $progress and notify
       },
       opts = require('plugins.lsp.opts_lsp'),
+
+      ---@param opts PluginLspOpts
       config = function(_, opts)
+         -- border en la ventana de LspInfo
+         require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
+
          require('plugins.lsp.util_lsp').config_diagnostics(opts)
          require('plugins.lsp.on_attach')
 
-         -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-         -- capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-         -- local on_attach = require('plugins.lsp.util_lsp').on_attach
-         local on_attach_sin_highlight = require('plugins.lsp.util_lsp').on_attach_sin_highlight
-         local capabilities = require('plugins.lsp.util_lsp').capabilities
+         local on_attach = require('plugins.lsp.util_lsp').on_attach
+         local on_attach_without_hl = require('plugins.lsp.util_lsp').on_attach_sin_highlight
+         local capabilities = require('blink.cmp').get_lsp_capabilities()
          local handlers = require('plugins.lsp.util_lsp').handlers
-         --
          local lspconfig = require('lspconfig')
 
-         -- configuracion completa de los diagnosticos
-
+         -- NOTE: configuracion completa de los Servidores LSP
          lspconfig.lua_ls.setup({
-            -- on_attach = on_attach,
+            on_attach = on_attach,
             capabilities = capabilities,
             handlers = handlers,
             settings = require('plugins.lsp.servers.lua_ls'),
          })
 
-         -- lspconfig.tsserver.setup({
-         --    on_attach = on_attach,
-         --    capabilities = capabilities,
-         --    handlers = require('config.plugins.lsp.servers.tsserver').handlers,
-         --    settings = require('config.plugins.lsp.servers.tsserver').settings,
-         -- })
+         lspconfig.ts_ls.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            handlers = handlers,
+            settings = require('plugins.lsp.servers.tsserver'),
+         })
          lspconfig.biome.setup({})
-         --
+
          lspconfig.eslint.setup({
-            -- root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
+            root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
             on_attach = require('plugins.lsp.servers.eslint').on_attach,
             settings = require('plugins.lsp.servers.eslint').settings,
          })
-         --
-         lspconfig.tailwindcss.setup({
-            capabilities = require('plugins.lsp.servers.tailwindcss').capabilities,
-            handlers = handlers,
 
+         lspconfig.tailwindcss.setup({
+            capabilities = capabilities,
+            handlers = handlers,
             root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
-            filetypes = require('plugins.lsp.servers.tailwindcss').filetypes,
-            init_options = require('plugins.lsp.servers.tailwindcss').init_options,
-            settings = require('plugins.lsp.servers.tailwindcss').settings,
          })
-         --
+
          lspconfig.stylelint_lsp.setup({
-            filetypes = { 'css', 'scss', 'vue' },
-            -- on_attach = on_attach,
-            -- capabilities = capabilities,
-            -- handlers = handlers,
             settings = require('plugins.lsp.servers.stylelint').settings,
          })
-         --
-         for _, lsp in ipairs({ 'html' }) do
-            lspconfig[lsp].setup({
-               capabilities = capabilities,
-               handlers = handlers,
-               on_attach = on_attach_sin_highlight,
-            })
-         end
-         lspconfig.emmet_language_server.setup({
-            -- filetypes = { 'html', 'htmldjango', 'css', 'scss', 'vue' },
-         })
-         --
-         lspconfig.cssls.setup({
-            capabilities = require('plugins.lsp.util_lsp').capabilitiesCss,
-            settings = {
-               css = {
-                  validate = true,
-               },
-               less = {
-                  validate = true,
-               },
-               scss = {
-                  validate = true,
-               },
-            },
-         })
 
-         -- formater and linter for 'Python', made in Rust
+         lspconfig.pyright.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            handlers = handlers,
+            settings = require('plugins.lsp.servers.pyright'),
+         })
          lspconfig.ruff.setup({})
 
-         -- stylua: ignore
-         local servers = {
-            'jsonls', 'marksman', 'pyright', 'yamlls', 'rust_analyzer',
-            'clangd', 'astro', 'texlab',
-         }
+         lspconfig.rust_analyzer.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            handlers = handlers,
+            settings = require('plugins.lsp.servers.rust_analyzer'),
+         })
 
-         for _, lsp in ipairs(servers) do
+         lspconfig.texlab.setup({
+            on_attach = on_attach,
+            capabilities = capabilities,
+            handlers = handlers,
+            settings = require('plugins.lsp.servers.tex_lab'),
+         })
+
+         lspconfig.emmet_language_server.setup({})
+
+         for _, lsp in pairs({ 'html', 'cssls', 'jsonls', 'marksman', 'clangd', 'astro', 'yamlls' }) do
             lspconfig[lsp].setup({
-               -- on_attach = on_attach,
+               on_attach = on_attach,
                capabilities = capabilities,
                handlers = handlers,
-               settings = {
-                  python = require('plugins.lsp.servers.pyright').settings.python,
-                  yaml = require('plugins.lsp.servers.yaml').settings.yaml,
-                  Rust = require('plugins.lsp.servers.rust_analyzer').settings.Rust,
-                  texlab = require('plugins.lsp.servers.tex_lab'),
-               },
             })
          end
       end,

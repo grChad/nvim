@@ -1,12 +1,12 @@
 local M = {}
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.colorProvider = { dynamicRegistration = false }
-capabilities.textDocument.foldingRange = {
-   dynamicRegistration = false,
-   lineFoldingOnly = true,
-}
+-- local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- capabilities.textDocument.completion.completionItem.snippetSupport = true
+-- capabilities.textDocument.colorProvider = { dynamicRegistration = false }
+-- capabilities.textDocument.foldingRange = {
+--    dynamicRegistration = false,
+--    lineFoldingOnly = true,
+-- }
 
 -- Settings
 local filetypes = {
@@ -19,13 +19,6 @@ local filetypes = {
    'vue',
    'svelte',
    'astro',
-}
-
-local init_options = {
-   userLanguages = {
-      eelixir = 'html-eex',
-      eruby = 'erb',
-   },
 }
 
 local settings = {

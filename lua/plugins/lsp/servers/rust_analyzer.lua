@@ -1,6 +1,4 @@
-local M = {}
-
-M.settings = {
+return {
    Rust = {
       assist = {
          importGranularity = 'module',
@@ -14,5 +12,3 @@ M.settings = {
       },
    },
 }
-
-return M

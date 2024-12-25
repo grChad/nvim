@@ -31,7 +31,7 @@ U.on_attach_sin_highlight = function(client, _)
 end
 
 -- NOTE: Capabilities ---------------------------------------------------------
-U.capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- U.capabilities = require('cmp_nvim_lsp').default_capabilities()
 U.capabilities = vim.lsp.protocol.make_client_capabilities()
 U.capabilities.textDocument.completion.completionItem = {
    documentationFormat = { 'markdown', 'plaintext' },
@@ -55,15 +55,11 @@ U.capabilities.textDocument.foldingRange = {
    lineFoldingOnly = true,
 }
 
-U.capabilitiesCss = require('cmp_nvim_lsp').default_capabilities()
-U.capatilitiesCss = vim.lsp.protocol.make_client_capabilities()
-U.capabilitiesCss.textDocument.completion.completionItem.snippetSupport = true
-
 -- NOTE: Handlers -------------------------------------------------------------
 U.handlers = {
    ['textDocument/hover'] = vim.lsp.with(
       vim.lsp.handlers.hover,
-      { border = 'rounded', title = ' Hover ', max_width = 85, max_height = 18 }
+      { border = 'rounded', title = ' Hover ', max_width = 85, max_height = 18, silent = true }
    ),
    ['textDocument/signatureHelp'] = vim.lsp.with(
       vim.lsp.handlers.signature_help,
@@ -71,32 +67,17 @@ U.handlers = {
    ),
    ['textDocument/publishDiagnostics'] = vim.lsp.with(
       vim.lsp.diagnostic.on_publish_diagnostics,
-      { virtual_text = true }
+      { virtual_text = true, signs = true }
    ),
 }
 
+---@param opts PluginLspOpts
 U.config_diagnostics = function(opts)
-   -- border en la ventana de LspInfo
-   require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
-
-   -- NOTE: ----------------------[diagnostics]-----------------------
    local signs = grvim.lsp.signs
 
    for name, icon in pairs(signs) do
       name = 'DiagnosticSign' .. name
       vim.fn.sign_define(name, { text = icon, texthl = name, numhl = '' })
-   end
-
-   if type(opts.diagnostics.virtual_text) == 'table' and opts.diagnostics.virtual_text.prefix == 'icons' then
-      opts.diagnostics.virtual_text.prefix = vim.fn.has('nvim-0.10.0') == 0 and '●'
-         or function(diagnostic)
-            local icons = require('lazyvim.config').icons.diagnostics
-            for d, icon in pairs(icons) do
-               if diagnostic.severity == vim.diagnostic.severity[d:upper()] then
-                  return icon
-               end
-            end
-         end
    end
 
    vim.diagnostic.config(vim.deepcopy(opts.diagnostics))

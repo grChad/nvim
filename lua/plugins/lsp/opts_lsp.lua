@@ -13,14 +13,12 @@ return {
       },
       severity_sort = true,
    },
-   inlay_hints = { enabled = true },
-   -- TODO: ver como usar o que es 'dodelens'
-   -- codelens = { enabled = true },
-   document_highlight = { enabled = true }, -- lsp cursor word highlighting
+   inlay_hints = { enabled = true, exclude = { 'vue' } },
+   -- Se necesita configurar el plugin 'codelens' para que funcione.
+   codelens = { enabled = false },
+   -- document_highlight = { enabled = true }, -- lsp cursor word highlighting
    -- format = { formatting_options = nil, timeout_ms = nil },
 
-   -- add any global capabilities here
-   -- capabilities = {
    --    workspace = {
    --       fileOperations = {
    --          didRename = true,

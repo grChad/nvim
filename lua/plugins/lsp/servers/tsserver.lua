@@ -1,21 +1,4 @@
-local TS = {}
-
-local handlers = {
-   ['textDocument/hover'] = vim.lsp.with(
-      vim.lsp.handlers.hover,
-      { border = 'rounded', title = ' Hover ', silent = true }
-   ),
-   ['textDocument/signatureHelp'] = vim.lsp.with(
-      vim.lsp.handlers.signature_help,
-      { border = 'rounded', title = ' Help ' }
-   ),
-   ['textDocument/publishDiagnostics'] = vim.lsp.with(
-      vim.lsp.diagnostic.on_publish_diagnostics,
-      { virtual_text = true }
-   ),
-}
-
-local settings = {
+return {
    typescript = {
       format = {
          indentSize = vim.o.shiftwidth,
@@ -34,7 +17,3 @@ local settings = {
       completeFunctionCalls = true,
    },
 }
-
-TS.handlers = handlers
-TS.settings = settings
-return TS
