@@ -1,34 +1,34 @@
 return {
    -- NOTE: -------------------[for typescript]---------------------
-   {
-      'pmizio/typescript-tools.nvim',
-      event = { 'BufRead', 'BufWinEnter', 'BufNewFile' },
-      dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
-      opts = {
-         -- on_attach = function(client, bufnr)
-         --    client.server_capabilities.semanticTokensProvider = nil
-         -- end,
-         handlers = require('plugins.lsp.util_lsp').handlers,
-         settings = {
-            tsserver_locale = 'es',
-            separate_diagnostic_server = true,
-            tsserver_file_preferences = {
-               quotePreference = 'single',
-               includeCompletionsForModuleExports = true,
-               includeCompletionsForImportStatements = true,
-
-               includeInlayParameterNameHints = 'literals', -- 'none' | 'literals' | 'all'
-               includeInlayParameterNameHintsWhenArgumentMatchesName = true, --'boolean'
-               includeInlayFunctionParameterTypeHints = true, -- 'boolean'
-               includeInlayVariableTypeHints = true, -- 'boolean'
-               includeInlayVariableTypeHintsWhenTypeMatchesName = true, -- 'boolean'
-               includeInlayPropertyDeclarationTypeHints = true, -- 'boolean'
-               includeInlayFunctionLikeReturnTypeHints = true, -- 'boolean'
-               includeInlayEnumMemberValueHints = true, -- 'boolean'
-            },
-         },
-      },
-   },
+   -- {
+   --    'pmizio/typescript-tools.nvim',
+   --    event = { 'BufRead', 'BufWinEnter', 'BufNewFile' },
+   --    dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' },
+   --    opts = {
+   --       -- on_attach = function(client, bufnr)
+   --       --    client.server_capabilities.semanticTokensProvider = nil
+   --       -- end,
+   --       -- handlers = require('plugins.lsp.util_lsp').handlers,
+   --       settings = {
+   --          tsserver_locale = 'es',
+   --          separate_diagnostic_server = true,
+   --          tsserver_file_preferences = {
+   --             quotePreference = 'single',
+   --             includeCompletionsForModuleExports = true,
+   --             includeCompletionsForImportStatements = true,
+   --
+   --             includeInlayParameterNameHints = 'literals', -- 'none' | 'literals' | 'all'
+   --             includeInlayParameterNameHintsWhenArgumentMatchesName = true, --'boolean'
+   --             includeInlayFunctionParameterTypeHints = true, -- 'boolean'
+   --             includeInlayVariableTypeHints = true, -- 'boolean'
+   --             includeInlayVariableTypeHintsWhenTypeMatchesName = true, -- 'boolean'
+   --             includeInlayPropertyDeclarationTypeHints = true, -- 'boolean'
+   --             includeInlayFunctionLikeReturnTypeHints = true, -- 'boolean'
+   --             includeInlayEnumMemberValueHints = true, -- 'boolean'
+   --          },
+   --       },
+   --    },
+   -- },
 
    -- NOTE: --------------------[for markdown]----------------------
    {
