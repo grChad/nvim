@@ -1,115 +1,113 @@
 return {
    {
-      'L3MON4D3/LuaSnip',
-      build = 'make install_jsregexp',
-      version = 'v2.*',
-      dependencies = { 'grChad/snippets.nvim', dev = true },
-      config = function()
-         require('luasnip').setup({
-            history = true,
-            delete_check_events = 'TextChanged',
-         })
-
-         require('luasnip.loaders.from_vscode').lazy_load()
-      end,
+      'folke/lazydev.nvim',
+      ft = 'lua', -- only load on lua files
+      cmd = 'LazyDev',
+      opts = {
+         library = {
+            { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+            -- Para usar typos de 'wezterm' instalar `justinsgithub/wezterm-types`
+            -- { path = 'wezterm-types', mods = { 'wezterm' } },
+         },
+      },
    },
 
    {
-      'hrsh7th/nvim-cmp',
-      version = false, -- last release is way too old
-      event = 'InsertEnter',
-      dependencies = {
-         'hrsh7th/cmp-nvim-lsp',
-         'hrsh7th/cmp-buffer',
-         'hrsh7th/cmp-path',
-         'saadparwaiz1/cmp_luasnip',
-         'hrsh7th/cmp-emoji',
+      'saghen/blink.cmp',
+      version = 'v0.*',
+      lazy = false,
+      opts_extend = {
+         'sources.completion.enabled_providers',
+         'sources.default',
       },
-      opts = function()
-         local cmp = require('cmp')
-         local defaults = require('cmp.config.default')()
+      -- NOTE: Los snippets custom tienen que tener el valor "description": "..."
+      dependencies = 'rafamadriz/friendly-snippets',
+      event = 'InsertEnter',
+      opts = {
+         appearance = {
+            use_nvim_cmp_as_default = true,
+            nerd_font_variant = 'mono',
+            kind_icons = grvim.ui.icons.kinds,
+         },
+         keymap = {
+            ---@type 'default' | 'none'
+            preset = 'none', -- 'none' para desactivar 'default'
+            ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
+            ['<C-e>'] = { 'hide', 'fallback' },
+            ['<CR>'] = { 'accept', 'fallback' },
 
-         return {
-            completion = {
-               completeopt = 'menu,menuone,noselect',
-            },
-            window = {
-               completion = {
-                  border = 'rounded',
-                  col_offset = 1,
-                  side_padding = 0,
-                  winhighlight = 'Normal:NormalFloat,CursorLine:NormalFloatSelect,Search:None',
+            ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+            ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
+            ['<C-p>'] = { 'select_prev', 'fallback' },
+            ['<C-n>'] = { 'select_next', 'fallback' },
+
+            ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
+            ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
+         },
+         completion = {
+            accept = { auto_brackets = { enabled = true } },
+            menu = {
+               draw = {
+                  treesitter = { 'lsp' },
+                  columns = {
+                     { 'label', 'label_description', gap = 1 },
+                     { 'kind_icon', 'kind' },
+                  },
+                  components = {
+                     kind_icon = {
+                        ellipsis = false,
+                        text = function(ctx)
+                           if ctx.kind == 'Color' then
+                              return grvim.ui.icons.kinds.Color
+                           end
+
+                           return ctx.kind_icon .. ctx.icon_gap
+                        end,
+                        highlight = function(ctx)
+                           if ctx.kind == 'Color' then
+                              return 'BlinkCmpKindColor'
+                           end
+
+                           return 'BlinkCmpKind' .. ctx.kind
+                        end,
+                     },
+                     kind = {
+                        ellipsis = false,
+                        width = { fill = true },
+                        text = function(ctx)
+                           if ctx.kind == 'Color' then
+                              if ctx.kind_icon == '██' then
+                                 return '󰝤󰝤󰝤󰝤󰝤󰝤󰝤'
+                              else
+                                 return 'Color'
+                              end
+                           end
+
+                           return ctx.kind
+                        end,
+                     },
+                  },
                },
-               documentation = {
-                  border = grvim.ui.border_rounded,
-                  winhighlight = 'Normal:NormalFloat,Search:None',
-                  max_width = 150,
+            },
+            list = {
+               ---@type 'preselect' | 'manual' | 'auto_insert
+               selection = 'manual',
+            },
+            documentation = { auto_show = true, auto_show_delay_ms = 200 },
+         },
+         sources = {
+            default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer' },
+            cmdline = {}, -- disabled
+            providers = {
+               lazydev = {
+                  name = 'LazyDev',
+                  module = 'lazydev.integrations.blink',
+                  score_offset = 100, -- show at a higher priority than lsp
                },
             },
-            snippet = {
-               expand = function(args)
-                  require('luasnip').lsp_expand(args.body)
-               end,
-            },
-            mapping = cmp.mapping.preset.insert({
-               ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-               ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-               ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-               ['<C-f>'] = cmp.mapping.scroll_docs(4),
-               ['<C-Space>'] = cmp.mapping.complete(),
-               ['<C-e>'] = cmp.mapping.abort(),
-               ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-               ['<S-CR>'] = cmp.mapping.confirm({
-                  behavior = cmp.ConfirmBehavior.Replace,
-                  select = true,
-               }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-               ['<C-CR>'] = function()
-                  cmp.abort()
-               end,
-               ['<Tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                     cmp.select_next_item()
-                  elseif require('luasnip').expand_or_jumpable() then
-                     require('luasnip').expand_or_jump()
-                  else
-                     fallback()
-                  end
-               end, { 'i', 's' }),
-
-               ['<S-Tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then
-                     cmp.select_prev_item()
-                  elseif require('luasnip').jumpable(-1) then
-                     require('luasnip').jump(-1)
-                  else
-                     fallback()
-                  end
-               end, { 'i', 's' }),
-            }),
-            sources = cmp.config.sources({
-               { name = 'nvim_lsp' },
-               { name = 'luasnip' },
-               { name = 'path' },
-               { name = 'emoji', option = { insert = true } },
-               { name = 'lazydev', group_index = 0 },
-            }, {
-               { name = 'buffer' },
-            }),
-            formatting = { format = require('gr-utils').cmp_format },
-            experimental = {
-               ghost_text = false,
-            },
-            sorting = defaults.sorting,
-         }
-      end,
-
-      ---@param opts cmp.ConfigSchema
-      config = function(_, opts)
-         for _, source in ipairs(opts.sources) do
-            source.group_index = source.group_index or 1
-         end
-         require('cmp').setup(opts)
-      end,
+         },
+         signature = { enabled = true },
+      },
    },
 
    {
@@ -135,10 +133,6 @@ return {
                end
             end):with_move(),
          })
-
-         local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-         local cmp = require('cmp')
-         cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
       end,
    },
 }
