@@ -1,0 +1,11 @@
+{
+  "Function Array": {
+    "prefix": "moda",
+    "body": [
+      "const ${1:name} = (${2}) => {",
+      "\t${3}",
+      "}"
+    ],
+    "description": "Function Array Simple"
+  }
+}

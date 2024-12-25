@@ -1,0 +1,16 @@
+{
+  "console.log": {
+    "prefix": "cl",
+    "body": "console.log(${1})",
+    "description": "Log to the console"
+  },
+  "Function Array": {
+    "prefix": "fas",
+    "body": [
+      "const ${1:name} = (${2}) => {",
+      "\t${3}",
+      "}"
+    ],
+    "description": "Function Array Simple"
+  }
+}
