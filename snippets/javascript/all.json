@@ -2,7 +2,7 @@
   "console.log": {
     "prefix": "cl",
     "body": "console.log(${1})",
-    "description": "Log to the console"
+    "description": "Console log, de toda la vida"
   },
   "Function Array": {
     "prefix": "fas",
@@ -11,6 +11,6 @@
       "\t${3}",
       "}"
     ],
-    "description": "Function Array Simple"
+    "description": "Function Array Simple - Custom"
   }
 }
