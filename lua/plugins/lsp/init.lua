@@ -65,21 +65,12 @@ return {
          })
          lspconfig.ruff.setup({})
 
-         lspconfig.rust_analyzer.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-            settings = require('plugins.lsp.servers.rust_analyzer'),
-         })
-
          lspconfig.texlab.setup({
             on_attach = on_attach,
             capabilities = capabilities,
             handlers = handlers,
             settings = require('plugins.lsp.servers.tex_lab'),
          })
-
-         lspconfig.emmet_language_server.setup({})
 
          for _, lsp in pairs({ 'html', 'cssls', 'jsonls', 'marksman', 'clangd', 'astro', 'yamlls' }) do
             lspconfig[lsp].setup({

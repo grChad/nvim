@@ -100,15 +100,13 @@ grvim.nvimTree = {
 grvim.mason = {
    -- stylua: ignore
    ensure_installed = {
-      'lua-language-server', 'html-lsp', 'emmet-language-server', 'stylelint-lsp',
-      'css-lsp', 'tailwindcss-language-server', 'json-lsp', 'pyright', 'rust-analyzer',
-      'marksman', 'yaml-language-server', 'astro-language-server', 'eslint-lsp',
-      'texlab', 'typescript-language-server',
+      'lua-language-server', 'html-lsp', 'stylelint-lsp', 'css-lsp', 'tailwindcss-language-server',
+      'json-lsp', 'pyright', 'marksman', 'yaml-language-server', 'astro-language-server',
+      'eslint-lsp', 'texlab', 'typescript-language-server',
 
       -- formatter & Linter
       'stylua', 'prettierd', 'biome', 'taplo', 'latexindent',
       'ruff', -- linting and formatting for 'python'
-      -- 'selene', -- diagnostic for lua
    },
 }
 
@@ -118,7 +116,7 @@ grvim.treesitter = {
       'bash', 'diff', 'html', 'css', 'scss', 'javascript', 'json', 'jsdoc', 'jsonc',
       'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline', 'python', 'htmldjango',
       'query', 'regex', 'toml', 'typescript', 'tsx', 'vue', 'vim', 'vimdoc', 'yaml',
-      'rust', 'comment', 'gitignore', 'git_config', 'astro', 'sql', 'latex', 'xml',
+      'comment', 'gitignore', 'git_config', 'astro', 'sql', 'latex', 'xml', 'go',
       'http'
    },
 }
