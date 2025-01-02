@@ -135,4 +135,22 @@ return {
          })
       end,
    },
+
+   {
+      'windwp/nvim-ts-autotag',
+      event = { 'BufReadPre', 'BufNewFile' },
+      config = function()
+         require('nvim-ts-autotag').setup({
+            opts = {
+               enable_rename = false, -- Auto rename pairs of tags
+               enable_close_on_slash = true, -- Auto close on trailing </
+            },
+            -- per_filetype = {
+            --    ['html'] = {
+            --       enable_close = false,
+            --    },
+            -- },
+         })
+      end,
+   },
 }
