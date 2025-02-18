@@ -20,7 +20,7 @@ return {
          'sources.completion.enabled_providers',
          'sources.default',
       },
-      -- NOTE: Los snippets custom tienen que tener el valor "description": "..."
+      -- NOTE: Los snippets custom tienen que tener el valor "description": "...", de lo contrario no funkan
       dependencies = 'rafamadriz/friendly-snippets',
       event = 'InsertEnter',
       opts = {
@@ -34,7 +34,7 @@ return {
             preset = 'none', -- 'none' para desactivar 'default'
             ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
             ['<C-e>'] = { 'hide', 'fallback' },
-            ['<CR>'] = { 'accept', 'fallback' },
+            ['<CR>'] = { 'select_and_accept', 'fallback' },
 
             ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
             ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
@@ -67,7 +67,6 @@ return {
                            if ctx.kind == 'Color' then
                               return 'BlinkCmpKindColor'
                            end
-
                            return 'BlinkCmpKind' .. ctx.kind
                         end,
                      },
@@ -90,14 +89,13 @@ return {
                },
             },
             list = {
-               ---@type 'preselect' | 'manual' | 'auto_insert
-               selection = 'manual',
+               -- configuracion para selection 'manual', para otras opciones revise la documentacion
+               selection = { preselect = false, auto_insert = false },
             },
             documentation = { auto_show = true, auto_show_delay_ms = 200 },
          },
          sources = {
             default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer' },
-            cmdline = {}, -- disabled
             providers = {
                lazydev = {
                   name = 'LazyDev',
@@ -106,6 +104,7 @@ return {
                },
             },
          },
+         -- cmdline = { enabled = false }, -- default in 'true'
          signature = { enabled = true },
       },
    },
