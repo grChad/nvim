@@ -11,6 +11,13 @@
       },
       {
         "language": [
+          "typescript",
+          "typescriptreact"
+        ],
+        "path": "./javascript/typescript.json"
+      },
+      {
+        "language": [
           "javascript",
           "typescript",
           "javascriptreact",

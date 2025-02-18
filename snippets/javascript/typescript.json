@@ -1,0 +1,7 @@
+{
+  "use interface or types": {
+    "prefix": "param",
+    "body": "{${2:params}}: ${1:Props}",
+    "description": "use parameters with interface or types"
+  }
+}
