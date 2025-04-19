@@ -11,8 +11,7 @@ return {
       },
       opts = require('plugins.lsp.opts_lsp'),
 
-      ---@param opts PluginLspOpts
-      config = function(_, opts)
+      config = function()
          -- border en la ventana de LspInfo
          require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
 
@@ -21,20 +20,6 @@ return {
          local handlers = require('plugins.lsp.util_lsp').handlers
          local lspconfig = require('lspconfig')
 
-         -- NOTE: configuracion completa de los Servidores LSP
-         -- lspconfig.lua_ls.setup({
-         --    on_attach = on_attach,
-         --    capabilities = capabilities,
-         --    handlers = handlers,
-         --    settings = require('plugins.lsp.servers.lua_ls'),
-         -- })
-
-         lspconfig.ts_ls.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-            settings = require('plugins.lsp.servers.tsserver'),
-         })
          lspconfig.biome.setup({})
 
          lspconfig.eslint.setup({
@@ -54,8 +39,8 @@ return {
          })
 
          lspconfig.pyright.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
+            -- on_attach = on_attach,
+            -- capabilities = capabilities,
             handlers = handlers,
             settings = require('plugins.lsp.servers.pyright'),
          })

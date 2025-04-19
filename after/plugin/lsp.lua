@@ -1,3 +1,11 @@
+-- Configure for all LSP servers
+vim.lsp.config('*', {
+   capabilities = require('blink.cmp').get_lsp_capabilities(),
+})
+
+-- Enable LSP servers
+vim.lsp.enable({ 'luals', 'ts_ls' })
+
 -- config LspAttach
 vim.api.nvim_create_autocmd('LspAttach', {
    group = vim.api.nvim_create_augroup('GrLspAttach', { clear = true }),
@@ -70,9 +78,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
       end
    end,
 })
-
-vim.lsp.config('*', {
-   capabilities = require('blink.cmp').get_lsp_capabilities(),
-})
-
-vim.lsp.enable({ 'luals' })
