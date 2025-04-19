@@ -33,7 +33,7 @@ return {
             settings = require('plugins.lsp.servers.tex_lab'),
          })
 
-         for _, lsp in pairs({ 'jsonls', 'marksman' }) do
+         for _, lsp in pairs({ 'marksman' }) do
             lspconfig[lsp].setup({
                on_attach = on_attach,
                capabilities = capabilities,
