@@ -20,8 +20,6 @@ return {
          local handlers = require('plugins.lsp.util_lsp').handlers
          local lspconfig = require('lspconfig')
 
-         lspconfig.biome.setup({})
-
          lspconfig.eslint.setup({
             root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
             on_attach = require('plugins.lsp.servers.eslint').on_attach,
