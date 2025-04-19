@@ -4,7 +4,7 @@ vim.lsp.config('*', {
 })
 
 -- Enable LSP servers
-vim.lsp.enable({ 'luals', 'ts_ls', 'html' })
+vim.lsp.enable({ 'luals', 'ts_ls', 'html', 'cssls' })
 
 -- config LspAttach
 vim.api.nvim_create_autocmd('LspAttach', {
