@@ -16,6 +16,7 @@ vim.lsp.enable({
    'ruff',
    'jsonls',
    'marksman',
+   'texlab',
 })
 
 -- config LspAttach

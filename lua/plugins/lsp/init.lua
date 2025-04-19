@@ -25,13 +25,6 @@ return {
             handlers = handlers,
             root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
          })
-
-         lspconfig.texlab.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-            settings = require('plugins.lsp.servers.tex_lab'),
-         })
       end,
    },
 
