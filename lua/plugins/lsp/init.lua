@@ -20,12 +20,6 @@ return {
          local handlers = require('plugins.lsp.util_lsp').handlers
          local lspconfig = require('lspconfig')
 
-         lspconfig.eslint.setup({
-            root_dir = lspconfig.util.root_pattern('.eslintrc.*', 'eslintrc.*'),
-            on_attach = require('plugins.lsp.servers.eslint').on_attach,
-            settings = require('plugins.lsp.servers.eslint').settings,
-         })
-
          lspconfig.tailwindcss.setup({
             capabilities = capabilities,
             handlers = handlers,
@@ -35,8 +29,6 @@ return {
          lspconfig.stylelint_lsp.setup({
             settings = require('plugins.lsp.servers.stylelint').settings,
          })
-
-         lspconfig.ruff.setup({})
 
          lspconfig.texlab.setup({
             on_attach = on_attach,
