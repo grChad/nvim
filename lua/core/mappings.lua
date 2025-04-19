@@ -98,17 +98,7 @@ map('n', 'gk', cmd('norm! K'), { desc = 'Keywordprg' })
 map('n', 'fs', 'i<C-x>s', { desc = 'Spell options' })
 
 -- Inspect for Treesitter
-map('n', '<leader>i', cmd('Inspect'), { desc = 'Inspect highlight' })
+map('n', '<leader>ii', cmd('Inspect'), { desc = 'Inspect highlight' })
 
 -- Toggle para booleanos: true|false, on|off, yes|no
 map('n', '<leader>b', cmd("lua require('gr-utils').toggle()"), { desc = 'Toggle boolean' })
-
--- NOTE: Diagnostics for LSP ---------------------------------------------------------
--- disable diagnostics 'vim.diagnostic.open_float()'
-vim.keymap.del('n', '<C-W>d')
-vim.keymap.del('n', '<C-W><C-D>')
-
-map('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-map('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-map('n', '<leader>d', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
--- vim.keymap.set('n', '<leader>Q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })

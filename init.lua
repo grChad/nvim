@@ -6,6 +6,7 @@ require('core.user')
 
 require('core.settings')
 require('core.mappings')
+require('core.diagnostic')
 require('core.autocmds')
 
 -- Plugin manager for NeoVim
