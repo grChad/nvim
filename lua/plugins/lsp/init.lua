@@ -16,22 +16,18 @@ return {
          -- border en la ventana de LspInfo
          require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
 
-         require('plugins.lsp.util_lsp').config_diagnostics(opts)
-         require('plugins.lsp.on_attach')
-
          local on_attach = require('plugins.lsp.util_lsp').on_attach
-         local on_attach_without_hl = require('plugins.lsp.util_lsp').on_attach_sin_highlight
          local capabilities = require('blink.cmp').get_lsp_capabilities()
          local handlers = require('plugins.lsp.util_lsp').handlers
          local lspconfig = require('lspconfig')
 
          -- NOTE: configuracion completa de los Servidores LSP
-         lspconfig.lua_ls.setup({
-            on_attach = on_attach,
-            capabilities = capabilities,
-            handlers = handlers,
-            settings = require('plugins.lsp.servers.lua_ls'),
-         })
+         -- lspconfig.lua_ls.setup({
+         --    on_attach = on_attach,
+         --    capabilities = capabilities,
+         --    handlers = handlers,
+         --    settings = require('plugins.lsp.servers.lua_ls'),
+         -- })
 
          lspconfig.ts_ls.setup({
             on_attach = on_attach,

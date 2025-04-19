@@ -10,11 +10,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       lsp_map('gr', vim.lsp.buf.references, '[G]oto [R]eferences')
       lsp_map('gi', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
       lsp_map('go', vim.lsp.buf.type_definition, 'Type [D]efinition')
-      lsp_map('<leader>re', "<cmd>lua require('gr-utils').rename.run()<CR>", 'rename variable')
+      lsp_map('<leader>re', function()
+         require('utils.renamer').open()
+      end, '[R]e[n]ame')
       lsp_map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-      lsp_map('K', vim.lsp.buf.hover, 'Hover Documentation')
+      lsp_map('K', function()
+         vim.lsp.buf.hover()
+      end, 'Hover Documentation')
       lsp_map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
-      --
 
       -- The following two autocommands are used to highlight references of the
       -- word under your cursor when your cursor rests there for a little while.
@@ -24,7 +27,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       local client = vim.lsp.get_client_by_id(event.data.client_id)
 
       if client and client.server_capabilities.documentHighlightProvider then
-         local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
+         local highlight_augroup = vim.api.nvim_create_augroup('GRLspHighlight', { clear = false })
          vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
             group = highlight_augroup,
