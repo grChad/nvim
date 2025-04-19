@@ -38,12 +38,6 @@ return {
             settings = require('plugins.lsp.servers.stylelint').settings,
          })
 
-         lspconfig.pyright.setup({
-            -- on_attach = on_attach,
-            -- capabilities = capabilities,
-            handlers = handlers,
-            settings = require('plugins.lsp.servers.pyright'),
-         })
          lspconfig.ruff.setup({})
 
          lspconfig.texlab.setup({
