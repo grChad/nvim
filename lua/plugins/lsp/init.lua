@@ -26,10 +26,6 @@ return {
             root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
          })
 
-         lspconfig.stylelint_lsp.setup({
-            settings = require('plugins.lsp.servers.stylelint').settings,
-         })
-
          lspconfig.texlab.setup({
             on_attach = on_attach,
             capabilities = capabilities,
