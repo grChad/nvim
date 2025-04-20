@@ -14,17 +14,6 @@ return {
       config = function()
          -- border en la ventana de LspInfo
          require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
-
-         local on_attach = require('plugins.lsp.util_lsp').on_attach
-         local capabilities = require('blink.cmp').get_lsp_capabilities()
-         local handlers = require('plugins.lsp.util_lsp').handlers
-         local lspconfig = require('lspconfig')
-
-         lspconfig.tailwindcss.setup({
-            capabilities = capabilities,
-            handlers = handlers,
-            root_dir = lspconfig.util.root_pattern('tailwind.config.*'),
-         })
       end,
    },
 

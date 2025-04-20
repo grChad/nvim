@@ -17,6 +17,7 @@ vim.lsp.enable({
    'jsonls',
    'marksman',
    'texlab',
+   'tailwind',
 })
 
 -- config LspAttach
