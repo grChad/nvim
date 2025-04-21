@@ -1,5 +1,6 @@
 return {
-   -- dependencies
+   { 'j-hui/fidget.nvim', opts = {} }, -- $progress and notify
+
    {
       'grChad/utils.nvim',
       dev = true,

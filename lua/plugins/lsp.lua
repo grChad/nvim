@@ -2,19 +2,6 @@ return {
    {
       'neovim/nvim-lspconfig',
       event = { 'BufRead', 'BufWinEnter', 'BufNewFile' },
-      init = function()
-         vim.cmd('silent! do FileType')
-      end,
-      dependencies = {
-         'saghen/blink.cmp',
-         { 'j-hui/fidget.nvim', opts = {} }, -- $progress and notify
-      },
-      opts = require('plugins.lsp.opts_lsp'),
-
-      config = function()
-         -- border en la ventana de LspInfo
-         require('lspconfig.ui.windows').default_options.border = grvim.ui.border_inset
-      end,
    },
 
    {
