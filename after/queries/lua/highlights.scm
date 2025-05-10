@@ -5,3 +5,6 @@
 
 ((identifier) @text.strong
   (#eq? @text.strong "grvim"))
+
+((identifier) @text.strong
+  (#eq? @text.strong "Snacks"))

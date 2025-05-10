@@ -74,9 +74,7 @@ return {
                hl = 'AlphaButtonHL',
             }
 
-            if cmd then
-               opts.keymap = { 'n', key, cmd, { noremap = true, silent = true } }
-            end
+            if cmd then opts.keymap = { 'n', key, cmd, { noremap = true, silent = true } } end
 
             return {
                type = 'button',
@@ -93,11 +91,15 @@ return {
             type = 'group',
             val = {
                -- button('e ', '  New', '<cmd>ene<cr>'),
-               button('w', '󰈭  Find Word', '<cmd>Telescope live_grep<CR>'),
-               button('f', '󰱼  Find File', '<cmd>Telescope find_files<cr>'),
-               button('r', '  Recent File', '<cmd>Telescope oldfiles<cr>'),
-               button('b', '  Bookmarks', '<cmd>Telescope marks<CR>'),
-               -- button('u', '  Update', '<cmd>Lazy sync<cr>'),
+               button('w', '󰈭  Find Word', function() Snacks.picker.grep({ exclude = { 'node_modules' } }) end),
+               button(
+                  'f',
+                  '󰱼  Find File',
+                  function() Snacks.picker.files({ exclude = { 'node_modules' }, hidden = true, ignored = false }) end
+               ),
+               button('r', '  Recent File', function() Snacks.picker.recent() end),
+               button('b', '  Bookmarks', function() Snacks.picker.marks() end),
+               button('u', '  Update', '<cmd>Lazy sync<cr>'),
                -- button('s', '  Abrir session reciente', '<cmd>SessionManager load_current_dir_session<CR>'),
                button('q', '󰗼  Quit!', '<cmd>qall!<cr>'),
             },
@@ -164,9 +166,7 @@ return {
             vim.api.nvim_create_autocmd('FileType', {
                group = 'alpha_tabline',
                pattern = 'alpha',
-               callback = function()
-                  vim.opt_local.laststatus = 0
-               end,
+               callback = function() vim.opt_local.laststatus = 0 end,
             })
 
             vim.api.nvim_create_autocmd('FileType', {
@@ -176,9 +176,7 @@ return {
                   vim.api.nvim_create_autocmd('BufUnload', {
                      group = 'alpha_tabline',
                      buffer = 0,
-                     callback = function()
-                        vim.opt.laststatus = 3
-                     end,
+                     callback = function() vim.opt.laststatus = 3 end,
                   })
                end,
             })
@@ -209,9 +207,7 @@ return {
                      buffer = buf,
                      callback = function()
                         package.loaded.alpha.default_config.layout = layout().display
-                        if vim.api.nvim_get_current_win() == win then
-                           redraw()
-                        end
+                        if vim.api.nvim_get_current_win() == win then redraw() end
                      end,
                   })
 
@@ -220,9 +216,7 @@ return {
                      buffer = buf,
                      callback = function()
                         vim.defer_fn(function()
-                           if vim.api.nvim_get_current_win() == win then
-                              redraw()
-                           end
+                           if vim.api.nvim_get_current_win() == win then redraw() end
                         end, 5)
                      end,
                   })

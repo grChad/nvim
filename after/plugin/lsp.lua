@@ -28,20 +28,26 @@ vim.api.nvim_create_autocmd('LspAttach', {
          vim.keymap.set('n', keys, func, { buffer = args.buf, desc = 'LSP: ' .. desc })
       end
 
-      lsp_map('L', function()
-         vim.lsp.buf.signature_help({ border = 'single', title = ' Ayuda ', max_width = 80, max_height = 18 })
-      end, 'Signature Documentation')
+      lsp_map(
+         'L',
+         function()
+            vim.lsp.buf.signature_help({ border = 'single', title = ' Ayuda ', max_width = 80, max_height = 18 })
+         end,
+         'Signature Documentation'
+      )
       lsp_map('gd', require('snacks').picker.lsp_definitions, '[G]oto [D]efinition')
       lsp_map('gt', require('snacks').picker.lsp_type_definitions, 'Type [D]efinition')
       lsp_map('gr', require('snacks').picker.lsp_references, '[G]oto [R]eferences')
       lsp_map('gi', require('snacks').picker.lsp_implementations, '[G]oto [I]mplementation')
       lsp_map('gO', require('snacks').picker.lsp_symbols, '[D]ocument [S]ymbols')
-      lsp_map('<leader>ws', require('snacks').picker.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
-      lsp_map('<leader>re', vim.lsp.buf.rename, '[R]e[n]ame')
-      lsp_map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-      lsp_map('K', function()
-         vim.lsp.buf.hover({ border = 'single', title = ' Hover ', max_width = 80, max_height = 18 })
-      end, 'Hover Documentation')
+      lsp_map('<Leader>ws', require('snacks').picker.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
+      lsp_map('<Leader>re', vim.lsp.buf.rename, '[R]e[n]ame')
+      lsp_map('<Leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+      lsp_map(
+         'K',
+         function() vim.lsp.buf.hover({ border = 'single', title = ' Hover ', max_width = 80, max_height = 18 }) end,
+         'Hover Documentation'
+      )
       lsp_map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
       -----------------------------[ Highlight References ]-----------------------------

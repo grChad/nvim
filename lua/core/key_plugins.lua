@@ -6,11 +6,8 @@ local mode = {
    visual_select = 'x',
 }
 
-local leader = '<Leader>'
-
-local cmd = function(str)
-   return '<cmd>' .. str .. '<CR>'
-end
+local leader = function(str) return '<Leader>' .. str end
+local cmd = function(str) return '<cmd>' .. str .. '<CR>' end
 
 local deleteCustomBuffer = function()
    local api = require('nvim-tree.api')
@@ -33,30 +30,26 @@ MAP.bufferline = {
    { ',', cmd('BufferLinePick'), desc = 'Pick buffer' },
    -- { leader .. 'x', cmd('bdelete'), desc = 'delete buffer' },
    {
-      leader .. 'x',
-      function()
-         deleteCustomBuffer()
-      end,
+      leader('x'),
+      function() deleteCustomBuffer() end,
       desc = 'delete buffer',
    },
-   { leader .. 'k', cmd('BufferLineCycleNext'), desc = 'Next buffer' },
-   { leader .. 'j', cmd('BufferLineCyclePrev'), desc = 'Previous buffer' },
+   { leader('k'), cmd('BufferLineCycleNext'), desc = 'Next buffer' },
+   { leader('j'), cmd('BufferLineCyclePrev'), desc = 'Previous buffer' },
 }
 
 MAP.nvimtree = {
-   { leader .. 'e', cmd('NvimTreeToggle'), desc = 'Toggle nvimtree' },
+   { leader('e'), cmd('NvimTreeToggle'), desc = 'Toggle nvimtree' },
 }
 
 MAP.comment = {
    {
-      leader .. '/',
-      function()
-         require('Comment.api').toggle.linewise.current()
-      end,
+      leader('/'),
+      function() require('Comment.api').toggle.linewise.current() end,
       desc = 'Toggle comment',
    },
    {
-      leader .. '/',
+      leader('/'),
       "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
       mode = mode.visual,
       desc = 'Toggle comment',
@@ -64,12 +57,12 @@ MAP.comment = {
 }
 
 MAP.resty = {
-   { leader .. 'rr', cmd('Resty run'), desc = '[R]esty [R]un request under the cursor' },
+   { leader('rr'), cmd('Resty run'), desc = '[R]esty [R]un request under the cursor' },
 }
 
 MAP.markdown_preview = {
    {
-      leader .. 'mp',
+      leader('mp'),
       function()
          vim.cmd('MarkdownPreviewToggle')
          vim.notify('Markdown Preview')
@@ -79,15 +72,13 @@ MAP.markdown_preview = {
 }
 
 MAP.img_clip = {
-   { leader .. 'pi', cmd('PasteImage'), desc = 'Paste clipboard image' },
+   { leader('pi'), cmd('PasteImage'), desc = 'Paste clipboard image' },
 }
 
 MAP.lua_snip = {
    {
       '<Tab>',
-      function()
-         return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>'
-      end,
+      function() return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>' end,
       mode = mode.insert,
    },
    { '<s-tab>', cmd("lua require('luasnip').jump(-1)"), mode = mode.insert },
@@ -96,25 +87,31 @@ MAP.lua_snip = {
    { '<s-tab>', cmd("lua require('luasnip').jump(-1)"), mode = mode.select },
 }
 
-MAP.telescope = {
-   { leader .. 'ff', cmd('Telescope find_files'), desc = 'Find files' },
+-- tratar de reemplazar todo por s de snacks y en flash hacer algo, quizas integrarlo
+MAP.snacks = {
    {
-      leader .. 'fa',
-      cmd('Telescope find_files follow=true no_ignore=true hidden=true'),
-      desc = 'Find all',
+      leader('ff'),
+      function() Snacks.picker.files({ exclude = { 'node_modules' }, hidden = true, ignored = false }) end,
+      desc = 'Find files',
    },
-   { leader .. 'fw', cmd('Telescope live_grep'), desc = 'Live grep' },
-   { leader .. 'fb', cmd('Telescope buffers'), desc = 'Find buffers' },
-   { leader .. 'fh', cmd('Telescope help_tags'), desc = 'Help page' },
-   { leader .. 'fo', cmd('Telescope oldfiles'), desc = 'Find oldfiles' },
+   { leader('fw'), function() Snacks.picker.grep({ exclude = { 'node_modules' } }) end, desc = 'Live grep' },
+   { leader('fb'), function() Snacks.picker.buffers() end, desc = 'Buffers' },
+   { leader('fh'), function() Snacks.picker.help() end, desc = 'Help Pages' },
+   { leader('pp'), function() Snacks.picker.projects() end, desc = 'Projects' },
+   { 'ghi', function() Snacks.image.hover() end, desc = 'Show image floating' },
+   { leader('km'), function() Snacks.picker.keymaps() end },
 
    -- git
-   { leader .. 'cm', cmd('Telescope git_commits'), desc = 'Git commits' },
-   { leader .. 'gt', cmd('Telescope git_status'), desc = 'Git status' },
+   { leader('gb'), function() Snacks.picker.git_branches() end, desc = 'Git Branches' },
+   { leader('gl'), function() Snacks.picker.git_log() end, desc = 'Git Log' },
+   { leader('gs'), function() Snacks.picker.git_status() end, desc = 'Git Status' },
+   -- { "<leader>gS", function() Snacks.picker.git_stash() end, desc = "Git Stash" },
+   -- { "<leader>gd", function() Snacks.picker.git_diff() end, desc = "Git Diff (Hunks)" },
+   -- { "<leader>gf", function() Snacks.picker.git_log_file() end, desc = "Git Log File" },
 }
 
 MAP.outline = {
-   { leader .. 'o', cmd('Outline'), desc = 'Toggle outline' },
+   { leader('o'), cmd('Outline'), desc = 'Toggle outline' },
 }
 
 MAP.treesitter = {
@@ -123,31 +120,29 @@ MAP.treesitter = {
 }
 
 MAP.highlight_colors = {
-   { leader .. 'hi', cmd('HighlightColors Toggle'), desc = 'Toggle highlight colors' },
+   { leader('hi'), cmd('HighlightColors Toggle'), desc = 'Toggle highlight colors' },
 }
 
 MAP.conform = {
    {
-      leader .. 'fi',
-      function()
-         require('conform').format({ async = true, lsp_fallback = true })
-      end,
+      leader('fi'),
+      function() require('conform').format({ async = true, lsp_fallback = true }) end,
       desc = 'Format buffer',
    },
 }
 
 MAP.toggleterm = {
-   { leader .. 'te', cmd('ToggleTerm'), desc = 'Toggle terminal' },
-   { leader .. 'n', '<C-\\><C-n>', mode = mode.terminal, desc = 'Toggle terminal' },
-   { leader .. 't', cmd('ToggleTerm'), mode = mode.terminal, desc = 'Toggle terminal' },
+   { leader('te'), cmd('ToggleTerm'), desc = 'Toggle terminal' },
+   { leader('n'), '<C-\\><C-n>', mode = mode.terminal, desc = 'Toggle terminal' },
+   { leader('t'), cmd('ToggleTerm'), mode = mode.terminal, desc = 'Toggle terminal' },
 }
 
 MAP.overseer = {
-   { leader .. 'co', cmd('OverseerRun'), desc = 'Run overseer' },
+   { leader('co'), cmd('OverseerRun'), desc = 'Run overseer' },
 }
 
 MAP.mason = {
-   { leader .. 'm', cmd('Mason'), desc = 'Open Mason' },
+   { leader('mm'), cmd('Mason'), desc = 'Open Mason' },
 }
 
 return MAP

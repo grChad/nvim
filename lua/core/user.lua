@@ -116,11 +116,7 @@ grvim.treesitter = {
       'bash', 'diff', 'html', 'css', 'scss', 'javascript', 'json', 'jsdoc', 'jsonc',
       'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline', 'python', 'htmldjango',
       'query', 'regex', 'toml', 'typescript', 'tsx', 'vue', 'vim', 'vimdoc', 'yaml',
-      'comment', 'gitignore', 'git_config', 'astro', 'sql', 'latex', 'xml', 'go',
+      'comment', 'gitignore', 'git_config', 'astro', 'sql', 'xml', 'go',
       'http'
    },
-}
-
-grvim.telescope = {
-   borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
 }

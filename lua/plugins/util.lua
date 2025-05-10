@@ -53,13 +53,4 @@ return {
          })
       end,
    },
-
-   {
-      'folke/snacks.nvim',
-      priority = 800,
-      lazy = false,
-      opts = {
-         picker = { enabled = true },
-      },
-   },
 }

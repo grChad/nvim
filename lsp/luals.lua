@@ -19,7 +19,7 @@ return {
          },
          diagnostics = {
             -- enable = false,
-            globals = { 'vim', 'require' },
+            globals = { 'vim', 'require', 'grvim', 'Snacks' },
             -- incomplete-signature-doc: avisa de documentacion de firma incompleta
             -- trailing-space: avisa de espacios en el final de una sentencia
             -- no-unknown: avisa de variables no definidas

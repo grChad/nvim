@@ -8,12 +8,15 @@
 
 ## Requisitos
 
-- NeoVim 0.9 o nightly, para _Fedora_ ve [**aquí**](https://github.com/grChad/my-dotfiles#neovim-)
+- NeoVim para _Fedora_ ve [aquí](https://github.com/grChad/my-dotfiles#neovim-)
 - curl
 - git
 - Una fuente con soporte de Glyphos: [_nert-fonts_](https://github.com/ryanoasis/nerd-fonts/tree/master/patched-fonts)
-- [_ripgrep_](https://github.com/BurntSushi/ripgrep) para Telescope (opcional)
 - [_NodeJs_](https://nodejs.org/en) para descargar algunos de los servidores. Tengo una guia de como instalarlo con _fnm_ [**aquí**](https://github.com/grChad/my-dotfiles/blob/main/other-settings/node.md)
+- [fd](https://github.com/sharkdp/fd): Programa para encontrar entradas en el sistema de archivos (Para Snacks).
+  ```bash
+  sudo dnf install fd-find
+  ``` 
 - Y otros recomendados como: make, pip, npm y cargo instalados en tu sistema.
 
 ## Instalar
@@ -183,22 +186,5 @@ En modo Normal:
 Una vez dentro de NvimTree, esta tiene muchos atajos, seria recomendable visitar su repositorio de [Github](https://github.com/nvim-tree/nvim-tree.lua)
 
 ---
-
-</details>
-
-<details>
-  <summary><u>Telescope</u></summary>
-  <br/>
-
-En modo **Normal**:
-
-|       Comando       | Descripción                             |
-| :-----------------: | --------------------------------------- |
-| **`<leader> + ff`** | Para buscar archivos en el proyecto.    |
-| **`<leader> + fa`** | Busca archivos normales y ocultos.      |
-| **`<leader> + fw`** | Busca palabras en todo el proyecto.     |
-| **`<leader> + fb`** | Telescope buffers `navegar`             |
-| **`<leader> + fh`** | Telescope help `documentación de ayuda` |
-| **`<leader> + fo`** | busca archivos abiertos recientemente   |
 
 </details>
