@@ -99,7 +99,7 @@ MAP.snacks = {
    { leader('fh'), function() Snacks.picker.help() end, desc = 'Help Pages' },
    { leader('pp'), function() Snacks.picker.projects() end, desc = 'Projects' },
    { 'ghi', function() Snacks.image.hover() end, desc = 'Show image floating' },
-   { leader('km'), function() Snacks.picker.keymaps() end },
+   { leader('km'), function() Snacks.picker.keymaps() end, desc = 'Keymaps' },
 
    -- git
    { leader('gb'), function() Snacks.picker.git_branches() end, desc = 'Git Branches' },
