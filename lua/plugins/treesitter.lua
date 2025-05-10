@@ -1,7 +1,6 @@
 return {
    {
       'nvim-treesitter/nvim-treesitter',
-      version = false, -- last release is way too old and doesn't work on Windows
       build = ':TSUpdate',
       event = 'VeryLazy',
       cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
@@ -53,11 +52,14 @@ return {
       ---@type TSConfig
       ---@diagnostic disable-next-line: missing-fields
       opts = {
+         ensure_installed = grvim.treesitter.ensure_installed,
+         sync_install = false,
+         -- Si no tiene `tree-sitter` CLI instalado localmente establecer en 'false'
+         auto_install = false,
          highlight = { enable = true },
          indent = { enable = true },
 
          -- stylua: ignore
-         ensure_installed = grvim.treesitter.ensure_installed,
          incremental_selection = {
             enable = true,
             keymaps = {

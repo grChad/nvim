@@ -21,7 +21,10 @@ return {
          'sources.default',
       },
       -- NOTE: Los snippets custom tienen que tener el valor "description": "...", de lo contrario no funkan
-      dependencies = 'rafamadriz/friendly-snippets',
+      dependencies = {
+         'rafamadriz/friendly-snippets',
+         'moyiz/blink-emoji.nvim',
+      },
       event = 'InsertEnter',
       opts = {
          appearance = {
@@ -57,16 +60,12 @@ return {
                      kind_icon = {
                         ellipsis = false,
                         text = function(ctx)
-                           if ctx.kind == 'Color' then
-                              return grvim.ui.icons.kinds.Color
-                           end
+                           if ctx.kind == 'Color' then return grvim.ui.icons.kinds.Color end
 
                            return ctx.kind_icon .. ctx.icon_gap
                         end,
                         highlight = function(ctx)
-                           if ctx.kind == 'Color' then
-                              return 'BlinkCmpKindColor'
-                           end
+                           if ctx.kind == 'Color' then return 'BlinkCmpKindColor' end
                            return 'BlinkCmpKind' .. ctx.kind
                         end,
                      },
@@ -95,12 +94,18 @@ return {
             documentation = { auto_show = true, auto_show_delay_ms = 200 },
          },
          sources = {
-            default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer' },
+            default = { 'lazydev', 'lsp', 'snippets', 'path', 'buffer', 'emoji' },
             providers = {
                lazydev = {
                   name = 'LazyDev',
                   module = 'lazydev.integrations.blink',
                   score_offset = 100, -- show at a higher priority than lsp
+               },
+               emoji = {
+                  module = 'blink-emoji',
+                  name = 'Emoji',
+                  score_offset = 15, -- Tune by preference
+                  opts = { insert = true }, -- Insert emoji (default) or complete its name
                },
             },
          },
@@ -114,7 +119,7 @@ return {
       event = 'InsertEnter',
       opts = {
          fast_wrap = {},
-         disable_filetype = { 'TelescopePrompt', 'spectre_panel' },
+         disable_filetype = { 'spectre_panel' },
          enable_check_bracket_line = false,
       },
       config = function(_, opts)

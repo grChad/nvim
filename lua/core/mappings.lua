@@ -8,15 +8,14 @@
 -- :c  :cnoremap    Command-line
 -- :t  :tnoremap    Terminal
 
-local cmd = function(str)
-   return '<cmd>' .. str .. '<CR>'
-end
+local leader = function(str) return '<Leader>' .. str end
+local cmd = function(str) return '<cmd>' .. str .. '<CR>' end
 
 local map = vim.keymap.set
 
-map('n', '<leader>w', cmd('write'), { desc = 'Save file' })
-map('n', '<leader>q', cmd('quit'), { desc = 'Quit file' })
-map('n', '<leader>y', cmd('%y+'), { desc = 'copy whole file' })
+map('n', leader('w'), cmd('write'), { desc = 'Save file' })
+map('n', leader('q'), cmd('quit'), { desc = 'Quit file' })
+map('n', leader('y'), cmd('%y+'), { desc = 'copy whole file' })
 -- Don't copy the replaced text after pasting in visual mode
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
@@ -98,7 +97,7 @@ map('n', 'gk', cmd('norm! K'), { desc = 'Keywordprg' })
 map('n', 'fs', 'i<C-x>s', { desc = 'Spell options' })
 
 -- Inspect for Treesitter
-map('n', '<leader>ii', cmd('Inspect'), { desc = 'Inspect highlight' })
+map('n', leader('ii'), cmd('Inspect'), { desc = 'Inspect highlight' })
 
 -- Toggle para booleanos: true|false, on|off, yes|no
-map('n', '<leader>b', cmd("lua require('gr-utils').toggle()"), { desc = 'Toggle boolean' })
+map('n', leader('b'), cmd("lua require('gr-utils').toggle()"), { desc = 'Toggle boolean' })

@@ -28,7 +28,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 --------------------------------------------------------------------------------------
 
-require('lazy').setup('plugins', {
+require('lazy').setup({
+   spec = {
+      -- import your plugins
+      { import = 'plugins' },
+   },
    defaults = {
       lazy = true, -- should plugins be lazy-loaded?
       version = nil, -- always use the latest git commit
@@ -52,3 +56,5 @@ require('lazy').setup('plugins', {
       },
    },
 })
+
+vim.keymap.set('n', '<leader>ll', '<cmd>Lazy<CR>', { desc = 'Open Lazy' })
