@@ -95,6 +95,11 @@ vim.opt.timeoutlen = 300 -- para whick-key como ejemplo.
 vim.opt.shortmess:append('sI')
 vim.opt.whichwrap:append('<>[]hl')
 
+-- Para que los comentarios no molesten
+vim.opt.formatoptions:remove('c')
+vim.opt.formatoptions:remove('r')
+vim.opt.formatoptions:remove('o')
+
 -- My custom
 vim.opt.hidden = true -- para ToggleTerm
 vim.opt.pumblend = 10 -- Popup blend
