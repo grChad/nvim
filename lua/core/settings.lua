@@ -92,13 +92,9 @@ vim.opt.timeoutlen = 300 -- para whick-key como ejemplo.
 -- go to previous/next line with h,l,left arrow and right arrow
 -- when cursor reaches end/beginning of line
 -- disable nvim intro
-vim.opt.shortmess:append('sI')
+-- vim.opt.shortmess:append('sI') -- ver si es reemplazablo o lo restauro
+vim.opt.shortmess:append({ s = true, I = true })
 vim.opt.whichwrap:append('<>[]hl')
-
--- Para que los comentarios no molesten
-vim.opt.formatoptions:remove('c')
-vim.opt.formatoptions:remove('r')
-vim.opt.formatoptions:remove('o')
 
 -- My custom
 vim.opt.hidden = true -- para ToggleTerm
@@ -119,7 +115,7 @@ vim.opt.foldexpr = 'nvim_treesitter#foldexpr()' -- set to "nvim_treesitter#folde
 vim.o.guicursor = 'n-c-sm:block,i-ci-ve:ver25,r-cr-o-v:hor20'
 
 vim.o.encoding = 'utf-8'
-vim.cmd('set fileencoding=utf-8')
+vim.o.fileencoding = 'utf-8'
 
 vim.o.foldenable = true
 vim.o.foldlevel = 99
