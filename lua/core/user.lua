@@ -104,6 +104,8 @@ grvim.mason = {
       'json-lsp', 'pyright', 'marksman', 'astro-language-server', 'eslint-lsp', 
       'texlab', 'typescript-language-server',
 
+      'tinymist', -- for typst
+
       -- formatter & Linter
       'stylua', 'prettierd', 'biome', 'taplo', 'latexindent',
       'ruff', -- linting and formatting for 'python'
@@ -117,6 +119,6 @@ grvim.treesitter = {
       'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline', 'python', 'htmldjango',
       'query', 'regex', 'toml', 'typescript', 'tsx', 'vue', 'vim', 'vimdoc', 'yaml',
       'comment', 'gitignore', 'git_config', 'astro', 'sql', 'xml', 'go', 'kotlin',
-      'http'
+      'http', 'typst'
    },
 }

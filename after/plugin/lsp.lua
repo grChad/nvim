@@ -18,6 +18,7 @@ vim.lsp.enable({
    'marksman',
    'texlab',
    'tailwind',
+   'typst_mist',
 })
 
 -- config LspAttach
