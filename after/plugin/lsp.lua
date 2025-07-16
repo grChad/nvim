@@ -12,7 +12,7 @@ vim.lsp.enable({
    'cssls',
    'stylelint_lsp',
    'astro',
-   'pyright',
+   'pyrefly',
    'ruff',
    'jsonls',
    'marksman',

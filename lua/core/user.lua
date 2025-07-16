@@ -101,10 +101,8 @@ grvim.mason = {
    -- stylua: ignore
    ensure_installed = {
       'lua-language-server', 'html-lsp', 'stylelint-lsp', 'css-lsp', 'tailwindcss-language-server',
-      'json-lsp', 'pyright', 'marksman', 'astro-language-server', 'eslint-lsp', 
-      'texlab', 'typescript-language-server',
-
-      'tinymist', -- for typst
+      'json-lsp', 'pyrefly', 'marksman', 'astro-language-server', 'eslint-lsp',
+      'texlab', 'typescript-language-server', 'tinymist',
 
       -- formatter & Linter
       'stylua', 'prettierd', 'biome', 'taplo', 'latexindent',
