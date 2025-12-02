@@ -36,13 +36,13 @@ return {
             ---@type 'default' | 'none'
             preset = 'none', -- 'none' para desactivar 'default'
             ['<C-space>'] = { 'show', 'show_documentation', 'hide_documentation' },
-            ['<C-e>'] = { 'hide', 'fallback' },
+            ['<C-e>'] = { 'hide' },
             ['<CR>'] = { 'select_and_accept', 'fallback' },
 
             ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
             ['<S-Tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
-            ['<C-p>'] = { 'select_prev', 'fallback' },
-            ['<C-n>'] = { 'select_next', 'fallback' },
+            ['<C-p>'] = { 'select_prev', 'fallback_to_mappings' },
+            ['<C-n>'] = { 'select_next', 'fallback_to_mappings' },
 
             ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
             ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
@@ -116,7 +116,7 @@ return {
 
    {
       'windwp/nvim-autopairs',
-      event = 'InsertEnter',
+      event = { 'InsertEnter', 'BufEnter' },
       opts = {
          fast_wrap = {},
          disable_filetype = { 'spectre_panel' },
@@ -136,6 +136,14 @@ return {
                   return false
                end
             end):with_move(),
+            Rule('*', '*', 'typst'),
+            Rule('_', '_', 'typst'):with_pair(function(options)
+               if options.line:match('_.*_$') then
+                  -- estamos dentro de un par de _, no agregar otro
+                  return false
+               end
+            end):with_move(),
+            Rule('$', '$', 'typst'),
          })
       end,
    },
