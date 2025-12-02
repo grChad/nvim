@@ -12,13 +12,15 @@ vim.lsp.enable({
    'cssls',
    'stylelint_lsp',
    'astro',
-   'pyrefly',
+   -- 'pyrefly',
+   'pyright',
    'ruff',
    'jsonls',
    'marksman',
    'texlab',
    'tailwind',
    'typst_mist',
+   'typstyle',
 })
 
 -- config LspAttach
