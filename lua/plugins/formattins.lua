@@ -16,6 +16,7 @@ return {
                ['jsonc'] = { 'biome', 'prettierd' },
                ['vue'] = { 'prettierd' },
                -- ['svelte'] = { 'prettierd' },
+               -- ['python'] = { 'ruff_fix', 'ruff_format', 'ruff_organize_imports' },
                ['html'] = { 'prettierd' },
                ['yaml'] = { 'prettierd' },
                ['markdown'] = { 'prettierd' },
@@ -25,7 +26,7 @@ return {
 
                ['lua'] = { 'stylua' },
                ['toml'] = { 'taplo' },
-               -- ['latex'] = { 'latexindent' },
+               ['typst'] = { 'typstyle' },
             },
             format_on_save = {
                lsp_format = 'fallback',
