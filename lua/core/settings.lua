@@ -7,7 +7,7 @@ vim.g.mkdp_filetypes = { 'markdown' }
 vim.g.mkdp_auto_start = 0 -- for MarkdownPriview
 vim.g.mkdp_auto_close = 0 -- for MarkdownPriview
 
-vim.g.skip_ts_context_commentstring_module = true -- for plugin
+vim.g.skip_ts_context_commentstring_module = true -- for plugin 'nvim-ts-context-commentstring'
 
 -- for codeium
 vim.g.codeium_disable_bindings = 1 -- add new keymaps
