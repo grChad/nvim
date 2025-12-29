@@ -4,14 +4,5 @@ vim.filetype.add({
    },
 })
 
--- NOTE: para arvhivos 'tex'.
--- Define una función para matar el proceso latexmk
-local function kill_latexmk()
-   vim.cmd('!killall latexmk')
-end
-
--- Crea un comando personalizado que mate el proceso y luego compile
-vim.api.nvim_create_user_command('LatexCompile', function()
-   kill_latexmk()
-   vim.cmd('TexlabBuild')
-end, {})
+-- Solucion temporal para reanudar el pluign 'nvim-autopairs'
+vim.api.nvim_create_user_command('ToggleAutopairs', function() require('nvim-autopairs').toggle() end, {})

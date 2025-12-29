@@ -102,10 +102,10 @@ grvim.mason = {
    ensure_installed = {
       'lua-language-server', 'html-lsp', 'stylelint-lsp', 'css-lsp', 'tailwindcss-language-server',
       'json-lsp', 'pyrefly', 'pyright', 'marksman', 'astro-language-server', 'eslint-lsp',
-      'texlab', 'typescript-language-server', 'tinymist',
+      'typescript-language-server', 'tinymist',
 
       -- formatter & Linter
-      'prettierd', 'biome', 'taplo', 'latexindent',
+      'prettierd', 'biome', 'taplo',
       'ruff', -- linting and formatting for 'python'
       'stylua', -- formatter for 'lua'
       'typstyle' -- formatter for 'typst'

@@ -17,7 +17,6 @@ vim.lsp.enable({
    'ruff',
    'jsonls',
    'marksman',
-   'texlab',
    'tailwind',
    'typst_mist',
    'typstyle',
