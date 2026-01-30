@@ -44,7 +44,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
       lsp_map('gO', require('snacks').picker.lsp_symbols, '[D]ocument [S]ymbols')
       lsp_map('<Leader>ws', require('snacks').picker.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
       lsp_map('<Leader>re', vim.lsp.buf.rename, '[R]e[n]ame')
-      lsp_map('<Leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+      lsp_map('<A-CR>', vim.lsp.buf.code_action, '[C]ode [A]ction')
       lsp_map(
          'K',
          function() vim.lsp.buf.hover({ border = 'single', title = ' Hover ', max_width = 80, max_height = 18 }) end,
