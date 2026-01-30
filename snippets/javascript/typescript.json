@@ -1,7 +1,16 @@
 {
-  "use interface or types": {
-    "prefix": "param",
-    "body": "{${2:params}}: ${1:Props}",
-    "description": "use parameters with interface or types"
-  }
+   "use interface or types": {
+      "prefix": "param",
+      "body": "{${2:params}}: ${1:Props}",
+      "description": "use parameters with interface or types"
+   },
+   "create interface": {
+      "prefix": "cinter",
+      "body": [
+         "interface ${1:Prop} {",
+         "\t${2:type}",
+         "}"
+      ],
+      "description": "Create interface with Props"
+   }
 }

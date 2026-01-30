@@ -2,9 +2,7 @@ local ntree = grvim.nvimTree
 
 local function get_current_path()
    local handle = io.popen('pwd')
-   if not handle then
-      error('No se pudo ejecutar el comando "pwd"')
-   end
+   if not handle then error('No se pudo ejecutar el comando "pwd"') end
 
    local current_path = handle:read('*l')
    handle:close()
@@ -18,9 +16,7 @@ local function count_files_and_directories()
 
    -- Usa 'ls' para listar todos los archivos, excepto '.' y '..' y 'ocultos'
    local p = io.popen('ls ' .. path)
-   if not p then
-      error('No se pudo ejecutar el comando "ls"')
-   end
+   if not p then error('No se pudo ejecutar el comando "ls"') end
    local output = p:read('*all')
    p:close()
 
@@ -46,9 +42,7 @@ return {
       config = function()
          local present, nvimtree = pcall(require, 'nvim-tree')
 
-         if not present then
-            return
-         end
+         if not present then return end
 
          if vim.filetype == 'NvimTree' then
             vim.opt_local.loaded_netrw = 1
@@ -133,7 +127,7 @@ return {
                custom = {           -- Filtra archivos o ficheros
                   '.swp', '.pyc', 'node_modules', '.watchmanconfig',
                   '.ruby-version', 'Gemfile', '.flowconfig', 'buckconfig', '.bundle',
-                  '__tests__', 'style.css.map', '.vscode',
+                  'style.css.map', '.vscode',
                },
                -- exclude = { '.gitignore' },
             },

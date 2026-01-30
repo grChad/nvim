@@ -104,8 +104,26 @@ return {
                emoji = {
                   module = 'blink-emoji',
                   name = 'Emoji',
-                  score_offset = 15, -- Tune by preference
+                  score_offset = 10, -- Tune by preference
                   opts = { insert = true }, -- Insert emoji (default) or complete its name
+               },
+               snippets = {
+                  module = 'blink.cmp.sources.snippets',
+                  score_offset = -1, -- receives a -3 from top level snippets.score_offset
+
+                  -- For `snippets.preset == 'default'`
+                  opts = {
+                     friendly_snippets = true,
+                     search_paths = { vim.fn.stdpath('config') .. '/snippets' },
+                     global_snippets = { 'all' },
+                     extended_filetypes = {},
+                     ignored_filetypes = {},
+                     get_filetype = function(context) return vim.bo.filetype end,
+                     -- Set to '+' to use the system clipboard, or '"' to use the unnamed register
+                     clipboard_register = nil,
+                     -- Whether to put the snippet description in the label description
+                     use_label_description = false,
+                  },
                },
             },
          },
