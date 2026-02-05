@@ -1,245 +1,220 @@
+local group_custom = function(valor, table_hl)
+   return {
+      type = 'group',
+      val = {
+         {
+            type = 'text',
+            val = valor,
+            opts = { position = 'center', hl = table_hl },
+         },
+      },
+   }
+end
+
+-- Crear botón para teclas iniciales.
+--- @param key string
+--- @param txt string
+--- @param cmd string | (fun(): nil)
+local function create_button(key, txt, cmd)
+   local opts = {
+      position = 'center',
+      text = txt,
+      shortcut = key,
+      cursor = 4,
+      width = 25,
+      align_shortcut = 'right',
+      hl_shortcut = 'AlphaButtonKey',
+      hl = 'AlphaButtonHL',
+   }
+
+   if cmd then opts.keymap = { 'n', key, cmd, { noremap = true, silent = true } } end
+
+   return {
+      type = 'button',
+      val = txt,
+      on_press = function()
+         local _key = vim.api.nvim_replace_termcodes(key, true, false, true)
+         vim.api.nvim_feedkeys(_key, 'normal', false)
+      end,
+      opts = opts,
+   }
+end
+
+local Logo = {
+   '                  ████████                       ██',
+   '                 █████ ███                       ███ ',
+   '                  ███      ███                       ███ ',
+   '██████    ███ ███      ███                       ███ ',
+   '██████  ████ ███    ███████████████████████ ',
+   '  █████ ███ ███      ███   ███  ████  ████ ',
+   '       ██ ███  █████ ███   ███  ████  ████ ',
+   ' ███████████  █████████ ███████████████',
+}
+
+-- Mandar estos colores al Theme
+vim.api.nvim_set_hl(0, 'LogoHL', { fg = '#88DBDB', bold = true })
+
+--- @return string
+local get_date = function()
+   local capitalized = function(my_string) return string.upper(string.sub(my_string, 1, 1)) .. string.sub(my_string, 2) end
+
+   local day = capitalized(tostring(os.date('%A')))
+   local month = capitalized(tostring(os.date('%B')))
+
+   return ' ' .. day .. os.date(' %d de ') .. month .. os.date('  -   %R')
+end
+
+local function footer()
+   local v = vim.version()
+   local plugins_lazy = require('lazy').plugins()
+   local value_str = 'NeoVim v%d.%d.%d -  %d Plugins'
+
+   return string.format(value_str, v.major, v.minor, v.patch, #plugins_lazy) .. ' | by · @grchad 󰊤'
+end
+
+local layout = {}
+
+-- Solo ejecutar si Alpha carga -- solo si no hay archivos para leer
+local argc = vim.fn.argc()
+if argc == 0 then
+   local header = {
+      type = 'text',
+      val = Logo,
+      opts = { position = 'center', hl = 'LogoHL' },
+   }
+
+   local fecha_actual = group_custom(get_date(), {
+      { 'CalendaryColor', 0, 4 },
+      { 'Text', 4, 50 },
+   })
+
+   local buttons = {
+      type = 'group',
+      val = {
+         create_button('w', '󰈭  Find Word', function() Snacks.picker.grep({ exclude = { 'node_modules' } }) end),
+         create_button(
+            'f',
+            '󰱼  Find File',
+            function() Snacks.picker.files({ exclude = { 'node_modules' }, hidden = true, ignored = false }) end
+         ),
+         create_button('r', '  Recent File', function() Snacks.picker.recent() end),
+         create_button('b', '  Bookmarks', function() Snacks.picker.marks() end),
+         create_button('u', '  Update', '<cmd>Lazy sync<cr>'),
+         -- button('s', '  Abrir session reciente', '<cmd>SessionManager load_current_dir_session<CR>'),
+         create_button('q', '󰗼  Quit!', '<cmd>qall!<cr>'),
+      },
+      opts = {
+         spacing = 1,
+         position = 'center',
+      },
+   }
+
+   local the_footer = group_custom(footer(), {
+      { 'BlueColor', 0, 3 },
+      { 'GreenColor', 3, 6 },
+      { 'Text', 7, 60 },
+   })
+
+   -- Manejador de centrado para Alpha
+   local ol = { -- líneas ocupadas
+      icon = #header.val, -- número de líneas del header
+      message = #the_footer.val, -- padding inferior
+      length_buttons = #buttons.val * 2 - 1, -- botones ocuparán
+      padding_between = 3, -- padding entre teclas y header
+   }
+
+   local terminal_height = vim.api.nvim_win_get_height(0)
+   local left_terminal_value = terminal_height - (ol.length_buttons + ol.message + ol.padding_between + ol.icon)
+
+   -- Si hay suficiente espacio en pantalla
+   if left_terminal_value >= 0 then
+      local top_padding = math.floor(left_terminal_value / 2)
+      local bottom_padding = left_terminal_value - top_padding
+
+      layout = {
+         { type = 'padding', val = top_padding },
+         header,
+         { type = 'padding', val = 1 },
+         fecha_actual,
+         { type = 'padding', val = 1 },
+         buttons,
+         the_footer,
+         { type = 'padding', val = bottom_padding },
+      }
+   else
+      -- Si no hay espacio, configuración mínima
+      layout = {
+         { type = 'padding', val = 1 },
+         fecha_actual,
+         { type = 'padding', val = 1 },
+         buttons,
+         the_footer,
+         { type = 'padding', val = 1 },
+      }
+   end
+else
+   -- Cuando se abre con archivos, Alpha vacío
+   layout = {}
+end
+
 return {
-   { -- dashboard
-      'goolord/alpha-nvim',
-      event = 'VimEnter',
-      dependencies = { 'nvim-tree/nvim-web-devicons' },
-      init = function()
-         local def_highlight = vim.api.nvim_set_hl
+   'goolord/alpha-nvim',
+   event = 'VimEnter',
+   dependencies = { 'nvim-tree/nvim-web-devicons' },
+   init = function()
+      local def_highlight = vim.api.nvim_set_hl
 
-         def_highlight(0, 'CalendaryColor', { fg = '#FF875F' })
-         def_highlight(0, 'BlueColor', { fg = '#0F85EF' })
-         def_highlight(0, 'GreenColor', { fg = '#66AF3D' })
-      end,
-      config = function()
-         local alpha = require('alpha')
-         local redraw = alpha.redraw
+      -- Mandar estos colores al Theme
+      def_highlight(0, 'CalendaryColor', { fg = '#FF875F' })
+      def_highlight(0, 'BlueColor', { fg = '#0F85EF' })
+      def_highlight(0, 'GreenColor', { fg = '#66AF3D' })
 
-         require('alpha.term')
-         local dashboard = require('alpha.themes.dashboard')
+      def_highlight(0, 'AlphaButtonHL', { fg = '#01B2CB', italic = true })
+      def_highlight(0, 'AlphaButtonKey', { fg = '#01B2CB', bold = true })
+   end,
+   config = function()
+      local status_ok, alpha = pcall(require, 'alpha')
 
-         dashboard.opts.opts.noautocmd = true
+      if not status_ok then return end
 
-         local width = 57
-         local height = 8
+      alpha.setup({
+         layout = layout,
+         opts = {
+            margin = 0,
+            redraw_on_resize = true,
+         },
+      })
 
-         local path_logo = '~/.config/nvim/lua/core/alpha-logo.sh'
-         dashboard.section.terminal.command = 'sh ' .. path_logo
-         dashboard.section.terminal.width = width
-         dashboard.section.terminal.height = height
-         -- dashboard.section.terminal.opts.redraw = true
+      vim.api.nvim_create_augroup('alpha_custom', { clear = true })
 
-         -- +--------------------------------------------------------------------+
-         local group_custom = function(valor, table_hl)
-            return {
-               type = 'group',
-               val = {
-                  {
-                     type = 'text',
-                     val = valor,
-                     opts = { position = 'center', hl = table_hl },
-                  },
-               },
-            }
-         end
+      -- Al entrar a Alpha: ocultar barra de estado y tabline
+      vim.api.nvim_create_autocmd('FileType', {
+         group = 'alpha_custom',
+         pattern = 'alpha',
+         callback = function()
+            vim.opt_local.laststatus = 0 -- Sin barra de estado
+            vim.opt_local.showtabline = 0 -- Sin tabline
+            vim.opt_local.number = false -- Sin números de línea
+            vim.opt_local.relativenumber = false
+            vim.opt_local.signcolumn = 'no' -- Sin signcolumn
+         end,
+      })
 
-         -- Información de la fecha:
-         -- en lugar de usar 'date' del sistema, 'os.date' de Lua formatea directamente el código.
-         local capitalized = function(my_string)
-            return string.upper(string.sub(my_string, 1, 1)) .. string.sub(my_string, 2)
-         end
-
-         local day = capitalized(tostring(os.date('%A')))
-         local month = capitalized(tostring(os.date('%B')))
-
-         local fecha = ' ' .. day .. os.date(' %d de ') .. month .. os.date('  -   %R')
-
-         local fecha_actual = group_custom(fecha, {
-            { 'CalendaryColor', 0, 4 },
-            { 'Text', 4, 50 },
-         })
-
-         -- +--------------------------------------------------------------------+
-         vim.api.nvim_set_hl(0, 'AlphaButtonHL', { fg = '#01B2CB', italic = true })
-         vim.api.nvim_set_hl(0, 'AlphaButtonKey', { fg = '#01B2CB', bold = true })
-
-         local function button(key, txt, cmd)
-            local opts = {
-               position = 'center',
-               text = txt,
-               shortcut = key,
-               cursor = 4,
-               width = 25,
-               align_shortcut = 'right',
-               hl_shortcut = 'AlphaButtonKey',
-               hl = 'AlphaButtonHL',
-            }
-
-            if cmd then opts.keymap = { 'n', key, cmd, { noremap = true, silent = true } } end
-
-            return {
-               type = 'button',
-               val = txt,
-               on_press = function()
-                  local _key = vim.api.nvim_replace_termcodes(key, true, false, true)
-                  vim.api.nvim_feedkeys(_key, 'normal', false)
-               end,
-               opts = opts,
-            }
-         end
-
-         local buttons = {
-            type = 'group',
-            val = {
-               -- button('e ', '  New', '<cmd>ene<cr>'),
-               button('w', '󰈭  Find Word', function() Snacks.picker.grep({ exclude = { 'node_modules' } }) end),
-               button(
-                  'f',
-                  '󰱼  Find File',
-                  function() Snacks.picker.files({ exclude = { 'node_modules' }, hidden = true, ignored = false }) end
-               ),
-               button('r', '  Recent File', function() Snacks.picker.recent() end),
-               button('b', '  Bookmarks', function() Snacks.picker.marks() end),
-               button('u', '  Update', '<cmd>Lazy sync<cr>'),
-               -- button('s', '  Abrir session reciente', '<cmd>SessionManager load_current_dir_session<CR>'),
-               button('q', '󰗼  Quit!', '<cmd>qall!<cr>'),
-            },
-            opts = { spacing = 1 },
-         }
-
-         -- +--------------------------------------------------------------------+
-
-         -- datos de la version de Nvim
-         local function footer()
-            local v = vim.version()
-            local plugins_lazy = require('lazy').plugins()
-            local value_str = 'NeoVim v%d.%d.%d -  %d Plugins'
-
-            return string.format(value_str, v.major, v.minor, v.patch, #plugins_lazy) .. ' | by · @grchad 󰊤'
-         end
-
-         local the_footer = group_custom(footer(), {
-            { 'BlueColor', 0, 3 },
-            { 'GreenColor', 3, 6 },
-            { 'Text', 7, 60 },
-         })
-
-         local layout = function()
-            local R = {}
-
-            R.pid = vim.loop.getpid()
-            R.width = vim.api.nvim_win_get_width(0)
-            R.height = vim.api.nvim_win_get_height(0)
-
-            local padding_resize
-            if R.height <= 25 then
-               padding_resize = math.floor((R.height - 14) / 2)
-
-               R.display = {
-                  { type = 'padding', val = padding_resize },
-                  fecha_actual,
-                  { type = 'padding', val = 2 },
-                  buttons,
-                  { type = 'padding', val = 1 },
-                  the_footer,
-               }
-            else
-               padding_resize = math.floor((R.height - 24) / 2)
-
-               R.display = {
-                  { type = 'padding', val = padding_resize },
-                  dashboard.section.terminal,
-                  { type = 'padding', val = 1 },
-                  fecha_actual,
-                  { type = 'padding', val = 2 },
-                  buttons,
-                  { type = 'padding', val = 1 },
-                  the_footer,
-               }
+      -- Al salir de Alpha: restaurar barra de estado y tabline
+      vim.api.nvim_create_autocmd('BufUnload', {
+         group = 'alpha_custom',
+         pattern = '*',
+         callback = function(args)
+            if vim.bo[args.buf].ft == 'alpha' then
+               vim.schedule(function()
+                  vim.opt.laststatus = 3 -- Restaurar barra de estado global
+                  vim.opt.showtabline = 2 -- Restaurar tabline
+                  vim.opt.number = true -- Restaurar números
+                  vim.opt.relativenumber = true
+                  vim.opt.signcolumn = 'yes' -- Restaurar signcolumn
+               end)
             end
-
-            return R
-         end
-
-         local config = function()
-            vim.api.nvim_create_augroup('alpha_tabline', { clear = true })
-
-            vim.api.nvim_create_autocmd('FileType', {
-               group = 'alpha_tabline',
-               pattern = 'alpha',
-               callback = function() vim.opt_local.laststatus = 0 end,
-            })
-
-            vim.api.nvim_create_autocmd('FileType', {
-               group = 'alpha_tabline',
-               pattern = 'alpha',
-               callback = function()
-                  vim.api.nvim_create_autocmd('BufUnload', {
-                     group = 'alpha_tabline',
-                     buffer = 0,
-                     callback = function() vim.opt.laststatus = 3 end,
-                  })
-               end,
-            })
-
-            vim.api.nvim_create_autocmd('User', {
-               pattern = 'AlphaReady',
-               callback = function()
-                  vim.o.stal = 0
-                  vim.b.miniindentscope_disable = true
-
-                  local buf = vim.api.nvim_get_current_buf()
-                  local win = vim.api.nvim_get_current_win()
-
-                  vim.keymap.set('n', '<c-l>', function()
-                     package.loaded.alpha.default_config.layout = layout().display
-                     redraw()
-                  end, {
-                     noremap = true,
-                     silent = true,
-                     buffer = buf,
-                     desc = 'Refresh dashboard',
-                  })
-
-                  local augroup = vim.api.nvim_create_augroup('alpha_recalc', { clear = true })
-
-                  vim.api.nvim_create_autocmd('VimResized', {
-                     group = augroup,
-                     buffer = buf,
-                     callback = function()
-                        package.loaded.alpha.default_config.layout = layout().display
-                        if vim.api.nvim_get_current_win() == win then redraw() end
-                     end,
-                  })
-
-                  vim.api.nvim_create_autocmd({ 'WinEnter' }, {
-                     group = augroup,
-                     buffer = buf,
-                     callback = function()
-                        vim.defer_fn(function()
-                           if vim.api.nvim_get_current_win() == win then redraw() end
-                        end, 5)
-                     end,
-                  })
-
-                  vim.api.nvim_create_autocmd('User', {
-                     pattern = 'AlphaClosed',
-                     callback = function()
-                        vim.o.stal = 2
-                        vim.api.nvim_del_augroup_by_id(augroup)
-                     end,
-                  })
-               end,
-            })
-         end
-
-         alpha.setup({
-            layout = layout().display,
-            opts = {
-               margin = 0,
-               redraw_on_resize = false,
-               setup = config(),
-            },
-         })
-      end,
-   },
+         end,
+      })
+   end,
 }

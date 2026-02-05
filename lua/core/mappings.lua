@@ -20,9 +20,9 @@ map('n', leader('y'), cmd('%y+'), { desc = 'copy whole file' })
 -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
 map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
 
--- Espacar del modo insertar
-map('i', 'kj', '<Esc>', { silent = true, desc = 'Escap' })
-map('i', 'KJ', '<Esc>', { silent = true, desc = 'Escap' })
+-- Espacar con otro atajo
+map({ 'i', 'v', 'n' }, '<A-n>', '<Esc>', { silent = true, desc = 'Escap' })
+map({ 'i', 'v', 'n' }, '<A-N>', '<Esc>', { silent = true, desc = 'Escap' })
 
 -- Allow moving the cursor through wrapped lines with j, k
 -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
