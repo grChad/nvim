@@ -1,16 +1,25 @@
 {
-   "use interface or types": {
-      "prefix": "param",
-      "body": "{${2:params}}: ${1:Props}",
-      "description": "use parameters with interface or types"
-   },
-   "create interface": {
-      "prefix": "cinter",
-      "body": [
-         "interface ${1:Prop} {",
-         "\t${2:type}",
-         "}"
-      ],
-      "description": "Create interface with Props"
-   }
+  "use interface or types": {
+    "prefix": "param",
+    "body": "{${2}}: ${1:Props}",
+    "description": "use parameters with interface or types"
+  },
+  "create interface": {
+    "prefix": "inter",
+    "body": [
+      "interface ${1} {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create interface with Props"
+  },
+  "export function component": {
+    "prefix": "efc",
+    "body": [
+      "export const ${1} = ( ${2} ) => {",
+      "\treturn ($0)",
+      "}"
+    ],
+    "description": "export function component simple"
+  }
 }

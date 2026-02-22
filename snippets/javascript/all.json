@@ -7,7 +7,7 @@
    "Function Array": {
       "prefix": "fas",
       "body": [
-         "const ${1:nameFun} = (${2:param}) => {",
+         "const ${1:nameFun} = (${2}) => {",
          "\t${3}",
          "}"
       ],
