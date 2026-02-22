@@ -7,7 +7,7 @@ grvim.ui = {
    border_rounded = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' },
    ---@type {style: UiHiglightStyle, tailwind: boolean}
    hig_colors = {
-      style = 'background',
+      style = 'virtual',
       tailwind = true,
    },
    icons = {

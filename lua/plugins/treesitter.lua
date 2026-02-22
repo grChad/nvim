@@ -42,11 +42,7 @@ return {
          },
          {
             'm-demare/hlargs.nvim',
-            config = function()
-               require('hlargs').setup({
-                  highlight = { fg = '#EEFFFF', italic = true },
-               })
-            end,
+            config = function() require('hlargs').setup() end,
          },
       },
       ---@type TSConfig
@@ -87,9 +83,7 @@ return {
             ---@type table<string, boolean>
             local added = {}
             opts.ensure_installed = vim.tbl_filter(function(lang)
-               if added[lang] then
-                  return false
-               end
+               if added[lang] then return false end
                added[lang] = true
                return true
             end, opts.ensure_installed)

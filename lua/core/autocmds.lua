@@ -2,7 +2,7 @@ local GROUPS = {}
 
 GROUPS.highlight_yank = {
    event = 'TextYankPost',
-   callback = function() vim.highlight.on_yank({ higroup = 'IncSearch', timeout = 200 }) end,
+   callback = function() vim.highlight.on_yank({ higroup = 'TextYank', timeout = 200 }) end,
 }
 
 GROUPS.disable_node_modules = {

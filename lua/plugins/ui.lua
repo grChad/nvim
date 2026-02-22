@@ -20,11 +20,9 @@ return {
       cmd = { 'BufferLinePick', 'BufferLineCycleNext', 'BufferLineCyclePrev' },
       keys = require('core.key_plugins').bufferline,
       config = function()
-         ---@type ColorsTheme
-         local color = require('theme-nvim').pallete
-
          require('bufferline').setup({
             options = {
+               themable = true, -- usa el theme gr-theme
                offsets = {
                   {
                      filetype = 'NvimTree',
@@ -34,19 +32,8 @@ return {
                   },
                },
                hover = { enabled = true, delay = 200, reveal = { 'close' } },
-            },
-            highlights = {
-               buffer_visible = { fg = color.whiteSmoke },
-               buffer_selected = { fg = color.white, bold = false, italic = false },
-               close_button = { fg = color.red_1 },
-               close_button_visible = { fg = color.red_1 },
-               close_button_selected = { fg = color.red_1 },
-               pick_selected = { fg = color.orange_1, bold = true, italic = false },
-               pick_visible = { fg = color.orange_1, bold = true, italic = false },
-               pick = { fg = color.orange_1, bold = true, italic = false },
-               modified = { fg = color.yellow, bg = color.dark },
-               modified_visible = { fg = color.yellow },
-               modified_selected = { fg = color.yellow },
+               always_show_bufferline = false, -- true muestra desde 1 buffer
+               indicator = { style = 'none' },
             },
          })
       end,

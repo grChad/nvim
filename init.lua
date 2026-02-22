@@ -5,6 +5,10 @@
 require('core.user')
 
 require('core.settings')
+
+-- theme custom
+require('custom.gr-theme').load()
+
 require('core.mappings')
 require('core.diagnostic')
 require('core.autocmds')

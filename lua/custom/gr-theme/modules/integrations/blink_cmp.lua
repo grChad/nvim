@@ -1,0 +1,33 @@
+local cp = require('custom.gr-theme.palette_manager').get_palette()
+
+return {
+   BlinkCmpLabel = { fg = cp.overlay2 },
+   BlinkCmpLabelDeprecated = { fg = cp.overlay0, style = { 'strikethrough' } },
+
+   BlinkCmpLabelMatch = { fg = cp.text, style = { 'bold' } },
+   BlinkCmpKindText = { fg = cp.green },
+   BlinkCmpKindMethod = { fg = cp.sky },
+   BlinkCmpKindFunction = { fg = cp.red },
+   BlinkCmpKindConstructor = { fg = cp.yellow },
+   BlinkCmpKindField = { fg = cp.teal },
+   BlinkCmpKindVariable = { fg = cp.textvar },
+   BlinkCmpKindClass = { fg = cp.pink },
+   BlinkCmpKindInterface = { fg = cp.gold },
+   BlinkCmpKindModule = { fg = cp.blue },
+   BlinkCmpKindProperty = { fg = cp.rosewater },
+   BlinkCmpKindUnit = { fg = cp.peach },
+   BlinkCmpKindValue = { fg = cp.peach },
+   BlinkCmpKindEnum = { fg = cp.gold },
+   BlinkCmpKindKeyword = { fg = cp.pink },
+   BlinkCmpKindSnippet = { fg = cp.maroon },
+   BlinkCmpKindColor = { fg = cp.sky },
+   BlinkCmpKindFile = { fg = cp.green },
+   BlinkCmpKindReference = { fg = cp.sky },
+   BlinkCmpKindFolder = { fg = cp.gold },
+   BlinkCmpKindEnumMember = { fg = cp.sky },
+   BlinkCmpKindConstant = { fg = cp.textvar, style = { 'bold' } },
+   BlinkCmpKindStruct = { fg = cp.mauve },
+   BlinkCmpKindEvent = { fg = cp.blue },
+   BlinkCmpKindOperator = { fg = cp.text },
+   BlinkCmpKindTypeParameter = { fg = cp.textparam },
+}
