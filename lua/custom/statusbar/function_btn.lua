@@ -86,8 +86,6 @@ M.toggleTheme = function()
 
    -- Recargar el tema
    require('custom.gr-theme').reload()
-   vim.cmd('doautocmd ColorScheme')
-   vim.cmd('HighlightColors On') -- plugin  brenoprata10/nvim-highlight-colors
 end
 
 M.position = function()
