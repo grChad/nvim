@@ -8,6 +8,7 @@
 -- :c  :cnoremap    Command-line
 -- :t  :tnoremap    Terminal
 
+local mimi_utils = require('custom.mini-utils')
 local leader = function(str) return '<Leader>' .. str end
 local cmd = function(str) return '<cmd>' .. str .. '<CR>' end
 
@@ -86,9 +87,15 @@ map('n', '<A-S-Right>', ':vertical resize +2<CR>', { desc = 'Resize right' })
 
 -- NOTE: atajos especiales -----------------------------------------------------------
 -- Options for search: clear highlight and word coincidences
-map('n', 'm', cmd("lua require('gr-utils').search.clear()"), { silent = true, desc = 'no highlight' })
-map('n', 'n', 'nzz' .. cmd("lua require('gr-utils').search.run()"), { desc = 'Next search' })
-map('n', 'N', 'Nzz' .. cmd("lua require('gr-utils').search.run()"), { desc = 'Previous search' })
+map('n', 'm', mimi_utils.search.clear, { silent = true, desc = 'no highlight' })
+map('n', 'n', function()
+   vim.cmd('normal! nzz')
+   mimi_utils.search.run()
+end, { desc = 'Next search' })
+map('n', 'N', function()
+   vim.cmd('normal! Nzz')
+   mimi_utils.search.run()
+end, { desc = 'Previous search' })
 
 --keywordprg doc for 'man'
 map('n', 'gk', cmd('norm! K'), { desc = 'Keywordprg' })
@@ -100,4 +107,4 @@ map('n', 'fs', 'i<C-x>s', { desc = 'Spell options' })
 map('n', leader('ii'), cmd('Inspect'), { desc = 'Inspect highlight' })
 
 -- Toggle para booleanos: true|false, on|off, yes|no
-map('n', leader('b'), cmd("lua require('gr-utils').toggle()"), { desc = 'Toggle boolean' })
+map('n', leader('b'), mimi_utils.toggle, { desc = 'Toggle boolean' })

@@ -43,7 +43,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
       lsp_map('gi', require('snacks').picker.lsp_implementations, '[G]oto [I]mplementation')
       lsp_map('gO', require('snacks').picker.lsp_symbols, '[D]ocument [S]ymbols')
       lsp_map('<Leader>ws', require('snacks').picker.lsp_workspace_symbols, '[W]orkspace [S]ymbols')
-      lsp_map('<Leader>re', vim.lsp.buf.rename, '[R]e[n]ame')
+      -- lsp_map('<Leader>re', vim.lsp.buf.rename, '[R]e[n]ame')
+      lsp_map('<Leader>re', require('custom.mini-utils').rename.run, '[R]e[n]ame')
       lsp_map('<A-CR>', vim.lsp.buf.code_action, '[C]ode [A]ction')
       lsp_map(
          'K',
