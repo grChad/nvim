@@ -18,7 +18,7 @@ grvim.ui = {
          Control = ' ',
          Collapsed = ' ',
          Constant = '󰏿 ',
-         Constructor = ' ',
+         Constructor = ' ',
          Enum = ' ',
          EnumMember = ' ',
          Event = ' ',
@@ -57,6 +57,20 @@ grvim.ui = {
          Supermaven = ' ',
       },
    },
+}
+
+grvim.statusbar = {
+   icons = {
+      separator = {
+         line = ' | ',
+         arrow = { left = '  ', right = '  ' },
+      },
+      percent_bar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' },
+      git = { branch = ' ', add = ' ', remove = ' ', change = ' ' },
+      others = { empty = '', lsp = ' ', directory = '󰉋 ', user = ' ' },
+      ia_icon = ' ',
+   },
+   suffix_file_size = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' },
 }
 
 grvim.gitsigns = {

@@ -40,13 +40,13 @@ return {
    NvimTreeOpenedHL = { fg = cp.blue, style = { 'bold' } },
 
    -- Git File File Highlight: >
-   NvimTreeGitFileDeletedHL = { fg = '#f26359' },
+   NvimTreeGitFileDeletedHL = { fg = cp.red },
    NvimTreeGitFileDirtyHL = { fg = cp.yellow },
    NvimTreeGitFileIgnoredHL = { fg = cp.overlay1 },
-   NvimTreeGitFileMergeHL = { fg = cp.peach },
+   NvimTreeGitFileMergeHL = { fg = cp.orange },
    NvimTreeGitFileNewHL = { fg = cp.green },
    NvimTreeGitFileRenamedHL = { fg = cp.textparam, style = { 'italic' } },
-   NvimTreeGitFileStagedHL = { fg = cp.peach },
+   NvimTreeGitFileStagedHL = { fg = cp.sky },
 
    -- Git Folder Folder Highlight: >
    NvimTreeGitFolderDeletedHL = { fg = cp.gold },
@@ -70,4 +70,6 @@ return {
    NvimTreeGitDeletedIcon = { fg = cp.red },
    NvimTreeGitDirtyIcon = { fg = cp.yellow },
    NvimTreeGitNewIcon = { fg = cp.green },
+   NvimTreeGitStagedIcon = { fg = cp.sky },
+   NvimTreeGitMergeIcon = { fg = cp.orange },
 }
