@@ -89,12 +89,22 @@ map('n', '<A-S-Right>', ':vertical resize +2<CR>', { desc = 'Resize right' })
 -- Options for search: clear highlight and word coincidences
 map('n', 'm', mimi_utils.search.clear, { silent = true, desc = 'no highlight' })
 map('n', 'n', function()
-   vim.cmd('normal! nzz')
-   mimi_utils.search.run()
+   local sc = vim.fn.searchcount({ recompute = true })
+   if sc.total and sc.total > 0 then
+      vim.cmd('normal! nzz')
+      mimi_utils.search.run()
+   else
+      vim.notify('No hay más resultados', vim.log.levels.INFO)
+   end
 end, { desc = 'Next search' })
 map('n', 'N', function()
-   vim.cmd('normal! Nzz')
-   mimi_utils.search.run()
+   local sc = vim.fn.searchcount({ recompute = true })
+   if sc.total and sc.total > 0 then
+      vim.cmd('normal! Nzz')
+      mimi_utils.search.run()
+   else
+      vim.notify('No hay más resultados', vim.log.levels.INFO)
+   end
 end, { desc = 'Previous search' })
 
 --keywordprg doc for 'man'
