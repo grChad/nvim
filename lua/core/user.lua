@@ -77,9 +77,14 @@ grvim.gitsigns = {
    icons = {
       add = { text = '┃' },
       change = { text = '┃' },
-      delete = { text = '' },
-      topdelete = { text = '' },
+      delete = { text = '━' },
+      topdelete = { text = '╍' },
+      untracked = { text = '┇' },
    },
+}
+
+grvim.statuscol = {
+   icons = { caret_right = '', caret_down = '' },
 }
 
 grvim.lsp = {

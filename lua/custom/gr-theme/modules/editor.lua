@@ -38,7 +38,7 @@ return {
    FloatShadowThrough = { bg = cp.overlay0 },
 
    Pmenu = { bg = cp.surface0 }, -- Popup menu: normal item.
-   PmenuSel = { bg = cp.selected }, -- Popup menu: selected item.
+   PmenuSel = { bg = cp.selected, style = { 'bold' } }, -- Popup menu: selected item.
    PmenuMatch = { fg = cp.text, style = { 'bold' } }, -- Popup menu: matching text.
    PmenuMatchSel = { style = { 'bold' } }, -- Popup menu: matching text in selected item; is combined with |hl-PmenuMatch| and |hl-PmenuSel|.
    PmenuSbar = { bg = cp.mantle }, -- Popup menu: scrollbar.

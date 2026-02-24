@@ -54,6 +54,7 @@ return {
          auto_install = false,
          highlight = { enable = true },
          indent = { enable = true },
+         fold = { enable = true },
 
          -- stylua: ignore
          incremental_selection = {

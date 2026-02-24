@@ -108,7 +108,7 @@ vim.opt.spelloptions = 'camel' -- Para que no muestre error ortografico en los C
 vim.opt.scrolloff = 4 -- Dejar espacio encima o debajo del cursor
 vim.opt.sidescrolloff = 8 -- Dejar espacio a los laterales del cursor
 vim.opt.foldmethod = 'expr' -- folding, set to "expr" for treesitter based folding
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()' -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()' -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
 
 -- NOTE: Configuracion de vim.o -----------------------------------------------------
 -- modo del cursor

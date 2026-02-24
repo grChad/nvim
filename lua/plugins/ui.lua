@@ -1,14 +1,25 @@
 return {
    {
-      'grChad/statusbar.nvim',
-      dev = true,
+      dir = vim.fn.stdpath('config') .. '/lua/custom/statusbar',
       lazy = false,
       config = function()
-         require('grbar').setup({
-            user = { name = 'Gabriel' },
-            ia = {
-               supermaven = { enabled = true, icon = ' ' },
-            },
+         -- require('gr-bar').setup({
+         --    -- user = { name = 'Gabriel' },
+         --    -- ia = {
+         --    --    supermaven = { enabled = true, icon = ' ' },
+         --    -- },
+         -- })
+         -- NOTE: no es obligatorio, pero por lo menos no definir mi nombre 'Gabriel' por defecto
+         require('custom.statusbar').setup()
+      end,
+   },
+
+   {
+      dir = vim.fn.stdpath('config') .. '/lua/custom/statuscol',
+      lazy = false,
+      config = function()
+         require('custom.statuscol').setup({
+            disabled_ft = { 'markdown', 'mdx', 'text' },
          })
       end,
    },
@@ -68,7 +79,6 @@ return {
       lazy = false,
       main = 'ibl',
       config = function()
-         -- NOTE: los highlight groups se crean en el theme [ 'grChad/theme-custom' ]
          -- stylua: ignore
          local Indent_hightlight = {
             'Ibl_RainbowRed', 'Ibl_RainbowYellow', 'Ibl_RainbowBlue', 'Ibl_RainbowOrange',
@@ -85,6 +95,7 @@ return {
          require('ibl').setup({
             indent = { highlight = Indent_hightlight, char = '▏', tab_char = '▏' },
             scope = { highlight = scope_highlights },
+            exclude = { filetypes = { 'text' } },
          })
       end,
    },

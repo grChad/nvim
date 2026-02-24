@@ -1,20 +1,5 @@
 return {
    { 'j-hui/fidget.nvim', opts = {} }, -- $progress and notify
-
-   {
-      'grChad/utils.nvim',
-      dev = true,
-      lazy = false,
-      config = function()
-         local gr_utils = require('gr-utils')
-
-         gr_utils.statuscolumn.setup({
-            without_fold = { 'text', 'markdown', 'mdx' },
-            -- disabled = {},
-            -- add_with_fold = {},
-         })
-      end,
-   },
    { 'nvim-lua/plenary.nvim' },
    {
       'stevearc/overseer.nvim',

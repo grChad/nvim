@@ -15,8 +15,8 @@ return {
    AlphaButtonHL = { fg = '#20CDE5' },
    AlphaButtonKey = { fg = '#18C2B8', style = { 'bold' } },
 
-   -- plugin utils-nvim
-   FoldSignsOpen = { fg = cp.lavender, bg = cp.mantle },
+   -- plugin statuscol
+   FoldSignsOpen = { fg = cp.lavender, bg = cp.base },
    FoldSignsClosed = { fg = cp.overlay1, bg = cp.base },
 
    TextYank = { fg = cp.base, bg = cp.sky },
