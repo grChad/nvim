@@ -1,5 +1,6 @@
 local texthl = require('custom.statusbar.utils').texthl
 local button = require('custom.statusbar.utils').button
+local trimPad = require('custom.statusbar.utils').trimAndPad
 local format_fize = require('custom.statusbar.utils').format_fize
 local hl = require('custom.statusbar.constants').hl_groups.file_name
 local icons = grvim.statusbar.icons
@@ -24,40 +25,42 @@ local file_size = function()
    return ''
 end
 
-local file_icon = function()
+---@param filename string
+local file_icon = function(filename)
    local fileIcon = icons.others.empty
-   local fileIconColor = '#A6D189'
-   local filename = (vim.fn.expand('%') == '' and 'Empty ') or vim.fn.expand('%:t')
    local extension = vim.fn.expand('%:e')
 
-   if filename ~= 'Empty ' then
-      local ok_devicons, devicons = pcall(require, 'nvim-web-devicons')
+   if filename == 'Empty' then return texthl(hl.subText, trimPad(fileIcon, 3)) end
 
-      if ok_devicons then
-         local deviIcon, deviColor = devicons.get_icon_color(filename, extension)
+   ---@type string
+   local fg_color_icon
+   local ok_devicons, devicons = pcall(require, 'nvim-web-devicons')
 
-         fileIcon = (deviIcon ~= nil and deviIcon) or ''
-         fileIconColor = deviColor
-      end
+   if ok_devicons then
+      local deviIcon, deviColor = devicons.get_icon_color(filename, extension)
+
+      fileIcon = (deviIcon ~= nil and deviIcon) or ''
+      fg_color_icon = deviColor
    end
+   vim.api.nvim_set_hl(0, hl.iconFtColor, { fg = fg_color_icon })
 
-   vim.api.nvim_set_hl(0, hl.iconFtColor, { fg = fileIconColor })
-
-   return texthl(hl.iconFtColor, ' ' .. fileIcon .. ' ')
+   return texthl(hl.iconFtColor, trimPad(fileIcon, 3))
 end
 
 return function()
-   local fileName = (vim.fn.expand('%') == '' and 'Empty ') or vim.fn.expand('%:t')
+   local file_name = (vim.fn.expand('%') == '' and 'Empty') or vim.fn.expand('%:t') -- '' -> Empty
 
-   local str = texthl(hl.text, fileName)
+   local file_name_hl = texthl(hl.text, file_name)
+   local file_icon_hl = file_icon(file_name)
+   local file_size_hl = file_size()
 
    ---@type string
    local finalStr
 
    if vim.g.s_filename_is_active then
-      finalStr = file_icon() .. str .. file_size()
+      finalStr = file_icon_hl .. file_name_hl .. file_size_hl
    else
-      finalStr = file_icon() .. str
+      finalStr = file_icon_hl .. file_name_hl
    end
 
    return button(finalStr, 'ToggleFileName')
