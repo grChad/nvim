@@ -67,7 +67,7 @@ grvim.statusbar = {
       },
       percent_bar = { '▁', '▂', '▃', '▄', '▅', '▆', '▇', '█' },
       git = { branch = ' ', add = ' ', remove = ' ', change = ' ' },
-      others = { empty = '', lsp = ' ', directory = '󰉋 ', user = ' ' },
+      others = { empty = '󰊠', lsp = ' ', directory = '󰉋 ', user = ' ' },
       ia_icon = ' ',
    },
    suffix_file_size = { 'b', 'k', 'M', 'G', 'T', 'P', 'E' },
@@ -77,7 +77,7 @@ grvim.gitsigns = {
    icons = {
       add = { text = '┃' },
       change = { text = '┃' },
-      delete = { text = '━' },
+      delete = { text = '┇' },
       topdelete = { text = '╍' },
       untracked = { text = '┇' },
    },
