@@ -14,7 +14,7 @@ end
 M.trim = function(str) return str:match('^%s*(.-)%s*$') or '' end
 
 ---@param str string
----@param len 2 | 3
+---@param len? 2 | 3
 ---@return string
 M.trimAndPad = function(str, len)
    str = M.trim(str)

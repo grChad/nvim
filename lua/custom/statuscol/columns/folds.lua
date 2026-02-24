@@ -2,8 +2,8 @@ local trimPad = require('custom.statuscol.utils').trimAndPad
 local icons = grvim.statuscol.icons
 
 return function()
-   local icon_right = trimPad(icons.caret_right, 2)
-   local icon_down = trimPad(icons.caret_down, 2)
+   local icon_right = trimPad(icons.caret_right)
+   local icon_down = trimPad(icons.caret_down)
 
    if vim.fn.eval('foldlevel(v:lnum) > foldlevel(v:lnum - 1)') == 1 then
       if vim.fn.eval('foldclosed(v:lnum) == -1') == 1 then
@@ -13,6 +13,6 @@ return function()
       end
    end
 
-   local space_void = '  '
+   local space_void = ' '
    return space_void .. '%T'
 end
