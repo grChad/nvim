@@ -3,12 +3,6 @@ return {
       dir = vim.fn.stdpath('config') .. '/lua/custom/statusbar',
       lazy = false,
       config = function()
-         -- require('gr-bar').setup({
-         --    -- user = { name = 'Gabriel' },
-         --    -- ia = {
-         --    --    supermaven = { enabled = true, icon = ' ' },
-         --    -- },
-         -- })
          -- NOTE: no es obligatorio, pero por lo menos no definir mi nombre 'Gabriel' por defecto
          require('custom.statusbar').setup()
       end,

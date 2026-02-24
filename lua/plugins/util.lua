@@ -1,5 +1,5 @@
 return {
-   { 'j-hui/fidget.nvim', opts = {} }, -- $progress and notify
+   { 'j-hui/fidget.nvim', lazy = false, opts = {} }, -- $progress and notify
    { 'nvim-lua/plenary.nvim' },
    {
       'stevearc/overseer.nvim',
