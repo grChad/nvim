@@ -45,18 +45,37 @@ end
 M.run = function()
    local currName = vim.fn.expand('<cword>') .. ' '
 
+   -- Posición absoluta del cursor en pantalla (1-based)
+   local screen_row = vim.fn.screenrow()
+   local screen_col = vim.fn.screencol()
+
+   -- Offset deseado: 2 líneas abajo, alineado al inicio del símbolo (calculado previamente)
+   local line = screen_row + 2
+   local col = screen_col - 3 -- ajusta este offset según tu alineación horizontal
+
+   -- Asegurar que el popup no se salga de la pantalla (considerando borde y altura)
+   local height = 1
+   local border_thickness = 1
+   local max_line = vim.o.lines - height - 2 * border_thickness
+   if line > max_line then line = max_line end
+
+   local width = 25
+   local max_col = vim.o.columns - width - 2 * border_thickness
+   if col > max_col then col = max_col end
+
    local win = require('plenary.popup').create(currName, {
       title = 'Rename',
       style = 'minimal',
       borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
-      relative = 'cursor',
+      relative = 'editor',
       borderhighlight = 'FloatBorder',
       titlehighlight = 'FloatTitle',
       focusable = true,
-      width = 25,
-      height = 1,
-      line = 'cursor+2',
-      col = 'cursor-1',
+      width = width,
+      height = height,
+      line = line,
+      col = col,
+      zindex = 60, -- pare evitar que otros popups se superpongan
    })
 
    -- Deshabilitar autocompletado para este buffer
@@ -86,6 +105,17 @@ M.run = function()
       set_keymap(0, mode, '<Esc>', '<cmd>stopinsert | q!<CR>', map_opts)
       set_keymap(0, mode, '<CR>', mapping, map_opts)
    end
+
+   -- NUEVO: Autocomando para cerrar el popup cuando pierde el foco
+   local close_on_leave = vim.api.nvim_create_augroup('RenamePopupLeave', { clear = true })
+
+   vim.api.nvim_create_autocmd('WinEnter', {
+      group = close_on_leave,
+      buffer = buf,
+      callback = function()
+         if vim.api.nvim_win_is_valid(win) then vim.cmd('redrawstatus') end
+      end,
+   })
 end
 
 return M
