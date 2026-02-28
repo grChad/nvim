@@ -14,8 +14,9 @@ return {
 
    {
       'saghen/blink.cmp',
-      version = 'v0.*',
-      lazy = false,
+      version = '1.*',
+      lazy = true,
+      event = 'InsertEnter',
       opts_extend = {
          'sources.completion.enabled_providers',
          'sources.default',
@@ -25,7 +26,6 @@ return {
          'rafamadriz/friendly-snippets',
          'moyiz/blink-emoji.nvim',
       },
-      event = 'InsertEnter',
       opts = {
          appearance = {
             use_nvim_cmp_as_default = true,
@@ -47,8 +47,8 @@ return {
             ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },
             ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },
          },
-         completion = {
-            accept = { auto_brackets = { enabled = true } },
+completion = {
+             accept = { auto_brackets = { enabled = false } },
             menu = {
                draw = {
                   treesitter = { 'lsp' },
