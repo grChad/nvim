@@ -10,16 +10,21 @@ local cached = {
    [severity.HINT] = texthl('DiagnosticHint', trimAndPad(icons.Hint, 2)),
 }
 
-return function()
-   local diagnostics = vim.diagnostic.get(0, { lnum = vim.v.lnum - 1 })
+return function(win)
+   local bufnr = vim.api.nvim_win_get_buf(win)
+   local diagnostics = vim.diagnostic.get(bufnr, { lnum = vim.v.lnum - 1 })
 
    ---@type vim.diagnostic.Severity?
-   local highest = math.huge
+   local highest = nil
 
    for _, diag in ipairs(diagnostics) do
-      if diag.severity < highest then highest = diag.severity end
+      if not highest or diag.severity < highest then highest = diag.severity end
    end
 
    local default_space = '  '
-   return cached[highest] or default_space
+   if highest then
+      return cached[highest] or default_space
+   else
+      return default_space
+   end
 end
