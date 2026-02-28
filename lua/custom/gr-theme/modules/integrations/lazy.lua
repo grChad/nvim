@@ -7,6 +7,10 @@ return {
    LazyH2 = { fg = cp.red, bg = cp.mantle, style = { 'bold' } },
 
    LazyDir = { fg = cp.gold },
-   LazyUrl = { fg = cp.blue, style = { 'underline' } },
-   LazyValue = { fg = cp.red },
+   LazyUrl = { fg = cp.blue, style = { 'undercurl' } },
+   LazyValue = { fg = cp.flamingo },
+   lazyProp = { fg = cp.sapphire, style = { 'bold' } },
+
+   LazyCommit = { fg = cp.tomato },
+   LazyInfo = { fg = cp.green },
 }
