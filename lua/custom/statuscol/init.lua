@@ -22,12 +22,7 @@ function M.build()
    for _, col_name in ipairs(order) do
       local col = columns[col_name]
       if col then
-         local result
-         if col_name == 'numbers' then
-            result = col(win) -- numbers espera win
-         else
-            result = col() -- otras columnas esperan ctx
-         end
+         local result = col(win)
          if result and result ~= '' then table.insert(parts, result) end
       end
    end
