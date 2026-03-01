@@ -1,4 +1,4 @@
-local button = require('custom.statusbar.utils').button
+local button = require('custom.statusbar.utils').on_click
 local txt = require('custom.statusbar.utils').texthl
 local hl = require('custom.statusbar.constants').hl_groups.cursor_position
 local percent_bar = grvim.statusbar.icons.percent_bar

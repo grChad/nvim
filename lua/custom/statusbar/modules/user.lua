@@ -1,7 +1,5 @@
 local hl = require('custom.statusbar.constants').hl_groups.user
-local texthl = require('custom.statusbar.utils').texthl
-local button = require('custom.statusbar.utils').button
-local trimAndPad = require('custom.statusbar.utils').trimAndPad
+local utils = require('custom.statusbar.utils')
 local user_icon = grvim.statusbar.icons.others.user
 
 --------------------------------- [ btn onclick function ] ---------------------------
@@ -12,12 +10,17 @@ vim.cmd([[
 ]])
 
 ------------------------------------ [ functions ] ------------------------------------
-return function()
-   local icon = user_icon
-   local name = 'Patricio'
+---@param confUser GrConfigUser
+return function(confUser)
+   local config = confUser or {}
+   local name = utils.selectStr(config.name, 'Patroclo')
+   local icon = utils.selectIcon(config.icon, user_icon)
+   local color_icon = config.color_icon
 
-   local icon_os = texthl(hl.userIcon, trimAndPad(icon, 2))
-   local user_name = texthl(hl.text, name)
+   if utils.isHex(color_icon) then utils.update_hl('S_UserIcon', { fg = color_icon }) end
+
+   local icon_os = utils.texthl(hl.userIcon, icon)
+   local user_name = utils.texthl(hl.text, name)
 
    ---@type string
    local str
@@ -27,5 +30,5 @@ return function()
       str = icon_os
    end
 
-   return button(str, 'ShowUser') .. ' '
+   return utils.on_click(str, 'ShowUser') .. ' '
 end

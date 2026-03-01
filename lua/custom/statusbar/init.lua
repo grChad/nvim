@@ -14,18 +14,19 @@ local user = require('custom.statusbar.modules.user')
 
 vim.g.s_status_cwd = 0 -- % 3 == 0
 
----@alias GrConfigModes 'foreground' | 'background'
+-- -@alias GrConfigModes 'foreground' | 'background'
 ---@alias GrConfigUser { enabled?: boolean, icon?: string, color_icon?: string, name?: string }
 
----@alias GrConfigIaCodeium { enabled?: boolean, icon?: string, color_icon?: string }
----@alias GrConfigIaSupermaven { enabled?: boolean, icon?: string, color_icon?: string }
----@alias GrConfigIa { codeium?: GrConfigIaCodeium, supermaven?: GrConfigIaSupermaven }
+-- ---@alias GrConfigIaCodeium { enabled?: boolean, icon?: string, color_icon?: string }
+-- ---@alias GrConfigIaSupermaven { enabled?: boolean, icon?: string, color_icon?: string }
+-- ---@alias GrConfigIa { codeium?: GrConfigIaCodeium, supermaven?: GrConfigIaSupermaven }
+--
+-- ---@alias GrConfigGit { icon_add?: string, color_add?: string, icon_remove?: string, color_remove?: string, icon_change?: string, color_change?: string, icon_branch?: string, color_branch?: string }
+--
+-- ---@alias GrConfigLsp { icon_error?: string, color_error?: string, icon_warning?: string, color_warning?: string, icon_hint?: string, color_hint?: string, icon_info?: string, color_info?: string }
 
----@alias GrConfigGit { icon_add?: string, color_add?: string, icon_remove?: string, color_remove?: string, icon_change?: string, color_change?: string, icon_branch?: string, color_branch?: string }
-
----@alias GrConfigLsp { icon_error?: string, color_error?: string, icon_warning?: string, color_warning?: string, icon_hint?: string, color_hint?: string, icon_info?: string, color_info?: string }
-
--- ---@class GrConfig
+---@class GrConfig
+---@field user? GrConfigUser
 -- ---@field background? string
 -- ---@field foreground? string
 -- ---@field sub_foreground? string
@@ -33,11 +34,10 @@ vim.g.s_status_cwd = 0 -- % 3 == 0
 -- ---@field mode_style? GrConfigModes
 -- ---@field lsp? GrConfigLsp
 -- ---@field git? GrConfigGit
--- ---@field user? GrConfigUser
 -- ---@field ia? GrConfigIa
 --
--- ---@type GrConfig
--- local opts = {}
+---@type GrConfig
+local opts = {}
 
 local M = {}
 
@@ -49,7 +49,7 @@ M.StatusLine = function()
       '%=',
       '%=',
       git(),
-      user(),
+      user(opts.user),
       directory(),
       spell(),
       ia(),
@@ -58,19 +58,9 @@ M.StatusLine = function()
    })
 end
 
-----@param config? GrConfig
-M.setup = function()
-   -- local count_configs = 0
-   --
-   -- if type(config) == 'table' and config ~= nil then
-   --    for _ in pairs(config) do
-   --       count_configs = count_configs + 1
-   --    end
-   --
-   --    if count_configs > 0 then opts = config end
-   -- end
-
-   -- require('statusbar.highlights')(opts)
+---@param config? GrConfig
+M.setup = function(config)
+   if type(config) == 'table' then opts = config end
 
    vim.o.statusline = "%!v:lua.require('custom.statusbar').StatusLine()"
 end

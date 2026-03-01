@@ -1,6 +1,6 @@
 local hl = require('custom.statusbar.constants').hl_groups.spell_check
 local texthl = require('custom.statusbar.utils').texthl
-local button = require('custom.statusbar.utils').button
+local button = require('custom.statusbar.utils').on_click
 
 --------------------------------- [ btn onclick function ] ---------------------------
 vim.cmd([[

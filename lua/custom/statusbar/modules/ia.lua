@@ -1,5 +1,5 @@
 local texthl = require('custom.statusbar.utils').texthl
-local button = require('custom.statusbar.utils').button
+local button = require('custom.statusbar.utils').on_click
 local space = require('custom.statusbar.utils').space()
 local trimAndPad = require('custom.statusbar.utils').trimAndPad
 local hl = require('custom.statusbar.constants').hl_groups.ia

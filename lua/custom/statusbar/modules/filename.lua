@@ -1,5 +1,5 @@
 local texthl = require('custom.statusbar.utils').texthl
-local button = require('custom.statusbar.utils').button
+local button = require('custom.statusbar.utils').on_click
 local trimPad = require('custom.statusbar.utils').trimAndPad
 local format_fize = require('custom.statusbar.utils').format_fize
 local hl = require('custom.statusbar.constants').hl_groups.file_name

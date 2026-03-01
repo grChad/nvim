@@ -13,7 +13,7 @@ end
 ---@param func string
 ---@param arg? integer
 ---@return string
-M.button = function(str_hl, func, arg)
+M.on_click = function(str_hl, func, arg)
    arg = arg or 0
    local arg_str = string.format('%s', arg)
 
@@ -43,6 +43,32 @@ M.selectStr = function(str_user, str_default)
       return str_default
    end
    return str_user
+end
+
+---@param icon_user? string
+---@param icon_default string
+M.selectIcon = function(icon_user, icon_default)
+   if icon_user and type(icon_user) == 'string' then
+      if #icon_user >= 1 and #icon_user <= 4 then return M.trimAndPad(icon_user, 2) end
+   end
+
+   return icon_default
+end
+
+---@param color? string
+M.isHex = function(color)
+   if type(color) ~= 'string' then return false end
+
+   -- Patrón: # seguido de 3 o 6 caracteres hexadecimales
+   return color:match('^#%x%x%x$') or color:match('^#%x%x%x%x%x%x$') ~= nil
+end
+
+---@param name string
+---@param opts {fg?: string, bg?: string, sp?: string}  -- Solo los que quieras cambiar
+M.update_hl = function(name, opts)
+   local current = vim.api.nvim_get_hl(0, { name = name }) or {}
+
+   vim.api.nvim_set_hl(0, name, vim.tbl_extend('keep', opts, current))
 end
 
 ---@param table_user? table
