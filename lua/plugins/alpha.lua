@@ -153,27 +153,9 @@ local CONTENT_LIGHT = TOTAL_CONTENT_HEIGHT - ol.logo_height
 -- │       cmdline           │
 -- └─────────────────────────┘
 
-local function get_alpha_window()
-   for _, win in ipairs(vim.api.nvim_list_wins()) do
-      local buf = vim.api.nvim_win_get_buf(win)
-      if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == 'alpha' then return win end
-   end
-   return nil
-end
-
-local LayoutScreen = function()
-   -- Calcular dentor de la función para recalcular al dimencionar la ventana
-   -- Encontrar la ventana de Alpha específicamente
-   local alpha_win = get_alpha_window()
-
-   -- Si no encontramos ventana de Alpha, usar la actual
-   if not alpha_win then
-      alpha_win = 0 -- Ventana actual como fallback
-   end
-   local terminal_height = vim.api.nvim_win_get_height(alpha_win)
-
-   local available_space_full = terminal_height - TOTAL_CONTENT_HEIGHT
-   local available_space_light = terminal_height - CONTENT_LIGHT
+local LayoutScreen = function(height)
+   local available_space_full = height - TOTAL_CONTENT_HEIGHT
+   local available_space_light = height - CONTENT_LIGHT
    local top_padding_full = math.floor(available_space_full / 2 + 1)
    local top_padding_light = math.floor(available_space_light / 2 + 1)
 
@@ -206,6 +188,14 @@ local LayoutScreen = function()
    end
 end
 
+local function get_alpha_window()
+   for _, win in ipairs(vim.api.nvim_list_wins()) do
+      local buf = vim.api.nvim_win_get_buf(win)
+      if vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].filetype == 'alpha' then return win end
+   end
+   return nil
+end
+
 return {
    'goolord/alpha-nvim',
    event = 'VimEnter',
@@ -218,32 +208,35 @@ return {
       if not status_ok or argc ~= 0 then return end
 
       local function refresh_alpha()
+         local alpha_win = get_alpha_window()
+         local height = alpha_win and vim.api.nvim_win_get_height(alpha_win) or vim.fn.winheight(0)
+
          alpha.setup({
-            layout = LayoutScreen(),
-            opts = {
-               margin = 0,
-               redraw_on_resize = true,
-            },
+            layout = LayoutScreen(height),
+            opts = { margin = 0, redraw_on_resize = true },
          })
+
          alpha.redraw()
       end
 
-      -- Configurar Alpha inicialmente
-      refresh_alpha()
+      refresh_alpha() -- Inicializar
 
       vim.api.nvim_create_augroup('alpha_custom', { clear = true })
 
-      -- Eventos que deberían triggerear un refresh
-      local refresh_events = {
-         'VimResized',
-         'WinResized',
-         'WinEnter',
-         'WinClosed',
-         'BufEnter',
-         'BufLeave',
-      }
+      -- Al entrar a Alpha: ocultar barra de estado y tabline y columna de signos
+      vim.api.nvim_create_autocmd('FileType', {
+         group = 'alpha_custom',
+         pattern = 'alpha',
+         callback = function()
+            vim.opt_local.laststatus = 0 -- Sin barra de estado
+            vim.opt_local.showtabline = 0 -- Sin tabline
+            vim.opt_local.number = false -- Sin números de línea
+            vim.opt_local.relativenumber = false
+            vim.opt_local.signcolumn = 'no' -- Sin signcolumn
+         end,
+      })
 
-      vim.api.nvim_create_autocmd(refresh_events, {
+      vim.api.nvim_create_autocmd({ 'VimResized', 'WinResized', 'WinNew', 'WinClosed' }, {
          group = 'alpha_custom',
          callback = function()
             -- Verificar si Alpha está abierto en alguna ventana
@@ -260,21 +253,8 @@ return {
             local current_is_alpha = vim.bo.filetype == 'alpha'
 
             if has_alpha_open or current_is_alpha then
-               vim.defer_fn(function() refresh_alpha() end, 100) -- Delay para estabilización del layout
+               vim.defer_fn(function() refresh_alpha() end, 30) -- Delay para estabilización del layout
             end
-         end,
-      })
-
-      -- Al entrar a Alpha: ocultar barra de estado y tabline y columna de signos
-      vim.api.nvim_create_autocmd('FileType', {
-         group = 'alpha_custom',
-         pattern = 'alpha',
-         callback = function()
-            vim.opt_local.laststatus = 0 -- Sin barra de estado
-            vim.opt_local.showtabline = 0 -- Sin tabline
-            vim.opt_local.number = false -- Sin números de línea
-            vim.opt_local.relativenumber = false
-            vim.opt_local.signcolumn = 'no' -- Sin signcolumn
          end,
       })
 
